@@ -4,10 +4,8 @@ import static java.lang.System.*;
 
 public class Main {
     public static void main(String[] args) {
-        Connection connection;
-
         try {
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost/socnet", "postgres", "");
+            var connection = DriverManager.getConnection("jdbc:postgresql://localhost/socnet", "postgres", "");
 
             MainScreen.getMainScreen(connection);
         }
