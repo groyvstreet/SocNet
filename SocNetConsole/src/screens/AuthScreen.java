@@ -1,13 +1,18 @@
 package screens;
 
+import entities.User;
+import repositories.UserRepository;
+
 import java.io.IOException;
 import java.sql.*;
+import java.text.ParseException;
+
 import static java.lang.System.*;
 
 public class AuthScreen {
     private AuthScreen() {}
 
-    public static void getAuthScreen(Connection connection) throws IOException {
+    public static void getAuthScreen(Connection connection) throws IOException, ParseException {
         int option;
 
         while (true) {
