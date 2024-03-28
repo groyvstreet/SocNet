@@ -57,3 +57,8 @@ K
 src/screens/EditScreen.java,6\6\66576eb0920c178b3539b08ccc25c35120ee5707
 N
 src/identity/IdentityUser.java,e\8\e8eff3e578ee8f1007a5406db9ccda260c5deb99
+:
+
+.gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
+K
+src/screens/ChatScreen.java,d\5\d505d164e4f0a8bd508e24baaa4175d11dc2bde8

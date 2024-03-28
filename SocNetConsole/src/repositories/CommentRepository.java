@@ -17,7 +17,7 @@ public class CommentRepository {
     }
 
     public void addComment(Comment comment) {
-        var query = STR."INSERT INTO comments VALUES('\{comment.id}', '\{comment.dateTime}', '\{comment.text}', '\{comment.postId}', '\{comment.userId}', '\{comment.commentId}');";
+        var query = STR."INSERT INTO comments VALUES('\{comment.id}', '\{comment.dateTime}', '\{comment.text}', '\{comment.postId}', '\{comment.userId}', \{comment.commentId == null ? null : STR."'\{comment.commentId}'"});";
 
         try (var statement = _connection.createStatement()) {
             statement.executeUpdate(query);
@@ -27,7 +27,7 @@ public class CommentRepository {
     }
 
     public void updateComment(Comment comment) {
-        var query = STR."UPDATE comments SET date_time='\{comment.dateTime}', text='\{comment.text}', post_id='\{comment.postId}', user_id='\{comment.userId}', comment_id='\{comment.commentId}' WHERE id='\{comment.id}';";
+        var query = STR."UPDATE comments SET date_time='\{comment.dateTime}', text='\{comment.text}', post_id='\{comment.postId}', user_id='\{comment.userId}', comment_id=\{comment.commentId == null ? null : STR."'\{comment.commentId}'"} WHERE id='\{comment.id}';";
 
         try (var statement = _connection.createStatement()) {
             statement.executeUpdate(query);
@@ -72,7 +72,7 @@ public class CommentRepository {
 
     public Comment getCommentById(UUID id) {
         Comment comment = null;
-        var query = STR."SELECT * FROM comments WHERE id=\{id}";
+        var query = STR."SELECT * FROM comments WHERE id='\{id}'";
 
         try (var statement = _connection.createStatement()) {
             var result = statement.executeQuery(query);
@@ -84,7 +84,8 @@ public class CommentRepository {
                 comment.text = result.getString("text");
                 comment.postId = UUID.fromString(result.getString("post_id"));
                 comment.userId = UUID.fromString(result.getString("user_id"));
-                comment.commentId = UUID.fromString(result.getString("comment_id"));
+                var stringCommentId = result.getString("comment_id");
+                comment.commentId = stringCommentId == null ? null : UUID.fromString(stringCommentId);
             }
         } catch (SQLException exception) {
             out.println(exception.getMessage());

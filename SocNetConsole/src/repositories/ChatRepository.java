@@ -69,7 +69,7 @@ public class ChatRepository {
 
     public Chat getChatById(UUID id) {
         Chat chat = null;
-        var query = STR."SELECT * FROM chats WHERE id=\{id}";
+        var query = STR."SELECT * FROM chats WHERE id='\{id}'";
 
         try (var statement = _connection.createStatement()) {
             var result = statement.executeQuery(query);

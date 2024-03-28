@@ -51,5 +51,5 @@ CREATE TABLE comments
     text text NOT NULL,
     post_id UUID REFERENCES posts(id) ON DELETE CASCADE,
     user_id UUID REFERENCES users(id) ON DELETE CASCADE,
-    comment_id UUID NULL REFERENCES chats(id) ON DELETE CASCADE
+    comment_id UUID NULL REFERENCES comments(id) ON DELETE CASCADE
 );

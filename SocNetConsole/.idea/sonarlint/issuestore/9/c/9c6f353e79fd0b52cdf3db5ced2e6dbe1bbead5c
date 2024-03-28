@@ -1,9 +1,9 @@
 
 “
-java:S1192B"KDefine a constant instead of duplicating this literal "Enter id: " 4 times.(ÚŸŞöıÿÿÿÿ8ÉĞäıç1J$4590f878-29f8-414c-bbdf-3ced24d2b121
-m
-java:S1192"KDefine a constant instead of duplicating this literal "\u001B[32m" 3 times.(Û»ŞÇıÿÿÿÿ8ì¹üıç1
+java:S1192C"KDefine a constant instead of duplicating this literal "Enter id: " 4 times.(ÚŸŞöıÿÿÿÿ8ÿ¹²Ÿè1J$5524af38-aa24-4168-92e4-117704c8184c
+“
+java:S1192"KDefine a constant instead of duplicating this literal "\u001B[32m" 4 times.(Û»ŞÇıÿÿÿÿ8€º²Ÿè1J$6b3e6efc-2c9c-414f-8e31-fdcec146c24f
 ’
-java:S1192""JDefine a constant instead of duplicating this literal "\u001B[0m" 3 times.(ŒìÛÿÿÿÿÿ8•‘øıç1J$fa41f461-5d58-4475-90a6-ff1aad3f74ea
+java:S1192""JDefine a constant instead of duplicating this literal "\u001B[0m" 3 times.(ŒìÛÿÿÿÿÿ8€º²Ÿè1J$dc964b37-4916-4bc0-a7e2-84f3a18beeff
 
-java:S1192<"MDefine a constant instead of duplicating this literal "Enter text: " 4 times.(·üñ8ÊĞäıç1J$9a2274da-0a3c-486b-b88f-13f3e56775f5
+java:S1192="MDefine a constant instead of duplicating this literal "Enter text: " 4 times.(·üñ8€º²Ÿè1J$0327f252-3bdf-4bf8-bd9c-deec10b158bd

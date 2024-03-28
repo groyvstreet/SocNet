@@ -1,2 +1,6 @@
 
-r	java:S106"+Replace this use of System.out by a logger.(“×·ôşÿÿÿÿ8ãíùç1J$8801568f-86ff-4840-8c2b-a85a84a41886
+r	java:S106"+Replace this use of System.out by a logger.(“×·ôşÿÿÿÿ8ãíùç1J$446a2a91-cd9a-487d-9ca2-9414052e5dfa
+{
+java:S1128"8Remove this unused import 'repositories.PostRepository'.(ŒÛç†8­Î­ÿç1J$386cb19d-ddd7-4586-bd29-6f270c46047d
+€
+java:S1128"8Remove this unused import 'repositories.UserRepository'.(Üƒ‡˜úÿÿÿÿ8­Î­ÿç1J$2a139012-fc5c-43aa-b739-68f777abb4aa

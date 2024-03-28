@@ -25,7 +25,6 @@ public class HomeScreen {
             out.println("2 - Posts");
             out.println("3 - Photos");
             out.println("4 - Chats");
-            out.println("5 - Users");
             option = in.read();
 
             switch (option) {
@@ -33,7 +32,7 @@ public class HomeScreen {
                     return;
                 case '1':
                     ProfileScreen.getProfileScreen(connection);
-                    return;
+                    break;
                 case '2':
                     PostsScreen.getPostsScreen(connection);
                     break;
@@ -42,9 +41,6 @@ public class HomeScreen {
                     break;
                 case '4':
                     ChatsScreen.getChatsScreen(connection);
-                    return;
-                case '5':
-                    UsersScreen.getUsersScreen(connection);
                     break;
                 default:
                     break;

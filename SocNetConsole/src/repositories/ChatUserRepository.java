@@ -86,4 +86,25 @@ public class ChatUserRepository {
 
         return chatUser;
     }
+
+    public ArrayList<ChatUser> getChatUsersByUserId(UUID id) {
+        var chatUsers = new ArrayList<ChatUser>();
+        var query = STR."SELECT * FROM chatusers WHERE user_id='\{id}'";
+
+        try (var statement = _connection.createStatement()) {
+            var result = statement.executeQuery(query);
+
+            while (result.next()) {
+                var chatUser = new ChatUser();
+                chatUser.id = UUID.fromString(result.getString("id"));
+                chatUser.chatId = UUID.fromString(result.getString("chat_id"));
+                chatUser.userId = UUID.fromString(result.getString("user_id"));
+                chatUsers.add(chatUser);
+            }
+        } catch (SQLException exception) {
+            out.println(exception.getMessage());
+        }
+
+        return chatUsers;
+    }
 }

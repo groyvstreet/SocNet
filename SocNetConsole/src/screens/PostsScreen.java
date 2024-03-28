@@ -41,6 +41,7 @@ public class PostsScreen {
                 out.print("Text: ");
                 out.print("\u001B[0m");
                 out.println(post.text);
+                out.print("\u001B[32m");
             }
 
             out.println("Select option:");
