@@ -1,12 +1,0 @@
-
-p
-java:S1104"NMake id a static final constant or non-public and provide accessors if needed.(Σε•Άÿÿÿÿÿ8ή‹ψη1
-q
-java:S1104"TMake dateTime a static final constant or non-public and provide accessors if needed.(ϋΞ¦8ΰ‹ψη1
-r
-java:S1104	"PMake text a static final constant or non-public and provide accessors if needed.(ψς¨ύÿÿÿÿ8ΰ‹ψη1
-o
-java:S1104
-"RMake chatId a static final constant or non-public and provide accessors if needed.(«ƒ™ÿ8α‹ψη1
-o
-java:S1104"RMake userId a static final constant or non-public and provide accessors if needed.(¨—Π8α‹ψη1

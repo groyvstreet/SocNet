@@ -1,18 +1,0 @@
-
-–
-java:S1104"NMake id a static final constant or non-public and provide accessors if needed.(Óå•¢ÿÿÿÿÿ8­ø§õç1J$60b2b5bd-ed1f-43de-9c73-e8402c5ae5de
-™
-java:S1104"QMake email a static final constant or non-public and provide accessors if needed.(¾Æ†Ëıÿÿÿÿ8­ø§õç1J$8f90309e-e055-4db5-bdcb-5469905c96bd
-œ
-java:S1104	"TMake password a static final constant or non-public and provide accessors if needed.(¼şòüÿÿÿÿ8®ø§õç1J$ca09a4df-9946-4351-bf88-b20a2220c495
-
-java:S1104
-"UMake firstName a static final constant or non-public and provide accessors if needed.(ßæÆÑıÿÿÿÿ8®ø§õç1J$439db0f2-db16-47d3-8b68-e5d76f9f4e69
-–
-java:S1104"TMake lastName a static final constant or non-public and provide accessors if needed.(¿ü8®ø§õç1J$77463da9-766f-4a14-ba58-849ec72bc81d
-˜
-java:S1104"UMake birthDate a static final constant or non-public and provide accessors if needed.(ÛÈê8®ø§õç1J$94891af9-7a0b-47dc-891a-32ae6b1dfe06
-”
-java:S1104"QMake image a static final constant or non-public and provide accessors if needed.(•—î×8®ø§õç1J$5857ef6d-d5bb-40be-bed9-843eff800ee2
-•
-java:S1104"RMake roleId a static final constant or non-public and provide accessors if needed.(£èØÁ8®ø§õç1J$33009dd8-c864-4196-8ddc-2fadd8d9383a
