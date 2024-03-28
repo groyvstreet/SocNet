@@ -17,7 +17,7 @@ public class RoleRepository {
     }
 
     public void addRole(Role role) {
-        var query = STR."INSERT INTO roles VALUES('\{role.id}', '\{role.name}');";
+        var query = STR."INSERT INTO roles VALUES('\{role.getId()}', '\{role.getName()}');";
 
         try (var statement = _connection.createStatement()) {
             statement.executeUpdate(query);
@@ -27,7 +27,7 @@ public class RoleRepository {
     }
 
     public void updateRole(Role role) {
-        var query = STR."UPDATE roles SET name='\{role.name}';";
+        var query = STR."UPDATE roles SET name='\{role.getName()}';";
 
         try (var statement = _connection.createStatement()) {
             statement.executeUpdate(query);
@@ -37,7 +37,7 @@ public class RoleRepository {
     }
 
     public void removeRole(Role role) {
-        var query = STR."DELETE FROM roles WHERE id='\{role.id}'";
+        var query = STR."DELETE FROM roles WHERE id='\{role.getId()}'";
 
         try (var statement = _connection.createStatement()) {
             statement.executeUpdate(query);
@@ -55,8 +55,8 @@ public class RoleRepository {
 
             while (result.next()) {
                 var role = new Role();
-                role.id = UUID.fromString(result.getString("id"));
-                role.name = result.getString("name");
+                role.setId(UUID.fromString(result.getString("id")));
+                role.setName(result.getString("name"));
                 roles.add(role);
             }
         } catch (SQLException exception) {
@@ -75,8 +75,8 @@ public class RoleRepository {
 
             while (result.next()) {
                 role = new Role();
-                role.id = UUID.fromString(result.getString("id"));
-                role.name = result.getString("name");
+                role.setId(UUID.fromString(result.getString("id")));
+                role.setName(result.getString("name"));
             }
         } catch (SQLException exception) {
             out.println(exception.getMessage());

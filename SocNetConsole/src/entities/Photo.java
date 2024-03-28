@@ -1,11 +1,14 @@
 package entities;
 
+import lombok.Data;
+
 import java.util.UUID;
 
+@Data
 public class Photo {
-    public UUID id = UUID.randomUUID();
-    public String source;
-    public UUID userId;
+    private UUID id = UUID.randomUUID();
+    private String source;
+    private UUID userId;
 
     public Photo() {}
 

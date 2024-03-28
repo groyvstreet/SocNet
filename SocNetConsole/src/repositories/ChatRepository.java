@@ -18,7 +18,7 @@ public class ChatRepository {
     }
 
     public void addChat(Chat chat) {
-        var query = STR."INSERT INTO chats VALUES('\{chat.id}', '\{chat.name}');";
+        var query = STR."INSERT INTO chats VALUES('\{chat.getId()}', '\{chat.getName()}');";
 
         try (var statement = _connection.createStatement()) {
             statement.executeUpdate(query);
@@ -28,7 +28,7 @@ public class ChatRepository {
     }
 
     public void updateChat(Chat chat) {
-        var query = STR."UPDATE chats SET name='\{chat.name}' WHERE id='\{chat.id}';";
+        var query = STR."UPDATE chats SET name='\{chat.getName()}' WHERE id='\{chat.getId()}';";
 
         try (var statement = _connection.createStatement()) {
             statement.executeUpdate(query);
@@ -38,7 +38,7 @@ public class ChatRepository {
     }
 
     public void removeChat(Chat chat) {
-        var query = STR."DELETE FROM chats WHERE id='\{chat.id}'";
+        var query = STR."DELETE FROM chats WHERE id='\{chat.getId()}'";
 
         try (var statement = _connection.createStatement()) {
             statement.executeUpdate(query);
@@ -56,8 +56,8 @@ public class ChatRepository {
 
             while (result.next()) {
                 var chat = new Chat();
-                chat.id = UUID.fromString(result.getString("id"));
-                chat.name = result.getString("name");
+                chat.setId(UUID.fromString(result.getString("id")));
+                chat.setName(result.getString("name"));
                 chats.add(chat);
             }
         } catch (SQLException exception) {
@@ -76,8 +76,8 @@ public class ChatRepository {
 
             while (result.next()) {
                 chat = new Chat();
-                chat.id = UUID.fromString(result.getString("id"));
-                chat.name = result.getString("name");
+                chat.setId(UUID.fromString(result.getString("id")));
+                chat.setName(result.getString("name"));
             }
         } catch (SQLException exception) {
             out.println(exception.getMessage());

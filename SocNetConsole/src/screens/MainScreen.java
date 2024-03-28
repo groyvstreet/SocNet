@@ -13,11 +13,11 @@ public class MainScreen {
         int option;
 
         while (true) {
-            out.print("\033[H\033[2J");
-            out.flush();
-            out.println("Select option:");
-            out.println("0 - Exit");
-            out.println("1 - Authorize");
+            console().printf("\033[H\033[2J");
+            console().flush();
+            console().printf("Select option:\n");
+            console().printf("0 - Exit\n");
+            console().printf("1 - Authorize\n");
             option = in.read();
 
             switch (option) {

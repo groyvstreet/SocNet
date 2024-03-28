@@ -1,13 +1,16 @@
 package entities;
 
+import lombok.Data;
+
 import java.util.Date;
 import java.util.UUID;
 
+@Data
 public class Post {
-    public UUID id = UUID.randomUUID();
-    public Date dateTime;
-    public String text;
-    public UUID userId;
+    private UUID id = UUID.randomUUID();
+    private Date dateTime;
+    private String text;
+    private UUID userId;
 
     public Post() {}
 

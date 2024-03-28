@@ -1,5 +1,6 @@
 package screens;
 
+import constants.Constants;
 import entities.Message;
 import identity.IdentityUser;
 import repositories.MessageRepository;
@@ -22,57 +23,56 @@ public class ChatScreen {
         while (true) {
             var messages = messageRepository.getMessagesByChatId(chatId);
 
-            out.print("\033[H\033[2J");
-            out.flush();
+            console().printf("\033[H\033[2J");
+            console().flush();
 
             for (var message : messages) {
-                out.print("\u001B[32m");
-                out.println("Message:");
-                out.print("Id: ");
-                out.print("\u001B[0m");
-                out.println(message.id);
-                out.print("\u001B[32m");
-                out.print("Time: ");
-                out.print("\u001B[0m");
-                out.println(message.dateTime);
-                out.print("\u001B[32m");
-                out.print("Text: ");
-                out.print("\u001B[0m");
-                out.println(message.text);
-                out.print("\u001B[32m");
-                out.print("User id: ");
-                out.print("\u001B[0m");
-                out.println(message.userId);
+                console().printf(Constants.GREEN);
+                console().printf("Message:\n");
+                console().printf("Id: ");
+                console().printf(Constants.WHITE);
+                console().printf(STR."\{message.getId()}\n");
+                console().printf(Constants.GREEN);
+                console().printf("Time: ");
+                console().printf(Constants.WHITE);
+                console().printf(STR."\{message.getDateTime()}\n");
+                console().printf(Constants.GREEN);
+                console().printf("Text: ");
+                console().printf(Constants.WHITE);
+                console().printf(STR."\{message.getText()}\n");
+                console().printf(Constants.GREEN);
+                console().printf("User id: ");
+                console().printf(Constants.WHITE);
+                console().printf(STR."\{message.getUserId()}\n");
             }
 
-            out.println("Select option:");
-            out.println("0 - Back");
-            out.println("1 - Add message");
-            out.println("2 - Edit message");
-            out.println("3 - Remove message");
+            console().printf("Select option:\n");
+            console().printf("0 - Back\n");
+            console().printf("1 - Add message\n");
+            console().printf("2 - Edit message\n");
+            console().printf("3 - Remove message\n");
             option = in.read();
 
             switch (option) {
                 case '0':
                     return;
                 case '1':
-                    out.print("Enter text: ");
+                    console().printf("Enter text: ");
                     var addedMessageText = console().readLine();
-                    var addedMessage = new Message(new Date(), addedMessageText, chatId, IdentityUser.user.id);
+                    var addedMessage = new Message(new Date(), addedMessageText, chatId, IdentityUser.getUser().getId());
                     messageRepository.addMessage(addedMessage);
                     break;
                 case '2':
-                    out.print("Enter id: ");
+                    console().printf("Enter id: ");
                     var editedMessageId = console().readLine();
-                    out.print("Enter text: ");
+                    console().printf("Enter text: ");
                     var editedMessageText = console().readLine();
                     var editedMessage = messageRepository.getMessageById(UUID.fromString(editedMessageId));
-                    editedMessage.text = editedMessageText;
-                    out.println("GOOD");
+                    editedMessage.setText(editedMessageText);
                     messageRepository.updateMessage(editedMessage);
                     break;
                 case '3':
-                    out.print("Enter id: ");
+                    console().printf("Enter id: ");
                     var removedMessageId = console().readLine();
                     var removedMessage = messageRepository.getMessageById(UUID.fromString(removedMessageId));
                     messageRepository.removeMessage(removedMessage);

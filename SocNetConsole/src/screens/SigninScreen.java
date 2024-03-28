@@ -19,15 +19,15 @@ public class SigninScreen {
         User user;
 
         do {
-            out.print("Enter email: ");
+            console().printf("Enter email: ");
             var email = console().readLine();
-            out.print("Enter password: ");
+            console().printf("Enter password: ");
             var password = console().readLine();
 
             user = userRepository.getUserByEmailAndPassword(email, password);
         } while (user == null);
 
-        IdentityUser.user = user;
+        IdentityUser.setUser(user);
         HomeScreen.getHomeScreen(connection);
     }
 }

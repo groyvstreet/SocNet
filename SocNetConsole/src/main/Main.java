@@ -1,3 +1,6 @@
+package main;
+
+import configs.DatabaseConfig;
 import screens.MainScreen;
 import java.sql.*;
 import static java.lang.System.*;
@@ -5,7 +8,9 @@ import static java.lang.System.*;
 public class Main {
     public static void main(String[] args) {
         try {
-            var connection = DriverManager.getConnection("jdbc:postgresql://localhost/socnet", "postgres", "12345678");
+            var connection = DriverManager.getConnection(DatabaseConfig.getDatabaseUrl(),
+                    DatabaseConfig.getDatabaseUsername(),
+                    DatabaseConfig.getDatabasePassword());
 
             MainScreen.getMainScreen(connection);
         }

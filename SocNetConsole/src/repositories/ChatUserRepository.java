@@ -17,7 +17,7 @@ public class ChatUserRepository {
     }
 
     public void addChatUser(ChatUser chatUser) {
-        var query = STR."INSERT INTO chatusers VALUES('\{chatUser.id}', '\{chatUser.chatId}', '\{chatUser.userId}');";
+        var query = STR."INSERT INTO chatusers VALUES('\{chatUser.getId()}', '\{chatUser.getChatId()}', '\{chatUser.getUserId()}');";
 
         try (var statement = _connection.createStatement()) {
             statement.executeUpdate(query);
@@ -27,7 +27,7 @@ public class ChatUserRepository {
     }
 
     public void updateChatUser(ChatUser chatUser) {
-        var query = STR."UPDATE chatusers SET chat_id='\{chatUser.chatId}', user_id='\{chatUser.userId}' WHERE id='\{chatUser.id}';";
+        var query = STR."UPDATE chatusers SET chat_id='\{chatUser.getChatId()}', user_id='\{chatUser.getUserId()}' WHERE id='\{chatUser.getId()}';";
 
         try (var statement = _connection.createStatement()) {
             statement.executeUpdate(query);
@@ -37,7 +37,7 @@ public class ChatUserRepository {
     }
 
     public void removeChatUser(ChatUser chatUser) {
-        var query = STR."DELETE FROM chatusers WHERE id='\{chatUser.id}'";
+        var query = STR."DELETE FROM chatusers WHERE id='\{chatUser.getId()}'";
 
         try (var statement = _connection.createStatement()) {
             statement.executeUpdate(query);
@@ -55,9 +55,9 @@ public class ChatUserRepository {
 
             while (result.next()) {
                 var chatUser = new ChatUser();
-                chatUser.id = UUID.fromString(result.getString("id"));
-                chatUser.chatId = UUID.fromString(result.getString("chat_id"));
-                chatUser.userId = UUID.fromString(result.getString("user_id"));
+                chatUser.setId(UUID.fromString(result.getString("id")));
+                chatUser.setChatId(UUID.fromString(result.getString("chat_id")));
+                chatUser.setUserId(UUID.fromString(result.getString("user_id")));
                 chatUsers.add(chatUser);
             }
         } catch (SQLException exception) {
@@ -76,9 +76,9 @@ public class ChatUserRepository {
 
             while (result.next()) {
                 chatUser = new ChatUser();
-                chatUser.id = UUID.fromString(result.getString("id"));
-                chatUser.chatId = UUID.fromString(result.getString("chat_id"));
-                chatUser.userId = UUID.fromString(result.getString("user_id"));
+                chatUser.setId(UUID.fromString(result.getString("id")));
+                chatUser.setChatId(UUID.fromString(result.getString("chat_id")));
+                chatUser.setUserId(UUID.fromString(result.getString("user_id")));
             }
         } catch (SQLException exception) {
             out.println(exception.getMessage());
@@ -96,9 +96,9 @@ public class ChatUserRepository {
 
             while (result.next()) {
                 var chatUser = new ChatUser();
-                chatUser.id = UUID.fromString(result.getString("id"));
-                chatUser.chatId = UUID.fromString(result.getString("chat_id"));
-                chatUser.userId = UUID.fromString(result.getString("user_id"));
+                chatUser.setId(UUID.fromString(result.getString("id")));
+                chatUser.setChatId(UUID.fromString(result.getString("chat_id")));
+                chatUser.setUserId(UUID.fromString(result.getString("user_id")));
                 chatUsers.add(chatUser);
             }
         } catch (SQLException exception) {

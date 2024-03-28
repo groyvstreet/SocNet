@@ -1,14 +1,17 @@
 package entities;
 
+import lombok.Data;
+
 import java.util.Date;
 import java.util.UUID;
 
+@Data
 public class Message {
-    public UUID id = UUID.randomUUID();
-    public Date dateTime;
-    public String text;
-    public UUID chatId;
-    public UUID userId;
+    private UUID id = UUID.randomUUID();
+    private Date dateTime;
+    private String text;
+    private UUID chatId;
+    private UUID userId;
 
     public Message() {}
 

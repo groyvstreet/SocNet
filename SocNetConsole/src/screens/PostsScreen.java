@@ -1,5 +1,6 @@
 package screens;
 
+import constants.Constants;
 import entities.Comment;
 import entities.Post;
 import identity.IdentityUser;
@@ -23,83 +24,82 @@ public class PostsScreen {
         int option;
 
         while (true) {
-            var posts = postRepository.getPostsByUserId(IdentityUser.user.id);
-            out.print("\033[H\033[2J");
-            out.flush();
+            var posts = postRepository.getPostsByUserId(IdentityUser.getUser().getId());
+            console().printf("\033[H\033[2J");
+            console().flush();
 
             for (var post : posts) {
-                out.print("\u001B[32m");
-                out.println("Post:");
-                out.print("Id: ");
-                out.print("\u001B[0m");
-                out.println(post.id);
-                out.print("\u001B[32m");
-                out.print("Time: ");
-                out.print("\u001B[0m");
-                out.println(post.dateTime);
-                out.print("\u001B[32m");
-                out.print("Text: ");
-                out.print("\u001B[0m");
-                out.println(post.text);
-                out.print("\u001B[32m");
+                console().printf(Constants.GREEN);
+                console().printf("Post:\n");
+                console().printf("Id: ");
+                console().printf(Constants.WHITE);
+                console().printf(STR."\{post.getId()}\n");
+                console().printf(Constants.GREEN);
+                console().printf("Time: ");
+                console().printf(Constants.WHITE);
+                console().printf(STR."\{post.getDateTime()}\n");
+                console().printf(Constants.GREEN);
+                console().printf("Text: ");
+                console().printf(Constants.WHITE);
+                console().printf(STR."\{post.getText()}\n");
             }
 
-            out.println("Select option:");
-            out.println("0 - Back");
-            out.println("1 - Add post");
-            out.println("2 - Edit post");
-            out.println("3 - Remove post");
-            out.println("4 - Add comment");
-            out.println("5 - Edit comment");
-            out.println("6 - Remove comment");
+            console().printf("Select option:\n");
+            console().printf("0 - Back\n");
+            console().printf("1 - Add post\n");
+            console().printf("2 - Edit post\n");
+            console().printf("3 - Remove post\n");
+            console().printf("4 - Add comment\n");
+            console().printf("5 - Edit comment\n");
+            console().printf("6 - Remove comment\n");
             option = in.read();
 
             switch (option) {
                 case '0':
                     return;
                 case '1':
-                    out.print("Enter text: ");
+                    console().printf("Enter text: ");
                     var addedPostText = console().readLine();
-                    var addedPost = new Post(new Date(), addedPostText, IdentityUser.user.id);
+                    var addedPost = new Post(new Date(), addedPostText, IdentityUser.getUser().getId());
                     postRepository.addPost(addedPost);
                     break;
                 case '2':
-                    out.print("Enter id: ");
+                    console().printf("Enter id: ");
                     var editedPostId = console().readLine();
-                    out.print("Enter text: ");
+                    console().printf("Enter text: ");
                     var editedPostText = console().readLine();
                     var editedPost = postRepository.getPostById(UUID.fromString(editedPostId));
-                    editedPost.text = editedPostText;
+                    editedPost.setText(editedPostText);
                     postRepository.updatePost(editedPost);
                     break;
                 case '3':
-                    out.print("Enter id: ");
+                    console().printf("Enter id: ");
                     var removedPostId = console().readLine();
                     var removedPost = postRepository.getPostById(UUID.fromString(removedPostId));
                     postRepository.removePost(removedPost);
                     break;
                 case '4':
-                    out.print("Enter post id: ");
+                    console().printf("Enter post id: ");
                     var addedCommentPostId = UUID.fromString(console().readLine());
-                    out.print("Enter comment id: ");
+                    console().printf("Enter comment id: ");
                     var stringAddedCommentCommentId = console().readLine();
                     var addedCommentCommentId = stringAddedCommentCommentId.isEmpty() ? null : UUID.fromString(stringAddedCommentCommentId);
-                    out.print("Enter text: ");
+                    console().printf("Enter text: ");
                     var addedCommentText = console().readLine();
-                    var addedComment = new Comment(new Date(), addedCommentText, addedCommentPostId, IdentityUser.user.id, addedCommentCommentId);
+                    var addedComment = new Comment(new Date(), addedCommentText, addedCommentPostId, IdentityUser.getUser().getId(), addedCommentCommentId);
                     commentRepository.addComment(addedComment);
                     break;
                 case '5':
-                    out.print("Enter id: ");
+                    console().printf("Enter id: ");
                     var editedCommentId = console().readLine();
-                    out.print("Enter text: ");
+                    console().printf("Enter text: ");
                     var editedCommentText = console().readLine();
                     var editedComment = commentRepository.getCommentById(UUID.fromString(editedCommentId));
-                    editedComment.text = editedCommentText;
+                    editedComment.setText(editedCommentText);
                     commentRepository.updateComment(editedComment);
                     break;
                 case '6':
-                    out.print("Enter id: ");
+                    console().printf("Enter id: ");
                     var removedCommentId = console().readLine();
                     var removedComment = commentRepository.getCommentById(UUID.fromString(removedCommentId));
                     commentRepository.removeComment(removedComment);

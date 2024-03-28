@@ -17,7 +17,7 @@ public class PhotoRepository {
     }
 
     public void addPhoto(Photo photo) {
-        var query = STR."INSERT INTO photos VALUES('\{photo.id}', '\{photo.source}', '\{photo.userId}');";
+        var query = STR."INSERT INTO photos VALUES('\{photo.getId()}', '\{photo.getSource()}', '\{photo.getUserId()}');";
 
         try (var statement = _connection.createStatement()) {
             statement.executeUpdate(query);
@@ -27,7 +27,7 @@ public class PhotoRepository {
     }
 
     public void updatePhoto(Photo photo) {
-        var query = STR."UPDATE photos SET source='\{photo.source}', user_id='\{photo.userId}' WHERE id='\{photo.id}';";
+        var query = STR."UPDATE photos SET source='\{photo.getSource()}', user_id='\{photo.getUserId()}' WHERE id='\{photo.getId()}';";
 
         try (var statement = _connection.createStatement()) {
             statement.executeUpdate(query);
@@ -37,7 +37,7 @@ public class PhotoRepository {
     }
 
     public void removePhoto(Photo photo) {
-        var query = STR."DELETE FROM photos WHERE id='\{photo.id}'";
+        var query = STR."DELETE FROM photos WHERE id='\{photo.getId()}'";
 
         try (var statement = _connection.createStatement()) {
             statement.executeUpdate(query);
@@ -55,9 +55,9 @@ public class PhotoRepository {
 
             while (result.next()) {
                 var photo = new Photo();
-                photo.id = UUID.fromString(result.getString("id"));
-                photo.source = result.getString("source");
-                photo.userId = UUID.fromString(result.getString("user_id"));
+                photo.setId(UUID.fromString(result.getString("id")));
+                photo.setSource(result.getString("source"));
+                photo.setUserId(UUID.fromString(result.getString("user_id")));
                 photos.add(photo);
             }
         } catch (SQLException exception) {
@@ -76,9 +76,9 @@ public class PhotoRepository {
 
             while (result.next()) {
                 photo = new Photo();
-                photo.id = UUID.fromString(result.getString("id"));
-                photo.source = result.getString("source");
-                photo.userId = UUID.fromString(result.getString("user_id"));
+                photo.setId(UUID.fromString(result.getString("id")));
+                photo.setSource(result.getString("source"));
+                photo.setUserId(UUID.fromString(result.getString("user_id")));
             }
         } catch (SQLException exception) {
             out.println(exception.getMessage());
@@ -96,9 +96,9 @@ public class PhotoRepository {
 
             while (result.next()) {
                 var photo = new Photo();
-                photo.id = UUID.fromString(result.getString("id"));
-                photo.source = result.getString("source");
-                photo.userId = UUID.fromString(result.getString("user_id"));
+                photo.setId(UUID.fromString(result.getString("id")));
+                photo.setSource(result.getString("source"));
+                photo.setUserId(UUID.fromString(result.getString("user_id")));
                 photos.add(photo);
             }
         } catch (SQLException exception) {

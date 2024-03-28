@@ -1,13 +1,11 @@
 package screens;
 
-import entities.User;
-import repositories.UserRepository;
-
 import java.io.IOException;
-import java.sql.*;
+import java.sql.Connection;
 import java.text.ParseException;
 
-import static java.lang.System.*;
+import static java.lang.System.console;
+import static java.lang.System.in;
 
 public class AuthScreen {
     private AuthScreen() {}
@@ -16,12 +14,12 @@ public class AuthScreen {
         int option;
 
         while (true) {
-            out.print("\033[H\033[2J");
-            out.flush();
-            out.println("Select option:");
-            out.println("0 - Back");
-            out.println("1 - Sign in");
-            out.println("2 - Sign up");
+            console().printf("\033[H\033[2J");
+            console().flush();
+            console().printf("Select option:\n");
+            console().printf("0 - Back\n");
+            console().printf("1 - Sign in\n");
+            console().printf("2 - Sign up\n");
             option = in.read();
 
             switch (option) {

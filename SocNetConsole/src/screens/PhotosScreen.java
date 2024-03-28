@@ -1,5 +1,6 @@
 package screens;
 
+import constants.Constants;
 import entities.Photo;
 import identity.IdentityUser;
 import repositories.PhotoRepository;
@@ -19,49 +20,49 @@ public class PhotosScreen {
         int option;
 
         while (true) {
-            var photos = photoRepository.getPhotosByUserId(IdentityUser.user.id);
-            out.print("\033[H\033[2J");
-            out.flush();
+            var photos = photoRepository.getPhotosByUserId(IdentityUser.getUser().getId());
+            console().printf("\033[H\033[2J");
+            console().flush();
 
             for (var photo : photos) {
-                out.print("\u001B[32m");
-                out.println("Photo:");
-                out.print("Id: ");
-                out.print("\u001B[0m");
-                out.println(photo.id);
-                out.print("\u001B[32m");
-                out.print("Source: ");
-                out.print("\u001B[0m");
-                out.println(photo.source);
+                console().printf(Constants.GREEN);
+                console().printf("Photo:\n");
+                console().printf("Id: ");
+                console().printf(Constants.WHITE);
+                console().printf(STR."\{photo.getId()}\n");
+                console().printf(Constants.GREEN);
+                console().printf("Source: ");
+                console().printf(Constants.WHITE);
+                console().printf(STR."\{photo.getSource()}\n");
             }
 
-            out.println("Select option:");
-            out.println("0 - Back");
-            out.println("1 - Add photo");
-            out.println("2 - Edit photo");
-            out.println("3 - Remove photo");
+            console().printf("Select option:\n");
+            console().printf("0 - Back\n");
+            console().printf("1 - Add photo\n");
+            console().printf("2 - Edit photo\n");
+            console().printf("3 - Remove photo\n");
             option = in.read();
 
             switch (option) {
                 case '0':
                     return;
                 case '1':
-                    out.print("Enter source: ");
+                    console().printf("Enter source: ");
                     var addedPhotoSource = console().readLine();
-                    var addedPhoto = new Photo(addedPhotoSource, IdentityUser.user.id);
+                    var addedPhoto = new Photo(addedPhotoSource, IdentityUser.getUser().getId());
                     photoRepository.addPhoto(addedPhoto);
                     break;
                 case '2':
-                    out.print("Enter id: ");
+                    console().printf("Enter id: ");
                     var editedPhotoId = console().readLine();
-                    out.print("Enter source: ");
+                    console().printf("Enter source: ");
                     var editedPhotoSource = console().readLine();
                     var editedPhoto = photoRepository.getPhotoById(UUID.fromString(editedPhotoId));
-                    editedPhoto.source = editedPhotoSource;
+                    editedPhoto.setSource(editedPhotoSource);
                     photoRepository.updatePhoto(editedPhoto);
                     break;
                 case '3':
-                    out.print("Enter id: ");
+                    console().printf("Enter id: ");
                     var removedPhotoId = console().readLine();
                     var removedPhoto = photoRepository.getPhotoById(UUID.fromString(removedPhotoId));
                     photoRepository.removePhoto(removedPhoto);

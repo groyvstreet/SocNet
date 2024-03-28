@@ -17,7 +17,7 @@ public class UserRepository {
     }
 
     public void addUser(User user) {
-        var query = STR."INSERT INTO users VALUES('\{user.id}', '\{user.firstName}', '\{user.lastName}', '\{user.birthDate}', '', '\{user.roleId}', '\{user.email}', '\{user.password}');";
+        var query = STR."INSERT INTO users VALUES('\{user.getId()}', '\{user.getFirstName()}', '\{user.getLastName()}', '\{user.getBirthDate()}', '', '\{user.getRoleId()}', '\{user.getEmail()}', '\{user.getPassword()}');";
 
         try (var statement = _connection.createStatement()) {
             statement.executeUpdate(query);
@@ -27,7 +27,7 @@ public class UserRepository {
     }
 
     public void updateUser(User user) {
-        var query = STR."UPDATE users SET first_name='\{user.firstName}', last_name='\{user.lastName}', birth_date='\{user.birthDate}', image='\{user.image}', role_id='\{user.roleId}', email='\{user.email}', password='\{user.password}' WHERE id='\{user.id}';";
+        var query = STR."UPDATE users SET first_name='\{user.getFirstName()}', last_name='\{user.getLastName()}', birth_date='\{user.getBirthDate()}', image='\{user.getImage()}', role_id='\{user.getRoleId()}', email='\{user.getEmail()}', password='\{user.getPassword()}' WHERE id='\{user.getId()}';";
 
         try (var statement = _connection.createStatement()) {
             statement.executeUpdate(query);
@@ -37,7 +37,7 @@ public class UserRepository {
     }
 
     public void removeUser(User user) {
-        var query = STR."DELETE FROM users WHERE id='\{user.id}'";
+        var query = STR."DELETE FROM users WHERE id='\{user.getId()}'";
 
         try (var statement = _connection.createStatement()) {
             statement.executeUpdate(query);
@@ -55,14 +55,14 @@ public class UserRepository {
 
             while (result.next()) {
                 var user = new User();
-                user.id = UUID.fromString(result.getString("id"));
-                user.email = result.getString("email");
-                user.password = result.getString("password");
-                user.firstName = result.getString("first_name");
-                user.lastName = result.getString("last_name");
-                user.birthDate = result.getDate("birth_date");
-                user.image = result.getString("image");
-                user.roleId = UUID.fromString(result.getString("role_id"));
+                user.setId(UUID.fromString(result.getString("id")));
+                user.setEmail(result.getString("email"));
+                user.setPassword(result.getString("password"));
+                user.setFirstName(result.getString("first_name"));
+                user.setLastName(result.getString("last_name"));
+                user.setBirthDate(result.getDate("birth_date"));
+                user.setImage(result.getString("image"));
+                user.setRoleId(UUID.fromString(result.getString("role_id")));
                 users.add(user);
             }
         } catch (SQLException exception) {
@@ -81,14 +81,14 @@ public class UserRepository {
 
             while (result.next()) {
                 user = new User();
-                user.id = UUID.fromString(result.getString("id"));
-                user.email = result.getString("email");
-                user.password = result.getString("password");
-                user.firstName = result.getString("first_name");
-                user.lastName = result.getString("last_name");
-                user.birthDate = result.getDate("birth_date");
-                user.image = result.getString("image");
-                user.roleId = UUID.fromString(result.getString("role_id"));
+                user.setId(UUID.fromString(result.getString("id")));
+                user.setEmail(result.getString("email"));
+                user.setPassword(result.getString("password"));
+                user.setFirstName(result.getString("first_name"));
+                user.setLastName(result.getString("last_name"));
+                user.setBirthDate(result.getDate("birth_date"));
+                user.setImage(result.getString("image"));
+                user.setRoleId(UUID.fromString(result.getString("role_id")));
             }
         } catch (SQLException exception) {
             out.println(exception.getMessage());
@@ -106,14 +106,14 @@ public class UserRepository {
 
             while (result.next()) {
                 user = new User();
-                user.id = UUID.fromString(result.getString("id"));
-                user.email = result.getString("email");
-                user.password = result.getString("password");
-                user.firstName = result.getString("first_name");
-                user.lastName = result.getString("last_name");
-                user.birthDate = result.getDate("birth_date");
-                user.image = result.getString("image");
-                user.roleId = UUID.fromString(result.getString("role_id"));
+                user.setId(UUID.fromString(result.getString("id")));
+                user.setEmail(result.getString("email"));
+                user.setPassword(result.getString("password"));
+                user.setFirstName(result.getString("first_name"));
+                user.setLastName(result.getString("last_name"));
+                user.setBirthDate(result.getDate("birth_date"));
+                user.setImage(result.getString("image"));
+                user.setRoleId(UUID.fromString(result.getString("role_id")));
             }
         } catch (SQLException exception) {
             out.println(exception.getMessage());

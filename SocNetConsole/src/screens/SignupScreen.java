@@ -21,22 +21,22 @@ public class SignupScreen {
         var image = "";
         var roleId = UUID.fromString("00000000-0000-0000-0000-000000000001");
 
-        out.print("Enter first name: ");
+        console().printf("Enter first name: ");
         var firstName = console().readLine();
-        out.print("Enter last name: ");
+        console().printf("Enter last name: ");
         var lastName = console().readLine();
-        out.print("Enter birth date: ");
+        console().printf("Enter birth date: ");
         var birthDate = console().readLine();
-        out.print("Enter email: ");
+        console().printf("Enter email: ");
         var email = console().readLine();
-        out.print("Enter password: ");
+        console().printf("Enter password: ");
         var password = console().readLine();
 
         var dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
         var user = new User(email, password, firstName, lastName, dateFormatter.parse(birthDate), image, roleId);
         userRepository.addUser(user);
 
-        IdentityUser.user = user;
+        IdentityUser.setUser(user);
         HomeScreen.getHomeScreen(connection);
     }
 }

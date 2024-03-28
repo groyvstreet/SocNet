@@ -18,17 +18,17 @@ public class ProfileScreen {
         int option;
 
         while (true) {
-            out.print("\033[H\033[2J");
-            out.flush();
-            out.println(STR."First name: \{IdentityUser.user.firstName}");
-            out.println(STR."Last name: \{IdentityUser.user.lastName}");
-            out.println(STR."Birth date: \{IdentityUser.user.birthDate}");
-            out.println(STR."Email: \{IdentityUser.user.email}");
-            out.println(STR."Image: \{IdentityUser.user.image}");
-            out.println("Select option:");
-            out.println("0 - Back");
-            out.println("1 - Edit");
-            out.println("2 - Remove account");
+            console().printf("\033[H\033[2J");
+            console().flush();
+            console().printf(STR."First name: \{IdentityUser.getUser().getFirstName()}\n");
+            console().printf(STR."Last name: \{IdentityUser.getUser().getLastName()}\n");
+            console().printf(STR."Birth date: \{IdentityUser.getUser().getBirthDate()}\n");
+            console().printf(STR."Email: \{IdentityUser.getUser().getEmail()}\n");
+            console().printf(STR."Image: \{IdentityUser.getUser().getImage()}\n");
+            console().printf("Select option:\n");
+            console().printf("0 - Back\n");
+            console().printf("1 - Edit\n");
+            console().printf("2 - Remove account\n");
             option = in.read();
 
             switch (option) {
@@ -38,7 +38,7 @@ public class ProfileScreen {
                     EditScreen.getEditScreen(connection);
                     return;
                 case '2':
-                    userRepository.removeUser(IdentityUser.user);
+                    userRepository.removeUser(IdentityUser.getUser());
                     return;
                 default:
                     break;

@@ -17,7 +17,7 @@ public class MessageRepository {
     }
 
     public void addMessage(Message message) {
-        var query = STR."INSERT INTO messages VALUES('\{message.id}', '\{message.dateTime}', '\{message.text}', '\{message.chatId}', '\{message.userId}');";
+        var query = STR."INSERT INTO messages VALUES('\{message.getId()}', '\{message.getDateTime()}', '\{message.getText()}', '\{message.getChatId()}', '\{message.getUserId()}');";
 
         try (var statement = _connection.createStatement()) {
             statement.executeUpdate(query);
@@ -27,7 +27,7 @@ public class MessageRepository {
     }
 
     public void updateMessage(Message message) {
-        var query = STR."UPDATE messages SET date_time='\{message.dateTime}', text='\{message.text}', chat_id='\{message.chatId}', user_id='\{message.userId}' WHERE id='\{message.id}';";
+        var query = STR."UPDATE messages SET date_time='\{message.getDateTime()}', text='\{message.getText()}', chat_id='\{message.getChatId()}', user_id='\{message.getUserId()}' WHERE id='\{message.getId()}';";
 
         try (var statement = _connection.createStatement()) {
             statement.executeUpdate(query);
@@ -37,7 +37,7 @@ public class MessageRepository {
     }
 
     public void removeMessage(Message message) {
-        var query = STR."DELETE FROM messages WHERE id='\{message.id}'";
+        var query = STR."DELETE FROM messages WHERE id='\{message.getId()}'";
 
         try (var statement = _connection.createStatement()) {
             statement.executeUpdate(query);
@@ -55,11 +55,11 @@ public class MessageRepository {
 
             while (result.next()) {
                 var message = new Message();
-                message.id = UUID.fromString(result.getString("id"));
-                message.dateTime = result.getDate("date_time");
-                message.text = result.getString("text");
-                message.chatId = UUID.fromString(result.getString("chat_id"));
-                message.userId = UUID.fromString(result.getString("user_id"));
+                message.setId(UUID.fromString(result.getString("id")));
+                message.setDateTime(result.getDate("date_time"));
+                message.setText(result.getString("text"));
+                message.setChatId(UUID.fromString(result.getString("chat_id")));
+                message.setUserId(UUID.fromString(result.getString("user_id")));
                 messages.add(message);
             }
         } catch (SQLException exception) {
@@ -78,11 +78,11 @@ public class MessageRepository {
 
             while (result.next()) {
                 message = new Message();
-                message.id = UUID.fromString(result.getString("id"));
-                message.dateTime = result.getDate("date_time");
-                message.text = result.getString("text");
-                message.chatId = UUID.fromString(result.getString("chat_id"));
-                message.userId = UUID.fromString(result.getString("user_id"));
+                message.setId(UUID.fromString(result.getString("id")));
+                message.setDateTime(result.getDate("date_time"));
+                message.setText(result.getString("text"));
+                message.setChatId(UUID.fromString(result.getString("chat_id")));
+                message.setUserId(UUID.fromString(result.getString("user_id")));
             }
         } catch (SQLException exception) {
             out.println(exception.getMessage());
@@ -100,11 +100,11 @@ public class MessageRepository {
 
             while (result.next()) {
                 var message = new Message();
-                message.id = UUID.fromString(result.getString("id"));
-                message.dateTime = result.getDate("date_time");
-                message.text = result.getString("text");
-                message.chatId = UUID.fromString(result.getString("chat_id"));
-                message.userId = UUID.fromString(result.getString("user_id"));
+                message.setId(UUID.fromString(result.getString("id")));
+                message.setDateTime(result.getDate("date_time"));
+                message.setText(result.getString("text"));
+                message.setChatId(UUID.fromString(result.getString("chat_id")));
+                message.setUserId(UUID.fromString(result.getString("user_id")));
                 messages.add(message);
             }
         } catch (SQLException exception) {

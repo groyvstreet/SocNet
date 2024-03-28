@@ -17,7 +17,7 @@ public class PostRepository {
     }
 
     public void addPost(Post post) {
-        var query = STR."INSERT INTO posts VALUES('\{post.id}', '\{post.dateTime}', '\{post.text}', '\{post.userId}');";
+        var query = STR."INSERT INTO posts VALUES('\{post.getId()}', '\{post.getDateTime()}', '\{post.getText()}', '\{post.getUserId()}');";
 
         try (var statement = _connection.createStatement()) {
             statement.executeUpdate(query);
@@ -27,7 +27,7 @@ public class PostRepository {
     }
 
     public void updatePost(Post post) {
-        var query = STR."UPDATE posts SET date_time='\{post.dateTime}', text='\{post.text}', user_id='\{post.userId}' WHERE id='\{post.id}';";
+        var query = STR."UPDATE posts SET date_time='\{post.getDateTime()}', text='\{post.getText()}', user_id='\{post.getUserId()}' WHERE id='\{post.getId()}';";
 
         try (var statement = _connection.createStatement()) {
             statement.executeUpdate(query);
@@ -37,7 +37,7 @@ public class PostRepository {
     }
 
     public void removePost(Post post) {
-        var query = STR."DELETE FROM posts WHERE id='\{post.id}'";
+        var query = STR."DELETE FROM posts WHERE id='\{post.getId()}'";
 
         try (var statement = _connection.createStatement()) {
             statement.executeUpdate(query);
@@ -55,10 +55,10 @@ public class PostRepository {
 
             while (result.next()) {
                 var post = new Post();
-                post.id = UUID.fromString(result.getString("id"));
-                post.dateTime = result.getDate("date_time");
-                post.text = result.getString("text");
-                post.userId = UUID.fromString(result.getString("user_id"));
+                post.setId(UUID.fromString(result.getString("id")));
+                post.setDateTime(result.getDate("date_time"));
+                post.setText(result.getString("text"));
+                post.setUserId(UUID.fromString(result.getString("user_id")));
                 posts.add(post);
             }
         } catch (SQLException exception) {
@@ -77,10 +77,10 @@ public class PostRepository {
 
             while (result.next()) {
                 post = new Post();
-                post.id = UUID.fromString(result.getString("id"));
-                post.dateTime = result.getDate("date_time");
-                post.text = result.getString("text");
-                post.userId = UUID.fromString(result.getString("user_id"));
+                post.setId(UUID.fromString(result.getString("id")));
+                post.setDateTime(result.getDate("date_time"));
+                post.setText(result.getString("text"));
+                post.setUserId(UUID.fromString(result.getString("user_id")));
             }
         } catch (SQLException exception) {
             out.println(exception.getMessage());
@@ -98,10 +98,10 @@ public class PostRepository {
 
             while (result.next()) {
                 var post = new Post();
-                post.id = UUID.fromString(result.getString("id"));
-                post.dateTime = result.getDate("date_time");
-                post.text = result.getString("text");
-                post.userId = UUID.fromString(result.getString("user_id"));
+                post.setId(UUID.fromString(result.getString("id")));
+                post.setDateTime(result.getDate("date_time"));
+                post.setText(result.getString("text"));
+                post.setUserId(UUID.fromString(result.getString("user_id")));
                 posts.add(post);
             }
         } catch (SQLException exception) {

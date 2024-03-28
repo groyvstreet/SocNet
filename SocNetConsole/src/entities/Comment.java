@@ -1,15 +1,18 @@
 package entities;
 
+import lombok.Data;
+
 import java.util.Date;
 import java.util.UUID;
 
+@Data
 public class Comment {
-    public UUID id = UUID.randomUUID();
-    public Date dateTime;
-    public String text;
-    public UUID postId;
-    public UUID userId;
-    public UUID commentId;
+    private UUID id = UUID.randomUUID();
+    private Date dateTime;
+    private String text;
+    private UUID postId;
+    private UUID userId;
+    private UUID commentId;
 
     public Comment() {}
 

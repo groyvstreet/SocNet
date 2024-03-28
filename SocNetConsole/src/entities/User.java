@@ -1,17 +1,20 @@
 package entities;
 
+import lombok.Data;
+
 import java.util.Date;
 import java.util.UUID;
 
+@Data
 public class User {
-    public UUID id = UUID.randomUUID();
-    public String email;
-    public String password;
-    public String firstName;
-    public String lastName;
-    public Date birthDate;
-    public String image;
-    public UUID roleId;
+    private UUID id = UUID.randomUUID();
+    private String email;
+    private String password;
+    private String firstName;
+    private String lastName;
+    private Date birthDate;
+    private String image;
+    private UUID roleId;
 
     public User() {}
 
