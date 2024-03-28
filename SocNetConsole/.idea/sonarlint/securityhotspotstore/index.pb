@@ -51,8 +51,6 @@ M
 src/screens/PhotosScreen.java,2\c\2c6e44880908299e897524458edd78c6944ff48f
 L
 src/screens/ChatsScreen.java,6\b\6b64e8fa859404a75a428fe07ff8a52cc9d2a317
-L
-src/screens/UsersScreen.java,b\4\b423b73d0cdc8aed5aea910b64cbb3f354102df9
 K
 src/screens/EditScreen.java,6\6\66576eb0920c178b3539b08ccc25c35120ee5707
 N
