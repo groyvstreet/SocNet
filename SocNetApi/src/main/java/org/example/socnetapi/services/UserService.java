@@ -1,5 +1,6 @@
 package org.example.socnetapi.services;
 
+import org.example.socnetapi.constants.Constants;
 import org.example.socnetapi.entities.User;
 import org.example.socnetapi.exceptions.NotFoundException;
 import org.example.socnetapi.repositories.UserRepository;
@@ -11,40 +12,38 @@ import java.util.UUID;
 
 @Service
 public class UserService {
-
     @Autowired
-    private UserRepository _userRepository;
+    private UserRepository userRepository;
 
     public List<User> getUsers() {
-        return _userRepository.findAll();
+        return userRepository.findAll();
     }
 
     public User getUserById(UUID id) {
-        return _userRepository.findById(id).orElseThrow(() -> new NotFoundException("no such user"));
+        return userRepository.findById(id).orElseThrow(() -> new NotFoundException(Constants.NO_SUCH_ENTITY));
     }
 
     public void addUser(User user) {
-        _userRepository.save(user);
+        userRepository.save(user);
     }
 
     public void updateUser(User user) {
-        var existingUser = _userRepository.findById(user.getId());
+        var existingUser = userRepository.findById(user.getId());
 
         if (existingUser.isEmpty()) {
-            throw new NotFoundException("no such user");
+            throw new NotFoundException(Constants.NO_SUCH_ENTITY);
         }
 
-        _userRepository.save(user);
+        userRepository.save(user);
     }
 
     public void removeUserById(UUID id) {
-        var existingUser = _userRepository.findById(id);
+        var existingUser = userRepository.findById(id);
 
         if (existingUser.isEmpty()) {
-            throw new NotFoundException("no such user");
+            throw new NotFoundException(Constants.NO_SUCH_ENTITY);
         }
 
-        _userRepository.deleteById(id);
+        userRepository.deleteById(id);
     }
-
 }

@@ -12,43 +12,41 @@ import java.util.UUID;
 
 @RestController
 public class ChatController {
-
     @Autowired
-    private ChatService _chatService;
+    private ChatService chatService;
 
     @GetMapping("/chats")
     public ResponseEntity<List<Chat>> getChats() {
-        var chats = _chatService.getChats();
+        var chats = chatService.getChats();
 
         return new ResponseEntity<>(chats, HttpStatus.OK);
     }
 
     @GetMapping("/chats/{id}")
     public ResponseEntity<Chat> getChatById(@PathVariable UUID id) {
-        var chat = _chatService.getChatById(id);
+        var chat = chatService.getChatById(id);
 
         return new ResponseEntity<>(chat, HttpStatus.OK);
     }
 
     @PostMapping("/chats")
     public ResponseEntity<Object> addChat(Chat chat) {
-        _chatService.addChat(chat);
+        chatService.addChat(chat);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/chats")
     public ResponseEntity<Object> updateChat(Chat chat) {
-        _chatService.updateChat(chat);
+        chatService.updateChat(chat);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/chats/{id}")
     public ResponseEntity<Object> removeChatById(@PathVariable UUID id) {
-        _chatService.removeChatById(id);
+        chatService.removeChatById(id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-    
 }

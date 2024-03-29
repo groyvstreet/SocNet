@@ -12,43 +12,41 @@ import java.util.UUID;
 
 @RestController
 public class MessageController {
-
     @Autowired
-    private MessageService _messageService;
+    private MessageService messageService;
 
     @GetMapping("/messages")
     public ResponseEntity<List<Message>> getMessages() {
-        var messages = _messageService.getMessages();
+        var messages = messageService.getMessages();
 
         return new ResponseEntity<>(messages, HttpStatus.OK);
     }
 
     @GetMapping("/messages/{id}")
     public ResponseEntity<Message> getMessageById(@PathVariable UUID id) {
-        var message = _messageService.getMessageById(id);
+        var message = messageService.getMessageById(id);
 
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
     @PostMapping("/messages")
     public ResponseEntity<Object> addMessage(Message message) {
-        _messageService.addMessage(message);
+        messageService.addMessage(message);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/messages")
     public ResponseEntity<Object> updateMessage(Message message) {
-        _messageService.updateMessage(message);
+        messageService.updateMessage(message);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/messages/{id}")
     public ResponseEntity<Object> removeMessageById(@PathVariable UUID id) {
-        _messageService.removeMessageById(id);
+        messageService.removeMessageById(id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-    
 }

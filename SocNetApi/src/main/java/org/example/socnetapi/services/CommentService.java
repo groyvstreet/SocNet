@@ -1,5 +1,6 @@
 package org.example.socnetapi.services;
 
+import org.example.socnetapi.constants.Constants;
 import org.example.socnetapi.entities.Comment;
 import org.example.socnetapi.exceptions.NotFoundException;
 import org.example.socnetapi.repositories.CommentRepository;
@@ -11,40 +12,38 @@ import java.util.UUID;
 
 @Service
 public class CommentService {
-
     @Autowired
-    private CommentRepository _commentRepository;
+    private CommentRepository commentRepository;
 
     public List<Comment> getComments() {
-        return _commentRepository.findAll();
+        return commentRepository.findAll();
     }
 
     public Comment getCommentById(UUID id) {
-        return _commentRepository.findById(id).orElseThrow(() -> new NotFoundException("no such comment"));
+        return commentRepository.findById(id).orElseThrow(() -> new NotFoundException(Constants.NO_SUCH_ENTITY));
     }
 
     public void addComment(Comment comment) {
-        _commentRepository.save(comment);
+        commentRepository.save(comment);
     }
 
     public void updateComment(Comment comment) {
-        var existingComment = _commentRepository.findById(comment.getId());
+        var existingComment = commentRepository.findById(comment.getId());
 
         if (existingComment.isEmpty()) {
-            throw new NotFoundException("no such comment");
+            throw new NotFoundException(Constants.NO_SUCH_ENTITY);
         }
 
-        _commentRepository.save(comment);
+        commentRepository.save(comment);
     }
 
     public void removeCommentById(UUID id) {
-        var existingComment = _commentRepository.findById(id);
+        var existingComment = commentRepository.findById(id);
 
         if (existingComment.isEmpty()) {
-            throw new NotFoundException("no such comment");
+            throw new NotFoundException(Constants.NO_SUCH_ENTITY);
         }
 
-        _commentRepository.deleteById(id);
+        commentRepository.deleteById(id);
     }
-    
 }

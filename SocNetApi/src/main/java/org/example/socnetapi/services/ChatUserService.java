@@ -1,5 +1,6 @@
 package org.example.socnetapi.services;
 
+import org.example.socnetapi.constants.Constants;
 import org.example.socnetapi.entities.ChatUser;
 import org.example.socnetapi.exceptions.NotFoundException;
 import org.example.socnetapi.repositories.ChatUserRepository;
@@ -11,40 +12,38 @@ import java.util.UUID;
 
 @Service
 public class ChatUserService {
-
     @Autowired
-    private ChatUserRepository _chatUserRepository;
+    private ChatUserRepository chatUserRepository;
 
     public List<ChatUser> getChatUsers() {
-        return _chatUserRepository.findAll();
+        return chatUserRepository.findAll();
     }
 
     public ChatUser getChatUserById(UUID id) {
-        return _chatUserRepository.findById(id).orElseThrow(() -> new NotFoundException("no such chatUser"));
+        return chatUserRepository.findById(id).orElseThrow(() -> new NotFoundException(Constants.NO_SUCH_ENTITY));
     }
 
     public void addChatUser(ChatUser chatUser) {
-        _chatUserRepository.save(chatUser);
+        chatUserRepository.save(chatUser);
     }
 
     public void updateChatUser(ChatUser chatUser) {
-        var existingChatUser = _chatUserRepository.findById(chatUser.getId());
+        var existingChatUser = chatUserRepository.findById(chatUser.getId());
 
         if (existingChatUser.isEmpty()) {
-            throw new NotFoundException("no such chatUser");
+            throw new NotFoundException(Constants.NO_SUCH_ENTITY);
         }
 
-        _chatUserRepository.save(chatUser);
+        chatUserRepository.save(chatUser);
     }
 
     public void removeChatUserById(UUID id) {
-        var existingChatUser = _chatUserRepository.findById(id);
+        var existingChatUser = chatUserRepository.findById(id);
 
         if (existingChatUser.isEmpty()) {
-            throw new NotFoundException("no such chatUser");
+            throw new NotFoundException(Constants.NO_SUCH_ENTITY);
         }
 
-        _chatUserRepository.deleteById(id);
+        chatUserRepository.deleteById(id);
     }
-    
 }

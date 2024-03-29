@@ -12,43 +12,41 @@ import java.util.UUID;
 
 @RestController
 public class CommentController {
-
     @Autowired
-    private CommentService _commentService;
+    private CommentService commentService;
 
     @GetMapping("/comments")
     public ResponseEntity<List<Comment>> getComments() {
-        var comments = _commentService.getComments();
+        var comments = commentService.getComments();
 
         return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 
     @GetMapping("/comments/{id}")
     public ResponseEntity<Comment> getCommentById(@PathVariable UUID id) {
-        var comment = _commentService.getCommentById(id);
+        var comment = commentService.getCommentById(id);
 
         return new ResponseEntity<>(comment, HttpStatus.OK);
     }
 
     @PostMapping("/comments")
     public ResponseEntity<Object> addComment(Comment comment) {
-        _commentService.addComment(comment);
+        commentService.addComment(comment);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/comments")
     public ResponseEntity<Object> updateComment(Comment comment) {
-        _commentService.updateComment(comment);
+        commentService.updateComment(comment);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/comments/{id}")
     public ResponseEntity<Object> removeCommentById(@PathVariable UUID id) {
-        _commentService.removeCommentById(id);
+        commentService.removeCommentById(id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-    
 }

@@ -12,43 +12,41 @@ import java.util.UUID;
 
 @RestController
 public class ChatUserController {
-
     @Autowired
-    private ChatUserService _chatUserService;
+    private ChatUserService chatUserService;
 
     @GetMapping("/chatUsers")
     public ResponseEntity<List<ChatUser>> getChatUsers() {
-        var chatUsers = _chatUserService.getChatUsers();
+        var chatUsers = chatUserService.getChatUsers();
 
         return new ResponseEntity<>(chatUsers, HttpStatus.OK);
     }
 
     @GetMapping("/chatUsers/{id}")
     public ResponseEntity<ChatUser> getChatUserById(@PathVariable UUID id) {
-        var chatUser = _chatUserService.getChatUserById(id);
+        var chatUser = chatUserService.getChatUserById(id);
 
         return new ResponseEntity<>(chatUser, HttpStatus.OK);
     }
 
     @PostMapping("/chatUsers")
     public ResponseEntity<Object> addChatUser(ChatUser chatUser) {
-        _chatUserService.addChatUser(chatUser);
+        chatUserService.addChatUser(chatUser);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/chatUsers")
     public ResponseEntity<Object> updateChatUser(ChatUser chatUser) {
-        _chatUserService.updateChatUser(chatUser);
+        chatUserService.updateChatUser(chatUser);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/chatUsers/{id}")
     public ResponseEntity<Object> removeChatUserById(@PathVariable UUID id) {
-        _chatUserService.removeChatUserById(id);
+        chatUserService.removeChatUserById(id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-    
 }

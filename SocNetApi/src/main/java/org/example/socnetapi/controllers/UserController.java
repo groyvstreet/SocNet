@@ -12,43 +12,41 @@ import java.util.UUID;
 
 @RestController
 public class UserController {
-
     @Autowired
-    private UserService _userService;
+    private UserService userService;
 
     @GetMapping("/users")
     public ResponseEntity<List<User>> getUsers() {
-        var users = _userService.getUsers();
+        var users = userService.getUsers();
 
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @GetMapping("/users/{id}")
     public ResponseEntity<User> getUserById(@PathVariable UUID id) {
-        var user = _userService.getUserById(id);
+        var user = userService.getUserById(id);
 
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PostMapping("/users")
     public ResponseEntity<Object> addUser(User user) {
-        _userService.addUser(user);
+        userService.addUser(user);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/users")
     public ResponseEntity<Object> updateUser(User user) {
-        _userService.updateUser(user);
+        userService.updateUser(user);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/users/{id}")
     public ResponseEntity<Object> removeUserById(@PathVariable UUID id) {
-        _userService.removeUserById(id);
+        userService.removeUserById(id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-    
 }

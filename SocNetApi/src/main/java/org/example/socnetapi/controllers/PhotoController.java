@@ -12,43 +12,41 @@ import java.util.UUID;
 
 @RestController
 public class PhotoController {
-
     @Autowired
-    private PhotoService _photoService;
+    private PhotoService photoService;
 
     @GetMapping("/photos")
     public ResponseEntity<List<Photo>> getPhotos() {
-        var photos = _photoService.getPhotos();
+        var photos = photoService.getPhotos();
 
         return new ResponseEntity<>(photos, HttpStatus.OK);
     }
 
     @GetMapping("/photos/{id}")
     public ResponseEntity<Photo> getPhotoById(@PathVariable UUID id) {
-        var photo = _photoService.getPhotoById(id);
+        var photo = photoService.getPhotoById(id);
 
         return new ResponseEntity<>(photo, HttpStatus.OK);
     }
 
     @PostMapping("/photos")
     public ResponseEntity<Object> addPhoto(Photo photo) {
-        _photoService.addPhoto(photo);
+        photoService.addPhoto(photo);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/photos")
     public ResponseEntity<Object> updatePhoto(Photo photo) {
-        _photoService.updatePhoto(photo);
+        photoService.updatePhoto(photo);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/photos/{id}")
     public ResponseEntity<Object> removePhotoById(@PathVariable UUID id) {
-        _photoService.removePhotoById(id);
+        photoService.removePhotoById(id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-    
 }

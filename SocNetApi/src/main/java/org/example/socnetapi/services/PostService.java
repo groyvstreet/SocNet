@@ -1,5 +1,6 @@
 package org.example.socnetapi.services;
 
+import org.example.socnetapi.constants.Constants;
 import org.example.socnetapi.entities.Post;
 import org.example.socnetapi.exceptions.NotFoundException;
 import org.example.socnetapi.repositories.PostRepository;
@@ -11,40 +12,38 @@ import java.util.UUID;
 
 @Service
 public class PostService {
-
     @Autowired
-    private PostRepository _postRepository;
+    private PostRepository postRepository;
 
     public List<Post> getPosts() {
-        return _postRepository.findAll();
+        return postRepository.findAll();
     }
 
     public Post getPostById(UUID id) {
-        return _postRepository.findById(id).orElseThrow(() -> new NotFoundException("no such post"));
+        return postRepository.findById(id).orElseThrow(() -> new NotFoundException(Constants.NO_SUCH_ENTITY));
     }
 
     public void addPost(Post post) {
-        _postRepository.save(post);
+        postRepository.save(post);
     }
 
     public void updatePost(Post post) {
-        var existingPost = _postRepository.findById(post.getId());
+        var existingPost = postRepository.findById(post.getId());
 
         if (existingPost.isEmpty()) {
-            throw new NotFoundException("no such post");
+            throw new NotFoundException(Constants.NO_SUCH_ENTITY);
         }
 
-        _postRepository.save(post);
+        postRepository.save(post);
     }
 
     public void removePostById(UUID id) {
-        var existingPost = _postRepository.findById(id);
+        var existingPost = postRepository.findById(id);
 
         if (existingPost.isEmpty()) {
-            throw new NotFoundException("no such post");
+            throw new NotFoundException(Constants.NO_SUCH_ENTITY);
         }
 
-        _postRepository.deleteById(id);
+        postRepository.deleteById(id);
     }
-    
 }

@@ -1,5 +1,6 @@
 package org.example.socnetapi.services;
 
+import org.example.socnetapi.constants.Constants;
 import org.example.socnetapi.entities.Role;
 import org.example.socnetapi.exceptions.NotFoundException;
 import org.example.socnetapi.repositories.RoleRepository;
@@ -11,40 +12,38 @@ import java.util.UUID;
 
 @Service
 public class RoleService {
-
     @Autowired
-    private RoleRepository _roleRepository;
+    private RoleRepository roleRepository;
 
     public List<Role> getRoles() {
-        return _roleRepository.findAll();
+        return roleRepository.findAll();
     }
 
     public Role getRoleById(UUID id) {
-        return _roleRepository.findById(id).orElseThrow(() -> new NotFoundException("no such role"));
+        return roleRepository.findById(id).orElseThrow(() -> new NotFoundException(Constants.NO_SUCH_ENTITY));
     }
 
     public void addRole(Role role) {
-        _roleRepository.save(role);
+        roleRepository.save(role);
     }
 
     public void updateRole(Role role) {
-        var existingRole = _roleRepository.findById(role.getId());
+        var existingRole = roleRepository.findById(role.getId());
 
         if (existingRole.isEmpty()) {
-            throw new NotFoundException("no such role");
+            throw new NotFoundException(Constants.NO_SUCH_ENTITY);
         }
 
-        _roleRepository.save(role);
+        roleRepository.save(role);
     }
 
     public void removeRoleById(UUID id) {
-        var existingRole = _roleRepository.findById(id);
+        var existingRole = roleRepository.findById(id);
 
         if (existingRole.isEmpty()) {
-            throw new NotFoundException("no such role");
+            throw new NotFoundException(Constants.NO_SUCH_ENTITY);
         }
 
-        _roleRepository.deleteById(id);
+        roleRepository.deleteById(id);
     }
-
 }

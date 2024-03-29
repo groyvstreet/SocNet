@@ -12,43 +12,41 @@ import java.util.UUID;
 
 @RestController
 public class RoleController {
-
     @Autowired
-    private RoleService _roleService;
+    private RoleService roleService;
 
     @GetMapping("/roles")
     public ResponseEntity<List<Role>> getRoles() {
-        var roles = _roleService.getRoles();
+        var roles = roleService.getRoles();
 
         return new ResponseEntity<>(roles, HttpStatus.OK);
     }
 
     @GetMapping("/roles/{id}")
     public ResponseEntity<Role> getRoleById(@PathVariable UUID id) {
-        var role = _roleService.getRoleById(id);
+        var role = roleService.getRoleById(id);
 
         return new ResponseEntity<>(role, HttpStatus.OK);
     }
 
     @PostMapping("/roles")
     public ResponseEntity<Object> addRole(Role role) {
-        _roleService.addRole(role);
+        roleService.addRole(role);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/roles")
     public ResponseEntity<Object> updateRole(Role role) {
-        _roleService.updateRole(role);
+        roleService.updateRole(role);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/roles/{id}")
     public ResponseEntity<Object> removeRoleById(@PathVariable UUID id) {
-        _roleService.removeRoleById(id);
+        roleService.removeRoleById(id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
 }
