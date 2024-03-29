@@ -6,8 +6,6 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class UpdateUserDto {
     private UUID id;
     private String firstName;
