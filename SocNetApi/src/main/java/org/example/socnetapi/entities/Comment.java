@@ -26,21 +26,21 @@ public class Comment {
     @Column(name = "text", nullable = false, length = Integer.MAX_VALUE)
     private String text;
 
-    //@ManyToOne(fetch = FetchType.LAZY)
-    //@OnDelete(action = OnDeleteAction.CASCADE)
-    //@JoinColumn(name = "post_id")
-    //private Post post;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "post_id")
+    private Post post;
 
-    //@ManyToOne(fetch = FetchType.LAZY)
-    //@OnDelete(action = OnDeleteAction.CASCADE)
-    //@JoinColumn(name = "user_id")
-    //private User user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    //@ManyToOne(fetch = FetchType.LAZY)
-    //@OnDelete(action = OnDeleteAction.CASCADE)
-    //@JoinColumn(name = "comment_id")
-    //private Comment parentComment;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "comment_id")
+    private Comment parentComment;
 
-    //@OneToMany(mappedBy = "parentComment")
-    //private Set<Comment> comments = new LinkedHashSet<>();
+    @OneToMany(mappedBy = "parentComment")
+    private Set<Comment> comments = new LinkedHashSet<>();
 }

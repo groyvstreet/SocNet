@@ -20,6 +20,6 @@ public class Role {
     @Column(name = "name", nullable = false, length = 100)
     private String name;
 
-    //@OneToMany(mappedBy = "role")
-    //private Set<User> users = new LinkedHashSet<>();
+    @OneToMany(mappedBy = "role")
+    private Set<User> users = new LinkedHashSet<>();
 }

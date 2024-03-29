@@ -31,6 +31,6 @@ public class Post {
     @JoinColumn(name = "user_id")
     private User user;
 
-    //@OneToMany(mappedBy = "post")
-    //private Set<Comment> comments = new LinkedHashSet<>();
+    @OneToMany(mappedBy = "post")
+    private Set<Comment> comments = new LinkedHashSet<>();
 }

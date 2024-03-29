@@ -20,9 +20,9 @@ public class Chat {
     @Column(name = "name", nullable = false, length = Integer.MAX_VALUE)
     private String name;
 
-    //@OneToMany(mappedBy = "chat")
-    //private Set<ChatUser> chatUsers = new LinkedHashSet<>();
+    @OneToMany(mappedBy = "chat")
+    private Set<ChatUser> chatUsers = new LinkedHashSet<>();
 
-    //@OneToMany(mappedBy = "chat")
-    //private Set<Message> messages = new LinkedHashSet<>();
+    @OneToMany(mappedBy = "chat")
+    private Set<Message> messages = new LinkedHashSet<>();
 }
