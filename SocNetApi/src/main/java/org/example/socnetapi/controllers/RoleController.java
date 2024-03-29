@@ -1,6 +1,8 @@
 package org.example.socnetapi.controllers;
 
-import org.example.socnetapi.entities.Role;
+import org.example.socnetapi.dtos.roledtos.AddRoleDto;
+import org.example.socnetapi.dtos.roledtos.GetRoleDto;
+import org.example.socnetapi.dtos.roledtos.UpdateRoleDto;
 import org.example.socnetapi.services.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,33 +14,37 @@ import java.util.UUID;
 
 @RestController
 public class RoleController {
+    private final RoleService roleService;
+
     @Autowired
-    private RoleService roleService;
+    public RoleController(RoleService roleService) {
+        this.roleService = roleService;
+    }
 
     @GetMapping("/roles")
-    public ResponseEntity<List<Role>> getRoles() {
+    public ResponseEntity<List<GetRoleDto>> getRoles() {
         var roles = roleService.getRoles();
 
         return new ResponseEntity<>(roles, HttpStatus.OK);
     }
 
     @GetMapping("/roles/{id}")
-    public ResponseEntity<Role> getRoleById(@PathVariable UUID id) {
+    public ResponseEntity<GetRoleDto> getRoleById(@PathVariable UUID id) {
         var role = roleService.getRoleById(id);
 
         return new ResponseEntity<>(role, HttpStatus.OK);
     }
 
     @PostMapping("/roles")
-    public ResponseEntity<Object> addRole(Role role) {
-        roleService.addRole(role);
+    public ResponseEntity<Object> addRole(AddRoleDto addRoleDto) {
+        roleService.addRole(addRoleDto);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/roles")
-    public ResponseEntity<Object> updateRole(Role role) {
-        roleService.updateRole(role);
+    public ResponseEntity<Object> updateRole(UpdateRoleDto updateRoleDto) {
+        roleService.updateRole(updateRoleDto);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

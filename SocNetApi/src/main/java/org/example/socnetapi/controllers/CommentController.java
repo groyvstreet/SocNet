@@ -1,6 +1,8 @@
 package org.example.socnetapi.controllers;
 
-import org.example.socnetapi.entities.Comment;
+import org.example.socnetapi.dtos.commentdtos.AddCommentDto;
+import org.example.socnetapi.dtos.commentdtos.GetCommentDto;
+import org.example.socnetapi.dtos.commentdtos.UpdateCommentDto;
 import org.example.socnetapi.services.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,33 +14,37 @@ import java.util.UUID;
 
 @RestController
 public class CommentController {
+    private final CommentService commentService;
+
     @Autowired
-    private CommentService commentService;
+    public CommentController(CommentService commentService) {
+        this.commentService = commentService;
+    }
 
     @GetMapping("/comments")
-    public ResponseEntity<List<Comment>> getComments() {
+    public ResponseEntity<List<GetCommentDto>> getComments() {
         var comments = commentService.getComments();
 
         return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 
     @GetMapping("/comments/{id}")
-    public ResponseEntity<Comment> getCommentById(@PathVariable UUID id) {
+    public ResponseEntity<GetCommentDto> getCommentById(@PathVariable UUID id) {
         var comment = commentService.getCommentById(id);
 
         return new ResponseEntity<>(comment, HttpStatus.OK);
     }
 
     @PostMapping("/comments")
-    public ResponseEntity<Object> addComment(Comment comment) {
-        commentService.addComment(comment);
+    public ResponseEntity<Object> addComment(AddCommentDto addCommentDto) {
+        commentService.addComment(addCommentDto);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/comments")
-    public ResponseEntity<Object> updateComment(Comment comment) {
-        commentService.updateComment(comment);
+    public ResponseEntity<Object> updateComment(UpdateCommentDto updateCommentDto) {
+        commentService.updateComment(updateCommentDto);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

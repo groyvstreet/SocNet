@@ -24,13 +24,13 @@ public class Message {
     @Column(name = "text", nullable = false, length = Integer.MAX_VALUE)
     private String text;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "chat_id")
-    private Chat chat;
+    //@ManyToOne(fetch = FetchType.LAZY)
+    //@OnDelete(action = OnDeleteAction.CASCADE)
+    //@JoinColumn(name = "chat_id")
+    //private Chat chat;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "user_id")
-    private User user;
+    //@ManyToOne(fetch = FetchType.LAZY)
+    //@OnDelete(action = OnDeleteAction.CASCADE)
+    //@JoinColumn(name = "user_id")
+    //private User user;
 }

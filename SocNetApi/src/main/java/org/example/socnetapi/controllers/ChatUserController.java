@@ -1,6 +1,7 @@
 package org.example.socnetapi.controllers;
 
-import org.example.socnetapi.entities.ChatUser;
+import org.example.socnetapi.dtos.chatuserdtos.AddChatUserDto;
+import org.example.socnetapi.dtos.chatuserdtos.GetChatUserDto;
 import org.example.socnetapi.services.ChatUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,35 +13,32 @@ import java.util.UUID;
 
 @RestController
 public class ChatUserController {
+    private final ChatUserService chatUserService;
+
     @Autowired
-    private ChatUserService chatUserService;
+    public ChatUserController(ChatUserService chatUserService) {
+        this.chatUserService = chatUserService;
+    }
 
     @GetMapping("/chatUsers")
-    public ResponseEntity<List<ChatUser>> getChatUsers() {
+    public ResponseEntity<List<GetChatUserDto>> getChatUsers() {
         var chatUsers = chatUserService.getChatUsers();
 
         return new ResponseEntity<>(chatUsers, HttpStatus.OK);
     }
 
     @GetMapping("/chatUsers/{id}")
-    public ResponseEntity<ChatUser> getChatUserById(@PathVariable UUID id) {
+    public ResponseEntity<GetChatUserDto> getChatUserById(@PathVariable UUID id) {
         var chatUser = chatUserService.getChatUserById(id);
 
         return new ResponseEntity<>(chatUser, HttpStatus.OK);
     }
 
     @PostMapping("/chatUsers")
-    public ResponseEntity<Object> addChatUser(ChatUser chatUser) {
-        chatUserService.addChatUser(chatUser);
+    public ResponseEntity<Object> addChatUser(AddChatUserDto addChatUserDto) {
+        chatUserService.addChatUser(addChatUserDto);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
-    @PutMapping("/chatUsers")
-    public ResponseEntity<Object> updateChatUser(ChatUser chatUser) {
-        chatUserService.updateChatUser(chatUser);
-
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/chatUsers/{id}")

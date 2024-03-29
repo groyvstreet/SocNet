@@ -1,6 +1,8 @@
 package org.example.socnetapi.controllers;
 
-import org.example.socnetapi.entities.Chat;
+import org.example.socnetapi.dtos.chatdtos.AddChatDto;
+import org.example.socnetapi.dtos.chatdtos.GetChatDto;
+import org.example.socnetapi.dtos.chatdtos.UpdateChatDto;
 import org.example.socnetapi.services.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,33 +14,37 @@ import java.util.UUID;
 
 @RestController
 public class ChatController {
+    private final ChatService chatService;
+
     @Autowired
-    private ChatService chatService;
+    public ChatController(ChatService chatService) {
+        this.chatService = chatService;
+    }
 
     @GetMapping("/chats")
-    public ResponseEntity<List<Chat>> getChats() {
+    public ResponseEntity<List<GetChatDto>> getChats() {
         var chats = chatService.getChats();
 
         return new ResponseEntity<>(chats, HttpStatus.OK);
     }
 
     @GetMapping("/chats/{id}")
-    public ResponseEntity<Chat> getChatById(@PathVariable UUID id) {
+    public ResponseEntity<GetChatDto> getChatById(@PathVariable UUID id) {
         var chat = chatService.getChatById(id);
 
         return new ResponseEntity<>(chat, HttpStatus.OK);
     }
 
     @PostMapping("/chats")
-    public ResponseEntity<Object> addChat(Chat chat) {
-        chatService.addChat(chat);
+    public ResponseEntity<Object> addChat(AddChatDto addChatDto) {
+        chatService.addChat(addChatDto);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/chats")
-    public ResponseEntity<Object> updateChat(Chat chat) {
-        chatService.updateChat(chat);
+    public ResponseEntity<Object> updateChat(UpdateChatDto updateChatDto) {
+        chatService.updateChat(updateChatDto);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

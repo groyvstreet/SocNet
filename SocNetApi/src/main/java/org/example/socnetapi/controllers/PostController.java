@@ -1,6 +1,8 @@
 package org.example.socnetapi.controllers;
 
-import org.example.socnetapi.entities.Post;
+import org.example.socnetapi.dtos.postdtos.AddPostDto;
+import org.example.socnetapi.dtos.postdtos.GetPostDto;
+import org.example.socnetapi.dtos.postdtos.UpdatePostDto;
 import org.example.socnetapi.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,33 +14,37 @@ import java.util.UUID;
 
 @RestController
 public class PostController {
+    private final PostService postService;
+
     @Autowired
-    private PostService postService;
+    public PostController(PostService postService) {
+        this.postService = postService;
+    }
 
     @GetMapping("/posts")
-    public ResponseEntity<List<Post>> getPosts() {
+    public ResponseEntity<List<GetPostDto>> getPosts() {
         var posts = postService.getPosts();
 
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
     @GetMapping("/posts/{id}")
-    public ResponseEntity<Post> getPostById(@PathVariable UUID id) {
+    public ResponseEntity<GetPostDto> getPostById(@PathVariable UUID id) {
         var post = postService.getPostById(id);
 
         return new ResponseEntity<>(post, HttpStatus.OK);
     }
 
     @PostMapping("/posts")
-    public ResponseEntity<Object> addPost(Post post) {
-        postService.addPost(post);
+    public ResponseEntity<Object> addPost(AddPostDto addPostDto) {
+        postService.addPost(addPostDto);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/posts")
-    public ResponseEntity<Object> updatePost(Post post) {
-        postService.updatePost(post);
+    public ResponseEntity<Object> updatePost(UpdatePostDto updatePostDto) {
+        postService.updatePost(updatePostDto);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -48,5 +54,12 @@ public class PostController {
         postService.removePostById(id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/users/{id}/posts")
+    public ResponseEntity<List<GetPostDto>> getPostsByUserId(@PathVariable UUID id) {
+        var posts = postService.getPostsByUserId(id);
+
+        return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 }

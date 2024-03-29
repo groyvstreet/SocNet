@@ -1,8 +1,10 @@
 package org.example.socnetapi.services;
 
 import org.example.socnetapi.constants.Constants;
-import org.example.socnetapi.entities.ChatUser;
+import org.example.socnetapi.dtos.chatuserdtos.AddChatUserDto;
+import org.example.socnetapi.dtos.chatuserdtos.GetChatUserDto;
 import org.example.socnetapi.exceptions.NotFoundException;
+import org.example.socnetapi.mappers.ChatUserMapper;
 import org.example.socnetapi.repositories.ChatUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,35 +14,35 @@ import java.util.UUID;
 
 @Service
 public class ChatUserService {
+    private final ChatUserRepository chatUserRepository;
+    private final ChatUserMapper chatUserMapper;
+
     @Autowired
-    private ChatUserRepository chatUserRepository;
-
-    public List<ChatUser> getChatUsers() {
-        return chatUserRepository.findAll();
+    public ChatUserService(ChatUserRepository chatUserRepository,
+                           ChatUserMapper chatUserMapper) {
+        this.chatUserRepository = chatUserRepository;
+        this.chatUserMapper = chatUserMapper;
     }
 
-    public ChatUser getChatUserById(UUID id) {
-        return chatUserRepository.findById(id).orElseThrow(() -> new NotFoundException(Constants.NO_SUCH_ENTITY));
+    public List<GetChatUserDto> getChatUsers() {
+        return chatUserRepository.findAll().stream().map(chatUserMapper::chatUserToGetChatUserDto).toList();
     }
 
-    public void addChatUser(ChatUser chatUser) {
-        chatUserRepository.save(chatUser);
+    public GetChatUserDto getChatUserById(UUID id) {
+        var chatUser = chatUserRepository.findById(id).orElseThrow(() -> new NotFoundException(Constants.NO_SUCH_ENTITY));
+
+        return chatUserMapper.chatUserToGetChatUserDto(chatUser);
     }
 
-    public void updateChatUser(ChatUser chatUser) {
-        var existingChatUser = chatUserRepository.findById(chatUser.getId());
-
-        if (existingChatUser.isEmpty()) {
-            throw new NotFoundException(Constants.NO_SUCH_ENTITY);
-        }
-
+    public void addChatUser(AddChatUserDto addChatUserDto) {
+        var chatUser = chatUserMapper.addChatUserDtoToChatUser(addChatUserDto);
         chatUserRepository.save(chatUser);
     }
 
     public void removeChatUserById(UUID id) {
-        var existingChatUser = chatUserRepository.findById(id);
+        var chatUser = chatUserRepository.findById(id);
 
-        if (existingChatUser.isEmpty()) {
+        if (chatUser.isEmpty()) {
             throw new NotFoundException(Constants.NO_SUCH_ENTITY);
         }
 

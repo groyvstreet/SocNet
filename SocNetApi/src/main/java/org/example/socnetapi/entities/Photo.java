@@ -20,8 +20,8 @@ public class Photo {
     @Column(name = "source", nullable = false, length = Integer.MAX_VALUE)
     private String source;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "user_id")
-    private User user;
+    //@ManyToOne(fetch = FetchType.LAZY)
+    //@OnDelete(action = OnDeleteAction.CASCADE)
+    //@JoinColumn(name = "user_id")
+    //private User user;
 }

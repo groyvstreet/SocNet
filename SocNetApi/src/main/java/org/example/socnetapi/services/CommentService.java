@@ -1,8 +1,11 @@
 package org.example.socnetapi.services;
 
 import org.example.socnetapi.constants.Constants;
-import org.example.socnetapi.entities.Comment;
+import org.example.socnetapi.dtos.commentdtos.AddCommentDto;
+import org.example.socnetapi.dtos.commentdtos.GetCommentDto;
+import org.example.socnetapi.dtos.commentdtos.UpdateCommentDto;
 import org.example.socnetapi.exceptions.NotFoundException;
+import org.example.socnetapi.mappers.CommentMapper;
 import org.example.socnetapi.repositories.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,35 +15,41 @@ import java.util.UUID;
 
 @Service
 public class CommentService {
+    private final CommentRepository commentRepository;
+    private final CommentMapper commentMapper;
+
     @Autowired
-    private CommentRepository commentRepository;
-
-    public List<Comment> getComments() {
-        return commentRepository.findAll();
+    public CommentService(CommentRepository commentRepository,
+                          CommentMapper commentMapper) {
+        this.commentRepository = commentRepository;
+        this.commentMapper = commentMapper;
     }
 
-    public Comment getCommentById(UUID id) {
-        return commentRepository.findById(id).orElseThrow(() -> new NotFoundException(Constants.NO_SUCH_ENTITY));
+    public List<GetCommentDto> getComments() {
+        return commentRepository.findAll().stream().map(commentMapper::commentToGetCommentDto).toList();
     }
 
-    public void addComment(Comment comment) {
+    public GetCommentDto getCommentById(UUID id) {
+        var comment = commentRepository.findById(id).orElseThrow(() -> new NotFoundException(Constants.NO_SUCH_ENTITY));
+
+        return commentMapper.commentToGetCommentDto(comment);
+    }
+
+    public void addComment(AddCommentDto addCommentDto) {
+        var comment = commentMapper.addCommentDtoToComment(addCommentDto);
         commentRepository.save(comment);
     }
 
-    public void updateComment(Comment comment) {
-        var existingComment = commentRepository.findById(comment.getId());
-
-        if (existingComment.isEmpty()) {
-            throw new NotFoundException(Constants.NO_SUCH_ENTITY);
-        }
-
+    public void updateComment(UpdateCommentDto updateCommentDto) {
+        var comment = commentRepository.findById(updateCommentDto.getId()).orElseThrow(() -> new NotFoundException(Constants.NO_SUCH_ENTITY));
+        comment.setText(updateCommentDto.getText());
         commentRepository.save(comment);
     }
 
     public void removeCommentById(UUID id) {
-        var existingComment = commentRepository.findById(id);
+        var comment = commentRepository.findById(id);
 
-        if (existingComment.isEmpty()) {
+        if (comment.isEmpty()) {
             throw new NotFoundException(Constants.NO_SUCH_ENTITY);
         }
 

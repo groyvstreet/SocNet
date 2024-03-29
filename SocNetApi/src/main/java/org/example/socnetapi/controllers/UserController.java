@@ -1,6 +1,8 @@
 package org.example.socnetapi.controllers;
 
-import org.example.socnetapi.entities.User;
+import org.example.socnetapi.dtos.userdtos.AddUserDto;
+import org.example.socnetapi.dtos.userdtos.GetUserDto;
+import org.example.socnetapi.dtos.userdtos.UpdateUserDto;
 import org.example.socnetapi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,33 +14,37 @@ import java.util.UUID;
 
 @RestController
 public class UserController {
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/users")
-    public ResponseEntity<List<User>> getUsers() {
+    public ResponseEntity<List<GetUserDto>> getUsers() {
         var users = userService.getUsers();
 
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @GetMapping("/users/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable UUID id) {
+    public ResponseEntity<GetUserDto> getUserById(@PathVariable UUID id) {
         var user = userService.getUserById(id);
 
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PostMapping("/users")
-    public ResponseEntity<Object> addUser(User user) {
-        userService.addUser(user);
+    public ResponseEntity<Object> addUser(AddUserDto addUserDto) {
+        userService.addUser(addUserDto);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/users")
-    public ResponseEntity<Object> updateUser(User user) {
-        userService.updateUser(user);
+    public ResponseEntity<Object> updateUser(UpdateUserDto updateUserDto) {
+        userService.updateUser(updateUserDto);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

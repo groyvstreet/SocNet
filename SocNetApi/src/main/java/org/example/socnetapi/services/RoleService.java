@@ -1,8 +1,11 @@
 package org.example.socnetapi.services;
 
 import org.example.socnetapi.constants.Constants;
-import org.example.socnetapi.entities.Role;
+import org.example.socnetapi.dtos.roledtos.AddRoleDto;
+import org.example.socnetapi.dtos.roledtos.GetRoleDto;
+import org.example.socnetapi.dtos.roledtos.UpdateRoleDto;
 import org.example.socnetapi.exceptions.NotFoundException;
+import org.example.socnetapi.mappers.RoleMapper;
 import org.example.socnetapi.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,35 +15,41 @@ import java.util.UUID;
 
 @Service
 public class RoleService {
+    private final RoleRepository roleRepository;
+    private final RoleMapper roleMapper;
+
     @Autowired
-    private RoleRepository roleRepository;
-
-    public List<Role> getRoles() {
-        return roleRepository.findAll();
+    public RoleService(RoleRepository roleRepository,
+                       RoleMapper roleMapper) {
+        this.roleRepository = roleRepository;
+        this.roleMapper = roleMapper;
     }
 
-    public Role getRoleById(UUID id) {
-        return roleRepository.findById(id).orElseThrow(() -> new NotFoundException(Constants.NO_SUCH_ENTITY));
+    public List<GetRoleDto> getRoles() {
+        return roleRepository.findAll().stream().map(roleMapper::roleToGetRoleDto).toList();
     }
 
-    public void addRole(Role role) {
+    public GetRoleDto getRoleById(UUID id) {
+        var role = roleRepository.findById(id).orElseThrow(() -> new NotFoundException(Constants.NO_SUCH_ENTITY));
+
+        return roleMapper.roleToGetRoleDto(role);
+    }
+
+    public void addRole(AddRoleDto addRoleDto) {
+        var role = roleMapper.addRoleDtoToRole(addRoleDto);
         roleRepository.save(role);
     }
 
-    public void updateRole(Role role) {
-        var existingRole = roleRepository.findById(role.getId());
-
-        if (existingRole.isEmpty()) {
-            throw new NotFoundException(Constants.NO_SUCH_ENTITY);
-        }
-
+    public void updateRole(UpdateRoleDto updateRoleDto) {
+        var role = roleRepository.findById(updateRoleDto.getId()).orElseThrow(() -> new NotFoundException(Constants.NO_SUCH_ENTITY));
+        role.setName(updateRoleDto.getName());
         roleRepository.save(role);
     }
 
     public void removeRoleById(UUID id) {
-        var existingRole = roleRepository.findById(id);
+        var role = roleRepository.findById(id);
 
-        if (existingRole.isEmpty()) {
+        if (role.isEmpty()) {
             throw new NotFoundException(Constants.NO_SUCH_ENTITY);
         }
 
