@@ -6,6 +6,8 @@ CREATE TABLE roles
 CREATE TABLE users
 (
     id UUID PRIMARY KEY,
+    email text NOT NULL,
+    password text NOT NULL,
     first_name VARCHAR2(100) NOT NULL,
     last_name VARCHAR2(100) NOT NULL,
     birth_date DATE NOT NULL,
