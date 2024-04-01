@@ -55,4 +55,11 @@ public class MessageController {
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("/chats/{id}/messages")
+    public ResponseEntity<Object> getMessagesByChatId(@PathVariable UUID id) {
+        var messages = messageService.getMessagesByChatId(id);
+
+        return new ResponseEntity<>(messages, HttpStatus.OK);
+    }
 }

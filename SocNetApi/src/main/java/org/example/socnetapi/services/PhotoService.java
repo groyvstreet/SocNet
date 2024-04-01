@@ -55,4 +55,8 @@ public class PhotoService {
 
         photoRepository.deleteById(id);
     }
+
+    public List<GetPhotoDto> getPhotosByUserId(UUID userId) {
+        return photoRepository.findByUserId(userId).stream().map(photoMapper::photoToGetPhotoDto).toList();
+    }
 }

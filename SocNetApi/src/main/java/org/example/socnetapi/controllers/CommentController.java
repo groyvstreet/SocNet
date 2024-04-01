@@ -55,4 +55,11 @@ public class CommentController {
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("/posts/{id}/comments")
+    public ResponseEntity<Object> getCommentsByPostId(@PathVariable UUID id) {
+        var comments = commentService.getCommentsByPostId(id);
+
+        return new ResponseEntity<>(comments, HttpStatus.OK);
+    }
 }

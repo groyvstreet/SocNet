@@ -55,4 +55,8 @@ public class CommentService {
 
         commentRepository.deleteById(id);
     }
+
+    public List<GetCommentDto> getCommentsByPostId(UUID postId) {
+        return commentRepository.findByPostId(postId).stream().map(commentMapper::commentToGetCommentDto).toList();
+    }
 }

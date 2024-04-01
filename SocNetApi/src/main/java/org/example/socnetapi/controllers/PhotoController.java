@@ -55,4 +55,11 @@ public class PhotoController {
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("/users/{id}/photos")
+    public ResponseEntity<Object> getPhotosByUserId(@PathVariable UUID id) {
+        var photos = photoService.getPhotosByUserId(id);
+
+        return new ResponseEntity<>(photos, HttpStatus.OK);
+    }
 }

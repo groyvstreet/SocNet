@@ -1,12 +1,12 @@
 package org.example.socnetapi.controllers;
 
-import org.example.socnetapi.dtos.userdtos.AddUserDto;
 import org.example.socnetapi.dtos.userdtos.GetUserDto;
 import org.example.socnetapi.dtos.userdtos.UpdateUserDto;
 import org.example.socnetapi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,14 +35,8 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @PostMapping("/users")
-    public ResponseEntity<Object> addUser(AddUserDto addUserDto) {
-        userService.addUser(addUserDto);
-
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
     @PutMapping("/users")
+    @PreAuthorize("authenticated()")
     public ResponseEntity<Object> updateUser(UpdateUserDto updateUserDto) {
         userService.updateUser(updateUserDto);
 

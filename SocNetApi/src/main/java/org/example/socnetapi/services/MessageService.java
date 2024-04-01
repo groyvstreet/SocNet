@@ -55,4 +55,8 @@ public class MessageService {
 
         messageRepository.deleteById(id);
     }
+
+    public List<GetMessageDto> getMessagesByChatId(UUID chatId) {
+        return messageRepository.findByChatId(chatId).stream().map(messageMapper::messageToGetMessageDto).toList();
+    }
 }

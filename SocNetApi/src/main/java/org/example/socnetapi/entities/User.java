@@ -18,7 +18,7 @@ import java.util.UUID;
 public class User {
     @Id
     @Column(name = "id", nullable = false)
-    private UUID id;
+    private UUID id = UUID.randomUUID();
 
     @Column(name = "first_name", nullable = false, length = 100)
     private String firstName;
@@ -30,7 +30,7 @@ public class User {
     private LocalDate birthDate;
 
     @Column(name = "image", nullable = false, length = Integer.MAX_VALUE)
-    private String image;
+    private String image = "";
 
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
