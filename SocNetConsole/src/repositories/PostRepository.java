@@ -47,25 +47,9 @@ public class PostRepository {
     }
 
     public ArrayList<Post> getPosts() {
-        var posts = new ArrayList<Post>();
         var query = "SELECT * FROM posts";
 
-        try (var statement = _connection.createStatement()) {
-            var result = statement.executeQuery(query);
-
-            while (result.next()) {
-                var post = new Post();
-                post.setId(UUID.fromString(result.getString("id")));
-                post.setDateTime(result.getDate("date_time"));
-                post.setText(result.getString("text"));
-                post.setUserId(UUID.fromString(result.getString("user_id")));
-                posts.add(post);
-            }
-        } catch (SQLException exception) {
-            out.println(exception.getMessage());
-        }
-
-        return posts;
+        return getPostsBy(query);
     }
 
     public Post getPostById(UUID id) {
@@ -90,8 +74,13 @@ public class PostRepository {
     }
 
     public ArrayList<Post> getPostsByUserId(UUID id) {
-        var posts = new ArrayList<Post>();
         var query = STR."SELECT * FROM posts WHERE user_id='\{id}'";
+
+        return getPostsBy(query);
+    }
+
+    private ArrayList<Post> getPostsBy(String query) {
+        var posts = new ArrayList<Post>();
 
         try (var statement = _connection.createStatement()) {
             var result = statement.executeQuery(query);

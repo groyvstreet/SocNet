@@ -47,24 +47,9 @@ public class ChatUserRepository {
     }
 
     public ArrayList<ChatUser> getChatUsers() {
-        var chatUsers = new ArrayList<ChatUser>();
         var query = "SELECT * FROM chatusers";
 
-        try (var statement = _connection.createStatement()) {
-            var result = statement.executeQuery(query);
-
-            while (result.next()) {
-                var chatUser = new ChatUser();
-                chatUser.setId(UUID.fromString(result.getString("id")));
-                chatUser.setChatId(UUID.fromString(result.getString("chat_id")));
-                chatUser.setUserId(UUID.fromString(result.getString("user_id")));
-                chatUsers.add(chatUser);
-            }
-        } catch (SQLException exception) {
-            out.println(exception.getMessage());
-        }
-
-        return chatUsers;
+        return getChatUsersBy(query);
     }
 
     public ChatUser getChatUserById(UUID id) {
@@ -88,8 +73,13 @@ public class ChatUserRepository {
     }
 
     public ArrayList<ChatUser> getChatUsersByUserId(UUID id) {
-        var chatUsers = new ArrayList<ChatUser>();
         var query = STR."SELECT * FROM chatusers WHERE user_id='\{id}'";
+
+        return getChatUsersBy(query);
+    }
+
+    private ArrayList<ChatUser> getChatUsersBy(String query) {
+        var chatUsers = new ArrayList<ChatUser>();
 
         try (var statement = _connection.createStatement()) {
             var result = statement.executeQuery(query);

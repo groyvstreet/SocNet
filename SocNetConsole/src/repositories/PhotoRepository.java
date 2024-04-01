@@ -47,24 +47,9 @@ public class PhotoRepository {
     }
 
     public ArrayList<Photo> getPhotos() {
-        var photos = new ArrayList<Photo>();
         var query = "SELECT * FROM photos";
 
-        try (var statement = _connection.createStatement()) {
-            var result = statement.executeQuery(query);
-
-            while (result.next()) {
-                var photo = new Photo();
-                photo.setId(UUID.fromString(result.getString("id")));
-                photo.setSource(result.getString("source"));
-                photo.setUserId(UUID.fromString(result.getString("user_id")));
-                photos.add(photo);
-            }
-        } catch (SQLException exception) {
-            out.println(exception.getMessage());
-        }
-
-        return photos;
+        return getPhotosBy(query);
     }
 
     public Photo getPhotoById(UUID id) {
@@ -88,8 +73,13 @@ public class PhotoRepository {
     }
 
     public ArrayList<Photo> getPhotosByUserId(UUID id) {
-        var photos = new ArrayList<Photo>();
         var query = STR."SELECT * FROM photos WHERE user_id='\{id}'";
+
+        return getPhotosBy(query);
+    }
+
+    public ArrayList<Photo> getPhotosBy(String query) {
+        var photos = new ArrayList<Photo>();
 
         try (var statement = _connection.createStatement()) {
             var result = statement.executeQuery(query);

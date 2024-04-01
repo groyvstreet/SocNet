@@ -3,6 +3,7 @@ package repositories;
 import entities.User;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -55,14 +56,7 @@ public class UserRepository {
 
             while (result.next()) {
                 var user = new User();
-                user.setId(UUID.fromString(result.getString("id")));
-                user.setEmail(result.getString("email"));
-                user.setPassword(result.getString("password"));
-                user.setFirstName(result.getString("first_name"));
-                user.setLastName(result.getString("last_name"));
-                user.setBirthDate(result.getDate("birth_date"));
-                user.setImage(result.getString("image"));
-                user.setRoleId(UUID.fromString(result.getString("role_id")));
+                setUserFields(user, result);
                 users.add(user);
             }
         } catch (SQLException exception) {
@@ -73,22 +67,26 @@ public class UserRepository {
     }
 
     public User getUserById(UUID id) {
-        User user = null;
         var query = STR."SELECT * FROM users WHERE id=\{id}";
+
+        return getUserBy(query);
+    }
+
+    public User getUserByEmailAndPassword(String email, String password) {
+        var query = STR."SELECT * FROM users WHERE email='\{email}' and password='\{password}'";
+
+        return getUserBy(query);
+    }
+
+    private User getUserBy(String query) {
+        User user = null;
 
         try (var statement = _connection.createStatement()) {
             var result = statement.executeQuery(query);
 
             while (result.next()) {
                 user = new User();
-                user.setId(UUID.fromString(result.getString("id")));
-                user.setEmail(result.getString("email"));
-                user.setPassword(result.getString("password"));
-                user.setFirstName(result.getString("first_name"));
-                user.setLastName(result.getString("last_name"));
-                user.setBirthDate(result.getDate("birth_date"));
-                user.setImage(result.getString("image"));
-                user.setRoleId(UUID.fromString(result.getString("role_id")));
+                setUserFields(user, result);
             }
         } catch (SQLException exception) {
             out.println(exception.getMessage());
@@ -97,28 +95,14 @@ public class UserRepository {
         return user;
     }
 
-    public User getUserByEmailAndPassword(String email, String password) {
-        User user = null;
-        var query = STR."SELECT * FROM users WHERE email='\{email}' and password='\{password}'";
-
-        try (var statement = _connection.createStatement()) {
-            var result = statement.executeQuery(query);
-
-            while (result.next()) {
-                user = new User();
-                user.setId(UUID.fromString(result.getString("id")));
-                user.setEmail(result.getString("email"));
-                user.setPassword(result.getString("password"));
-                user.setFirstName(result.getString("first_name"));
-                user.setLastName(result.getString("last_name"));
-                user.setBirthDate(result.getDate("birth_date"));
-                user.setImage(result.getString("image"));
-                user.setRoleId(UUID.fromString(result.getString("role_id")));
-            }
-        } catch (SQLException exception) {
-            out.println(exception.getMessage());
-        }
-
-        return user;
+    private void setUserFields(User user, ResultSet resultSet) throws SQLException {
+        user.setId(UUID.fromString(resultSet.getString("id")));
+        user.setEmail(resultSet.getString("email"));
+        user.setPassword(resultSet.getString("password"));
+        user.setFirstName(resultSet.getString("first_name"));
+        user.setLastName(resultSet.getString("last_name"));
+        user.setBirthDate(resultSet.getDate("birth_date"));
+        user.setImage(resultSet.getString("image"));
+        user.setRoleId(UUID.fromString(resultSet.getString("role_id")));
     }
 }

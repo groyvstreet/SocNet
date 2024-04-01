@@ -3,6 +3,7 @@ package repositories;
 import entities.Message;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -47,26 +48,9 @@ public class MessageRepository {
     }
 
     public ArrayList<Message> getMessages() {
-        var messages = new ArrayList<Message>();
         var query = "SELECT * FROM messages";
 
-        try (var statement = _connection.createStatement()) {
-            var result = statement.executeQuery(query);
-
-            while (result.next()) {
-                var message = new Message();
-                message.setId(UUID.fromString(result.getString("id")));
-                message.setDateTime(result.getDate("date_time"));
-                message.setText(result.getString("text"));
-                message.setChatId(UUID.fromString(result.getString("chat_id")));
-                message.setUserId(UUID.fromString(result.getString("user_id")));
-                messages.add(message);
-            }
-        } catch (SQLException exception) {
-            out.println(exception.getMessage());
-        }
-
-        return messages;
+        return getMessagesBy(query);
     }
 
     public Message getMessageById(UUID id) {
@@ -78,11 +62,7 @@ public class MessageRepository {
 
             while (result.next()) {
                 message = new Message();
-                message.setId(UUID.fromString(result.getString("id")));
-                message.setDateTime(result.getDate("date_time"));
-                message.setText(result.getString("text"));
-                message.setChatId(UUID.fromString(result.getString("chat_id")));
-                message.setUserId(UUID.fromString(result.getString("user_id")));
+                setMessageFields(message, result);
             }
         } catch (SQLException exception) {
             out.println(exception.getMessage());
@@ -92,19 +72,20 @@ public class MessageRepository {
     }
 
     public ArrayList<Message> getMessagesByChatId(UUID id) {
-        var messages = new ArrayList<Message>();
         var query = STR."SELECT * FROM messages WHERE chat_id='\{id}'";
+
+        return getMessagesBy(query);
+    }
+
+    private ArrayList<Message> getMessagesBy(String query) {
+        var messages = new ArrayList<Message>();
 
         try (var statement = _connection.createStatement()) {
             var result = statement.executeQuery(query);
 
             while (result.next()) {
                 var message = new Message();
-                message.setId(UUID.fromString(result.getString("id")));
-                message.setDateTime(result.getDate("date_time"));
-                message.setText(result.getString("text"));
-                message.setChatId(UUID.fromString(result.getString("chat_id")));
-                message.setUserId(UUID.fromString(result.getString("user_id")));
+                setMessageFields(message, result);
                 messages.add(message);
             }
         } catch (SQLException exception) {
@@ -112,5 +93,13 @@ public class MessageRepository {
         }
 
         return messages;
+    }
+
+    private void setMessageFields(Message message, ResultSet resultSet) throws SQLException {
+        message.setId(UUID.fromString(resultSet.getString("id")));
+        message.setDateTime(resultSet.getDate("date_time"));
+        message.setText(resultSet.getString("text"));
+        message.setChatId(UUID.fromString(resultSet.getString("chat_id")));
+        message.setUserId(UUID.fromString(resultSet.getString("user_id")));
     }
 }
