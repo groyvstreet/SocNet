@@ -50,7 +50,7 @@ public class MessageRepository {
     public ArrayList<Message> getMessages() {
         var query = "SELECT * FROM messages";
 
-        return getMessagesBy(query);
+        return getMessagesFromQuery(query);
     }
 
     public Message getMessageById(UUID id) {
@@ -74,10 +74,10 @@ public class MessageRepository {
     public ArrayList<Message> getMessagesByChatId(UUID id) {
         var query = STR."SELECT * FROM messages WHERE chat_id='\{id}'";
 
-        return getMessagesBy(query);
+        return getMessagesFromQuery(query);
     }
 
-    private ArrayList<Message> getMessagesBy(String query) {
+    private ArrayList<Message> getMessagesFromQuery(String query) {
         var messages = new ArrayList<Message>();
 
         try (var statement = _connection.createStatement()) {

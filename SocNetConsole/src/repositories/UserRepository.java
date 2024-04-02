@@ -69,16 +69,16 @@ public class UserRepository {
     public User getUserById(UUID id) {
         var query = STR."SELECT * FROM users WHERE id='\{id}'";
 
-        return getUserBy(query);
+        return getUserFromQuery(query);
     }
 
     public User getUserByEmailAndPassword(String email, String password) {
         var query = STR."SELECT * FROM users WHERE email='\{email}' and password='\{password}'";
 
-        return getUserBy(query);
+        return getUserFromQuery(query);
     }
 
-    private User getUserBy(String query) {
+    private User getUserFromQuery(String query) {
         User user = null;
 
         try (var statement = _connection.createStatement()) {

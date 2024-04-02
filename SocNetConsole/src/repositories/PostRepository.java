@@ -49,7 +49,7 @@ public class PostRepository {
     public ArrayList<Post> getPosts() {
         var query = "SELECT * FROM posts";
 
-        return getPostsBy(query);
+        return getPostsFromQuery(query);
     }
 
     public Post getPostById(UUID id) {
@@ -76,10 +76,10 @@ public class PostRepository {
     public ArrayList<Post> getPostsByUserId(UUID id) {
         var query = STR."SELECT * FROM posts WHERE user_id='\{id}'";
 
-        return getPostsBy(query);
+        return getPostsFromQuery(query);
     }
 
-    private ArrayList<Post> getPostsBy(String query) {
+    private ArrayList<Post> getPostsFromQuery(String query) {
         var posts = new ArrayList<Post>();
 
         try (var statement = _connection.createStatement()) {

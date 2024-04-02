@@ -50,13 +50,13 @@ public class CommentRepository {
     public ArrayList<Comment> getComments() {
         var query = "SELECT * FROM comments";
 
-        return getCommentsBy(query);
+        return getCommentsFromQuery(query);
     }
 
     public ArrayList<Comment> getCommentsByPostId(UUID postId) {
         var query = STR."SELECT * FROM comments WHERE post_id = '\{postId}'";
 
-        return getCommentsBy(query);
+        return getCommentsFromQuery(query);
     }
 
     public Comment getCommentById(UUID id) {
@@ -77,7 +77,7 @@ public class CommentRepository {
         return comment;
     }
 
-    private ArrayList<Comment> getCommentsBy(String query) {
+    private ArrayList<Comment> getCommentsFromQuery(String query) {
         var comments = new ArrayList<Comment>();
 
         try (var statement = _connection.createStatement()) {

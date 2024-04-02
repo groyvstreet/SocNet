@@ -49,7 +49,7 @@ public class PhotoRepository {
     public ArrayList<Photo> getPhotos() {
         var query = "SELECT * FROM photos";
 
-        return getPhotosBy(query);
+        return getPhotosFromQuery(query);
     }
 
     public Photo getPhotoById(UUID id) {
@@ -75,10 +75,10 @@ public class PhotoRepository {
     public ArrayList<Photo> getPhotosByUserId(UUID id) {
         var query = STR."SELECT * FROM photos WHERE user_id='\{id}'";
 
-        return getPhotosBy(query);
+        return getPhotosFromQuery(query);
     }
 
-    public ArrayList<Photo> getPhotosBy(String query) {
+    public ArrayList<Photo> getPhotosFromQuery(String query) {
         var photos = new ArrayList<Photo>();
 
         try (var statement = _connection.createStatement()) {
