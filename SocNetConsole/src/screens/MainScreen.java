@@ -13,8 +13,10 @@ public class MainScreen {
         int option;
 
         while (true) {
-            console().printf("\033[H\033[2J");
-            console().flush();
+            for (var i = 0; i < 50; i++) {
+                console().printf("\n");
+            }
+
             console().printf("Select option:\n");
             console().printf("0 - Exit\n");
             console().printf("1 - Authorize\n");

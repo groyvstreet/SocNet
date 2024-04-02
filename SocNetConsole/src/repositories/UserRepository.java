@@ -67,7 +67,7 @@ public class UserRepository {
     }
 
     public User getUserById(UUID id) {
-        var query = STR."SELECT * FROM users WHERE id=\{id}";
+        var query = STR."SELECT * FROM users WHERE id='\{id}'";
 
         return getUserBy(query);
     }
@@ -87,6 +87,16 @@ public class UserRepository {
             while (result.next()) {
                 user = new User();
                 setUserFields(user, result);
+
+                var chatIds = new ArrayList<UUID>();
+                query = STR."SELECT chat_id FROM chatusers WHERE user_id = '\{user.getId()}'";
+                result = statement.executeQuery(query);
+
+                while (result.next()) {
+                    chatIds.add(UUID.fromString(result.getString("chat_id")));
+                }
+
+                user.setChatIds(chatIds);
             }
         } catch (SQLException exception) {
             out.println(exception.getMessage());

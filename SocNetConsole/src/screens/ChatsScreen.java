@@ -2,10 +2,9 @@ package screens;
 
 import constants.Constants;
 import entities.Chat;
-import entities.ChatUser;
 import identity.IdentityUser;
 import repositories.ChatRepository;
-import repositories.ChatUserRepository;
+import repositories.UserRepository;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -18,22 +17,23 @@ public class ChatsScreen {
     private ChatsScreen() {}
 
     public static void getChatsScreen(Connection connection) throws IOException {
-        var chatUserRepository = new ChatUserRepository(connection);
         var chatRepository = new ChatRepository(connection);
+        var userRepository = new UserRepository(connection);
 
         int option;
 
         while (true) {
-            var chatUsers = chatUserRepository.getChatUsersByUserId(IdentityUser.getUser().getId());
+            IdentityUser.setUser(userRepository.getUserById(IdentityUser.getUser().getId()));
             var chats = new ArrayList<Chat>();
 
-            for (var chatUser : chatUsers) {
-                var chat = chatRepository.getChatById(chatUser.getChatId());
+            for (var chatId : IdentityUser.getUser().getChatIds()) {
+                var chat = chatRepository.getChatById(chatId);
                 chats.add(chat);
             }
 
-            console().printf("\033[H\033[2J");
-            console().flush();
+            for (var i = 0; i < 50; i++) {
+                console().printf("\n");
+            }
 
             for (var chat : chats) {
                 console().printf(Constants.GREEN);
@@ -45,6 +45,14 @@ public class ChatsScreen {
                 console().printf("Name: ");
                 console().printf(Constants.WHITE);
                 console().printf(STR."\{chat.getName()}\n");
+                console().printf(Constants.GREEN);
+                console().printf("Users:\n");
+                console().printf(Constants.WHITE);
+                chat.getUserIds().forEach(userId -> console().printf(STR."\t\{userId}\n"));
+                console().printf(Constants.GREEN);
+                console().printf("Messages:\n");
+                console().printf(Constants.WHITE);
+                chat.getMessageIds().forEach(messageId -> console().printf(STR."\t\{messageId}\n"));
             }
 
             console().printf("Select option:\n");
@@ -63,8 +71,7 @@ public class ChatsScreen {
                     var addedChatName = console().readLine();
                     var addedChat = new Chat(addedChatName);
                     chatRepository.addChat(addedChat);
-                    var chatUser = new ChatUser(addedChat.getId(), IdentityUser.getUser().getId());
-                    chatUserRepository.addChatUser(chatUser);
+                    chatRepository.addUserToChat(addedChat, IdentityUser.getUser());
                     break;
                 case '2':
                     console().printf("Enter id: ");

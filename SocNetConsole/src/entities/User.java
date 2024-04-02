@@ -2,6 +2,7 @@ package entities;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 
@@ -15,6 +16,7 @@ public class User {
     private Date birthDate;
     private String image;
     private UUID roleId;
+    private ArrayList<UUID> chatIds = new ArrayList<>();
 
     public User() {}
 

@@ -23,8 +23,9 @@ public class ChatScreen {
         while (true) {
             var messages = messageRepository.getMessagesByChatId(chatId);
 
-            console().printf("\033[H\033[2J");
-            console().flush();
+            for (var i = 0; i < 50; i++) {
+                console().printf("\n");
+            }
 
             for (var message : messages) {
                 console().printf(Constants.GREEN);

@@ -21,8 +21,10 @@ public class PhotosScreen {
 
         while (true) {
             var photos = photoRepository.getPhotosByUserId(IdentityUser.getUser().getId());
-            console().printf("\033[H\033[2J");
-            console().flush();
+
+            for (var i = 0; i < 50; i++) {
+                console().printf("\n");
+            }
 
             for (var photo : photos) {
                 console().printf(Constants.GREEN);

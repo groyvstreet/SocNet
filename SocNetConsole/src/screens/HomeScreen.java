@@ -14,8 +14,10 @@ public class HomeScreen {
         int option;
 
         while (true) {
-            console().printf("\033[H\033[2J");
-            console().flush();
+            for (var i = 0; i < 50; i++) {
+                console().printf("\n");
+            }
+
             console().printf("Select option:\n");
             console().printf("0 - Log out\n");
             console().printf("1 - Profile\n");

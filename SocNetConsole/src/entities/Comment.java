@@ -13,6 +13,7 @@ public class Comment {
     private UUID postId;
     private UUID userId;
     private UUID commentId;
+    private boolean isRoot;
 
     public Comment() {}
 
@@ -20,11 +21,13 @@ public class Comment {
                    String text,
                    UUID postId,
                    UUID userId,
-                   UUID commentId) {
+                   UUID commentId,
+                   boolean isRoot) {
         this.dateTime = dateTime;
         this.text = text;
         this.postId = postId;
         this.userId = userId;
         this.commentId = commentId;
+        this.isRoot = isRoot;
     }
 }

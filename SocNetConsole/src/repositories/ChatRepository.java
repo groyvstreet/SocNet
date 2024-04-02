@@ -2,6 +2,7 @@ package repositories;
 
 
 import entities.Chat;
+import entities.User;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -78,11 +79,51 @@ public class ChatRepository {
                 chat = new Chat();
                 chat.setId(UUID.fromString(result.getString("id")));
                 chat.setName(result.getString("name"));
+
+                var userIds = new ArrayList<UUID>();
+                query = STR."SELECT user_id FROM chatusers WHERE chat_id = '\{chat.getId()}'";
+                result = statement.executeQuery(query);
+
+                while (result.next()) {
+                    userIds.add(UUID.fromString(result.getString("user_id")));
+                }
+
+                chat.setUserIds(userIds);
+
+                var messageIds = new ArrayList<UUID>();
+                query = STR."SELECT id FROM messages WHERE chat_id = '\{chat.getId()}'";
+                result = statement.executeQuery(query);
+
+                while (result.next()) {
+                    messageIds.add(UUID.fromString(result.getString("id")));
+                }
+
+                chat.setMessageIds(messageIds);
             }
         } catch (SQLException exception) {
             out.println(exception.getMessage());
         }
 
         return chat;
+    }
+
+    public void addUserToChat(Chat chat, User user) {
+        var query = STR."INSERT INTO chatusers VALUES('\{UUID.randomUUID()}', '\{chat.getId()}', '\{user.getId()}');";
+
+        try (var statement = _connection.createStatement()) {
+            statement.executeUpdate(query);
+        } catch (SQLException exception) {
+            out.println(exception.getMessage());
+        }
+    }
+
+    public void removeUserFromChat(Chat chat, User user) {
+        var query = STR."DELETE FROM chatusers WHERE chatId='\{chat.getId()}' and userId='\{user.getId()}'";
+
+        try (var statement = _connection.createStatement()) {
+            statement.executeUpdate(query);
+        } catch (SQLException exception) {
+            out.println(exception.getMessage());
+        }
     }
 }

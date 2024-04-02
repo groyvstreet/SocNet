@@ -3,6 +3,7 @@ package repositories;
 import entities.Comment;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -17,7 +18,7 @@ public class CommentRepository {
     }
 
     public void addComment(Comment comment) {
-        var query = STR."INSERT INTO comments VALUES('\{comment.getId()}', '\{comment.getDateTime()}', '\{comment.getText()}', '\{comment.getPostId()}', '\{comment.getUserId()}', \{comment.getCommentId() == null ? null : STR."'\{comment.getCommentId()}'"});";
+        var query = STR."INSERT INTO comments VALUES('\{comment.getId()}', '\{comment.getDateTime()}', '\{comment.getText()}', '\{comment.getPostId()}', '\{comment.getUserId()}', \{comment.getCommentId() == null ? null : STR."'\{comment.getCommentId()}'"}, \{comment.isRoot()});";
 
         try (var statement = _connection.createStatement()) {
             statement.executeUpdate(query);
@@ -47,27 +48,15 @@ public class CommentRepository {
     }
 
     public ArrayList<Comment> getComments() {
-        var comments = new ArrayList<Comment>();
         var query = "SELECT * FROM comments";
 
-        try (var statement = _connection.createStatement()) {
-            var result = statement.executeQuery(query);
+        return getCommentsBy(query);
+    }
 
-            while (result.next()) {
-                var comment = new Comment();
-                comment.setId(UUID.fromString(result.getString("id")));
-                comment.setDateTime(result.getDate("date_time"));
-                comment.setText(result.getString("text"));
-                comment.setPostId(UUID.fromString(result.getString("post_id")));
-                comment.setUserId(UUID.fromString(result.getString("user_id")));
-                comment.setCommentId(UUID.fromString(result.getString("comment_id")));
-                comments.add(comment);
-            }
-        } catch (SQLException exception) {
-            out.println(exception.getMessage());
-        }
+    public ArrayList<Comment> getCommentsByPostId(UUID postId) {
+        var query = STR."SELECT * FROM comments WHERE post_id = '\{postId}'";
 
-        return comments;
+        return getCommentsBy(query);
     }
 
     public Comment getCommentById(UUID id) {
@@ -79,18 +68,40 @@ public class CommentRepository {
 
             while (result.next()) {
                 comment = new Comment();
-                comment.setId(UUID.fromString(result.getString("id")));
-                comment.setDateTime(result.getDate("date_time"));
-                comment.setText(result.getString("text"));
-                comment.setPostId(UUID.fromString(result.getString("post_id")));
-                comment.setUserId(UUID.fromString(result.getString("user_id")));
-                var stringCommentId = result.getString("comment_id");
-                comment.setCommentId(stringCommentId == null ? null : UUID.fromString(stringCommentId));
+                setCommentFields(comment, result);
             }
         } catch (SQLException exception) {
             out.println(exception.getMessage());
         }
 
         return comment;
+    }
+
+    private ArrayList<Comment> getCommentsBy(String query) {
+        var comments = new ArrayList<Comment>();
+
+        try (var statement = _connection.createStatement()) {
+            var result = statement.executeQuery(query);
+
+            while (result.next()) {
+                var comment = new Comment();
+                setCommentFields(comment, result);
+                comments.add(comment);
+            }
+        } catch (SQLException exception) {
+            out.println(exception.getMessage());
+        }
+
+        return comments;
+    }
+
+    private void setCommentFields(Comment comment, ResultSet resultSet) throws SQLException {
+        comment.setId(UUID.fromString(resultSet.getString("id")));
+        comment.setDateTime(resultSet.getDate("date_time"));
+        comment.setText(resultSet.getString("text"));
+        comment.setPostId(UUID.fromString(resultSet.getString("post_id")));
+        comment.setUserId(UUID.fromString(resultSet.getString("user_id")));
+        var stringCommentId = resultSet.getString("comment_id");
+        comment.setCommentId(stringCommentId == null ? null : UUID.fromString(stringCommentId));
     }
 }
