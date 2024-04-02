@@ -7,6 +7,7 @@ import org.example.socnetapi.services.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,6 +37,7 @@ public class CommentController {
     }
 
     @PostMapping("/comments")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Object> addComment(AddCommentDto addCommentDto) {
         commentService.addComment(addCommentDto);
 
@@ -43,6 +45,7 @@ public class CommentController {
     }
 
     @PutMapping("/comments")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Object> updateComment(UpdateCommentDto updateCommentDto) {
         commentService.updateComment(updateCommentDto);
 
@@ -50,6 +53,7 @@ public class CommentController {
     }
 
     @DeleteMapping("/comments/{id}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Object> removeCommentById(@PathVariable UUID id) {
         commentService.removeCommentById(id);
 

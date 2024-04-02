@@ -7,6 +7,7 @@ import org.example.socnetapi.services.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,6 +37,7 @@ public class PhotoController {
     }
 
     @PostMapping("/photos")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Object> addPhoto(AddPhotoDto addPhotoDto) {
         photoService.addPhoto(addPhotoDto);
 
@@ -43,6 +45,7 @@ public class PhotoController {
     }
 
     @PutMapping("/photos")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Object> updatePhoto(UpdatePhotoDto updatePhotoDto) {
         photoService.updatePhoto(updatePhotoDto);
 
@@ -50,6 +53,7 @@ public class PhotoController {
     }
 
     @DeleteMapping("/photos/{id}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Object> removePhotoById(@PathVariable UUID id) {
         photoService.removePhotoById(id);
 

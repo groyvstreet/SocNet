@@ -31,6 +31,6 @@ public class AuthorizationUserDetailsService implements UserDetailsService {
         return new User(
                 email,
                 user.get().getPassword(),
-                Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")));
+                Collections.singletonList(new SimpleGrantedAuthority("USER")));
     }
 }

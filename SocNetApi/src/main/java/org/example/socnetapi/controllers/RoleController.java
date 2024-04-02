@@ -7,6 +7,7 @@ import org.example.socnetapi.services.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,6 +37,7 @@ public class RoleController {
     }
 
     @PostMapping("/roles")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Object> addRole(AddRoleDto addRoleDto) {
         roleService.addRole(addRoleDto);
 
@@ -43,6 +45,7 @@ public class RoleController {
     }
 
     @PutMapping("/roles")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Object> updateRole(UpdateRoleDto updateRoleDto) {
         roleService.updateRole(updateRoleDto);
 
@@ -50,6 +53,7 @@ public class RoleController {
     }
 
     @DeleteMapping("/roles/{id}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Object> removeRoleById(@PathVariable UUID id) {
         roleService.removeRoleById(id);
 

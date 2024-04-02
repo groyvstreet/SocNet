@@ -7,6 +7,7 @@ import org.example.socnetapi.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,6 +37,7 @@ public class PostController {
     }
 
     @PostMapping("/posts")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Object> addPost(AddPostDto addPostDto) {
         postService.addPost(addPostDto);
 
@@ -43,6 +45,7 @@ public class PostController {
     }
 
     @PutMapping("/posts")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Object> updatePost(UpdatePostDto updatePostDto) {
         postService.updatePost(updatePostDto);
 
@@ -50,6 +53,7 @@ public class PostController {
     }
 
     @DeleteMapping("/posts/{id}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Object> removePostById(@PathVariable UUID id) {
         postService.removePostById(id);
 

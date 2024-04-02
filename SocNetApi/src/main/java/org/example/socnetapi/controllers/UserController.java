@@ -36,7 +36,7 @@ public class UserController {
     }
 
     @PutMapping("/users")
-    @PreAuthorize("authenticated()")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Object> updateUser(UpdateUserDto updateUserDto) {
         userService.updateUser(updateUserDto);
 
@@ -44,6 +44,7 @@ public class UserController {
     }
 
     @DeleteMapping("/users/{id}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Object> removeUserById(@PathVariable UUID id) {
         userService.removeUserById(id);
 

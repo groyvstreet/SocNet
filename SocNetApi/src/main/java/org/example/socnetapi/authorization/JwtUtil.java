@@ -17,18 +17,18 @@ public class JwtUtil {
 
     public String generateToken(UUID id, String email) throws IllegalArgumentException, JWTCreationException {
         return JWT.create()
-                .withSubject("User Details")
+                .withSubject("sub")
                 .withClaim("id", id.toString())
                 .withClaim("email", email)
                 .withIssuedAt(new Date())
-                .withIssuer("Issuer")
+                .withIssuer("iss")
                 .sign(Algorithm.HMAC256(secret));
     }
 
     public String validateTokenAndRetrieveSubject(String token) throws JWTVerificationException {
         var verifier = JWT.require(Algorithm.HMAC256(secret))
-                .withSubject("User Details")
-                .withIssuer("Issuer")
+                .withSubject("sub")
+                .withIssuer("iss")
                 .build();
 
         var jwt = verifier.verify(token);
