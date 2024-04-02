@@ -14,4 +14,4 @@ API (SpringBoot + Hibernate) - https://github.com/groyvstreet/SocNet/tree/main/S
 Факт: 15 ч.
 # 3. Сделать back-end:
 План: 12 ч;
-Факт: 16 ч.
+Факт: 19 ч.

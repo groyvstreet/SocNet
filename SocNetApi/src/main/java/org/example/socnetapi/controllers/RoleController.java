@@ -38,7 +38,7 @@ public class RoleController {
 
     @PostMapping("/roles")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Object> addRole(AddRoleDto addRoleDto) {
+    public ResponseEntity<Object> addRole(@RequestBody AddRoleDto addRoleDto) {
         roleService.addRole(addRoleDto);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -46,7 +46,7 @@ public class RoleController {
 
     @PutMapping("/roles")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Object> updateRole(UpdateRoleDto updateRoleDto) {
+    public ResponseEntity<Object> updateRole(@RequestBody UpdateRoleDto updateRoleDto) {
         roleService.updateRole(updateRoleDto);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

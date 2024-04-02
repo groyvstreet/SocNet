@@ -4,6 +4,7 @@ import org.example.socnetapi.constants.Constants;
 import org.example.socnetapi.dtos.userdtos.AddUserDto;
 import org.example.socnetapi.dtos.userdtos.GetUserDto;
 import org.example.socnetapi.dtos.userdtos.UpdateUserDto;
+import org.example.socnetapi.exceptions.AlreadyExistsException;
 import org.example.socnetapi.exceptions.ForbiddenException;
 import org.example.socnetapi.exceptions.NotFoundException;
 import org.example.socnetapi.mappers.UserMapper;
@@ -41,6 +42,12 @@ public class UserService {
     }
 
     public GetUserDto addUser(AddUserDto addUserDto) {
+        var optionalUser = userRepository.findByEmail(addUserDto.getEmail());
+
+        if (optionalUser.isPresent()) {
+            throw new AlreadyExistsException(Constants.CONFLICT);
+        }
+
         var user = userMapper.addUserDtoToUser(addUserDto);
         var role = roleRepository.findByName("user").orElseThrow(() -> new NotFoundException(Constants.NO_SUCH_ENTITY));
         user.setRole(role);
@@ -49,7 +56,11 @@ public class UserService {
         return userMapper.userToGetUserDto(user);
     }
 
-    public void updateUser(UpdateUserDto updateUserDto) {
+    public void updateUser(UpdateUserDto updateUserDto, UUID authenticatedUserId) {
+        if (authenticatedUserId != updateUserDto.getId()) {
+            throw new ForbiddenException(Constants.FORBIDDEN);
+        }
+
         var user = userRepository.findById(updateUserDto.getId()).orElseThrow(() -> new NotFoundException(Constants.NO_SUCH_ENTITY));
         user.setFirstName(updateUserDto.getFirstName());
         user.setLastName(updateUserDto.getLastName());
@@ -58,7 +69,11 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void removeUserById(UUID id) {
+    public void removeUserById(UUID id, UUID authenticatedUserId) {
+        if (authenticatedUserId != id) {
+            throw new ForbiddenException(Constants.FORBIDDEN);
+        }
+
         var user = userRepository.findById(id);
 
         if (user.isEmpty()) {

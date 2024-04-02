@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,24 +39,27 @@ public class PhotoController {
 
     @PostMapping("/photos")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Object> addPhoto(AddPhotoDto addPhotoDto) {
-        photoService.addPhoto(addPhotoDto);
+    public ResponseEntity<Object> addPhoto(@RequestBody AddPhotoDto addPhotoDto, Principal principal) {
+        var authenticatedUserId = UUID.fromString(principal.getName());
+        photoService.addPhoto(addPhotoDto, authenticatedUserId);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/photos")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Object> updatePhoto(UpdatePhotoDto updatePhotoDto) {
-        photoService.updatePhoto(updatePhotoDto);
+    public ResponseEntity<Object> updatePhoto(@RequestBody UpdatePhotoDto updatePhotoDto, Principal principal) {
+        var authenticatedUserId = UUID.fromString(principal.getName());
+        photoService.updatePhoto(updatePhotoDto, authenticatedUserId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/photos/{id}")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Object> removePhotoById(@PathVariable UUID id) {
-        photoService.removePhotoById(id);
+    public ResponseEntity<Object> removePhotoById(@PathVariable UUID id, Principal principal) {
+        var authenticatedUserId = UUID.fromString(principal.getName());
+        photoService.removePhotoById(id, authenticatedUserId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

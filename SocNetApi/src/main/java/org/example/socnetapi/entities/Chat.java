@@ -20,8 +20,11 @@ public class Chat {
     @Column(name = "name", nullable = false, length = Integer.MAX_VALUE)
     private String name;
 
-    @OneToMany(mappedBy = "chat")
-    private Set<ChatUser> chatUsers = new LinkedHashSet<>();
+    @ManyToMany
+    @JoinTable(name="chat_users",
+            joinColumns=@JoinColumn(name="chat_id",referencedColumnName="id"),
+            inverseJoinColumns=@JoinColumn(name="user_id", referencedColumnName="id"))
+    private Set<User> users = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "chat")
     private Set<Message> messages = new LinkedHashSet<>();

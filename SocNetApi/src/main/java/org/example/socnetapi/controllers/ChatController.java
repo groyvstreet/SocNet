@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,29 +32,49 @@ public class ChatController {
     }
 
     @GetMapping("/chats/{id}")
-    public ResponseEntity<GetChatDto> getChatById(@PathVariable UUID id) {
-        var chat = chatService.getChatById(id);
+    public ResponseEntity<GetChatDto> getChatById(@PathVariable UUID id, Principal principal) {
+        var authenticatedUserId = UUID.fromString(principal.getName());
+        var chat = chatService.getChatById(id, authenticatedUserId);
 
         return new ResponseEntity<>(chat, HttpStatus.OK);
     }
 
     @PostMapping("/chats")
-    public ResponseEntity<Object> addChat(AddChatDto addChatDto) {
-        chatService.addChat(addChatDto);
+    public ResponseEntity<Object> addChat(@RequestBody AddChatDto addChatDto, Principal principal) {
+        var authenticatedUserId = UUID.fromString(principal.getName());
+        chatService.addChat(addChatDto, authenticatedUserId);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/chats")
-    public ResponseEntity<Object> updateChat(UpdateChatDto updateChatDto) {
-        chatService.updateChat(updateChatDto);
+    public ResponseEntity<Object> updateChat(@RequestBody UpdateChatDto updateChatDto, Principal principal) {
+        var authenticatedUserId = UUID.fromString(principal.getName());
+        chatService.updateChat(updateChatDto, authenticatedUserId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/chats/{id}")
-    public ResponseEntity<Object> removeChatById(@PathVariable UUID id) {
-        chatService.removeChatById(id);
+    public ResponseEntity<Object> removeChatById(@PathVariable UUID id, Principal principal) {
+        var authenticatedUserId = UUID.fromString(principal.getName());
+        chatService.removeChatById(id, authenticatedUserId);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping("/chats/{chatId}/users/{userId}")
+    public ResponseEntity<Object> addUserToChat(@PathVariable UUID chatId, @PathVariable UUID userId, Principal principal) {
+        var authenticatedUserId = UUID.fromString(principal.getName());
+        chatService.addUserToChat(chatId, userId, authenticatedUserId);
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/chats/{chatId}/users/{userId}")
+    public ResponseEntity<Object> removeUserFromChat(@PathVariable UUID chatId, @PathVariable UUID userId, Principal principal) {
+        var authenticatedUserId = UUID.fromString(principal.getName());
+        chatService.removeUserFromChat(chatId, userId, authenticatedUserId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

@@ -40,9 +40,9 @@ public class JwtFilter extends OncePerRequestFilter {
             }
             else {
                 try {
-                    var email = jwtUtil.validateTokenAndRetrieveSubject(jwt);
-                    var userDetails = authorizationUserDetailsService.loadUserByUsername(email);
-                    var authToken = new UsernamePasswordAuthenticationToken(email,
+                    var id = jwtUtil.validateTokenAndRetrieveId(jwt);
+                    var userDetails = authorizationUserDetailsService.loadUserByUsername(id.toString());
+                    var authToken = new UsernamePasswordAuthenticationToken(id,
                             userDetails.getPassword(),
                             userDetails.getAuthorities());
 

@@ -4,6 +4,7 @@ import org.example.socnetapi.constants.Constants;
 import org.example.socnetapi.dtos.photodtos.AddPhotoDto;
 import org.example.socnetapi.dtos.photodtos.GetPhotoDto;
 import org.example.socnetapi.dtos.photodtos.UpdatePhotoDto;
+import org.example.socnetapi.exceptions.ForbiddenException;
 import org.example.socnetapi.exceptions.NotFoundException;
 import org.example.socnetapi.mappers.PhotoMapper;
 import org.example.socnetapi.repositories.PhotoRepository;
@@ -35,22 +36,31 @@ public class PhotoService {
         return photoMapper.photoToGetPhotoDto(photo);
     }
 
-    public void addPhoto(AddPhotoDto addPhotoDto) {
+    public void addPhoto(AddPhotoDto addPhotoDto, UUID authenticatedUserId) {
+        if (authenticatedUserId != addPhotoDto.getUserId()) {
+            throw new ForbiddenException(Constants.FORBIDDEN);
+        }
+
         var photo = photoMapper.addPhotoDtoToPhoto(addPhotoDto);
         photoRepository.save(photo);
     }
 
-    public void updatePhoto(UpdatePhotoDto updatePhotoDto) {
+    public void updatePhoto(UpdatePhotoDto updatePhotoDto, UUID authenticatedUserId) {
         var photo = photoRepository.findById(updatePhotoDto.getId()).orElseThrow(() -> new NotFoundException(Constants.NO_SUCH_ENTITY));
+
+        if (authenticatedUserId != photo.getUser().getId()) {
+            throw new ForbiddenException(Constants.FORBIDDEN);
+        }
+
         photo.setSource(updatePhotoDto.getSource());
         photoRepository.save(photo);
     }
 
-    public void removePhotoById(UUID id) {
-        var photo = photoRepository.findById(id);
+    public void removePhotoById(UUID id, UUID authenticatedUserId) {
+        var photo = photoRepository.findById(id).orElseThrow(() -> new NotFoundException(Constants.NO_SUCH_ENTITY));
 
-        if (photo.isEmpty()) {
-            throw new NotFoundException(Constants.NO_SUCH_ENTITY);
+        if (authenticatedUserId != photo.getUser().getId()) {
+            throw new ForbiddenException(Constants.FORBIDDEN);
         }
 
         photoRepository.deleteById(id);

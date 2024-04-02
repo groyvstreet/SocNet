@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,24 +39,27 @@ public class PostController {
 
     @PostMapping("/posts")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Object> addPost(AddPostDto addPostDto) {
-        postService.addPost(addPostDto);
+    public ResponseEntity<Object> addPost(@RequestBody AddPostDto addPostDto, Principal principal) {
+        var authenticatedUserId = UUID.fromString(principal.getName());
+        postService.addPost(addPostDto, authenticatedUserId);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/posts")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Object> updatePost(UpdatePostDto updatePostDto) {
-        postService.updatePost(updatePostDto);
+    public ResponseEntity<Object> updatePost(@RequestBody UpdatePostDto updatePostDto, Principal principal) {
+        var authenticatedUserId = UUID.fromString(principal.getName());
+        postService.updatePost(updatePostDto, authenticatedUserId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/posts/{id}")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Object> removePostById(@PathVariable UUID id) {
-        postService.removePostById(id);
+    public ResponseEntity<Object> removePostById(@PathVariable UUID id, Principal principal) {
+        var authenticatedUserId = UUID.fromString(principal.getName());
+        postService.removePostById(id, authenticatedUserId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

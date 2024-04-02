@@ -19,9 +19,8 @@ CREATE TABLE chats
     id UUID PRIMARY KEY,
     name text NOT NULL
 );
-CREATE TABLE chatusers
+CREATE TABLE chat_users
 (
-    id UUID PRIMARY KEY,
     chat_id UUID REFERENCES chats(id) ON DELETE CASCADE,
     user_id UUID REFERENCES users(id) ON DELETE CASCADE
 );
@@ -51,6 +50,7 @@ CREATE TABLE comments
     id UUID PRIMARY KEY,
     date_time TIMESTAMP NOT NULL,
     text text NOT NULL,
+    boolean is_root NOT NULL,
     post_id UUID REFERENCES posts(id) ON DELETE CASCADE,
     user_id UUID REFERENCES users(id) ON DELETE CASCADE,
     comment_id UUID NULL REFERENCES comments(id) ON DELETE CASCADE

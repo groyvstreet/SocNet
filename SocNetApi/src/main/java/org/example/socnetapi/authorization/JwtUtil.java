@@ -15,17 +15,16 @@ public class JwtUtil {
     @Value("${jwt_secret}")
     private String secret;
 
-    public String generateToken(UUID id, String email) throws IllegalArgumentException, JWTCreationException {
+    public String generateToken(UUID id) throws IllegalArgumentException, JWTCreationException {
         return JWT.create()
                 .withSubject("sub")
-                .withClaim("id", id.toString())
-                .withClaim("email", email)
-                .withIssuedAt(new Date())
                 .withIssuer("iss")
+                .withClaim("id", id.toString())
+                .withIssuedAt(new Date())
                 .sign(Algorithm.HMAC256(secret));
     }
 
-    public String validateTokenAndRetrieveSubject(String token) throws JWTVerificationException {
+    public UUID validateTokenAndRetrieveId(String token) throws JWTVerificationException {
         var verifier = JWT.require(Algorithm.HMAC256(secret))
                 .withSubject("sub")
                 .withIssuer("iss")
@@ -33,6 +32,6 @@ public class JwtUtil {
 
         var jwt = verifier.verify(token);
 
-        return jwt.getClaim("email").asString();
+        return UUID.fromString(jwt.getClaim("id").asString());
     }
 }

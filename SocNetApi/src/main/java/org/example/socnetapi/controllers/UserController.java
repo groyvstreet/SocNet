@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,16 +38,18 @@ public class UserController {
 
     @PutMapping("/users")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Object> updateUser(UpdateUserDto updateUserDto) {
-        userService.updateUser(updateUserDto);
+    public ResponseEntity<Object> updateUser(@RequestBody UpdateUserDto updateUserDto, Principal principal) {
+        var authenticatedUserId = UUID.fromString(principal.getName());
+        userService.updateUser(updateUserDto, authenticatedUserId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/users/{id}")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Object> removeUserById(@PathVariable UUID id) {
-        userService.removeUserById(id);
+    public ResponseEntity<Object> removeUserById(@PathVariable UUID id, Principal principal) {
+        var authenticatedUserId = UUID.fromString(principal.getName());
+        userService.removeUserById(id, authenticatedUserId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

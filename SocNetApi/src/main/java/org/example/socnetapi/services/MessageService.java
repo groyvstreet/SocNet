@@ -4,8 +4,10 @@ import org.example.socnetapi.constants.Constants;
 import org.example.socnetapi.dtos.messagedtos.AddMessageDto;
 import org.example.socnetapi.dtos.messagedtos.GetMessageDto;
 import org.example.socnetapi.dtos.messagedtos.UpdateMessageDto;
+import org.example.socnetapi.exceptions.ForbiddenException;
 import org.example.socnetapi.exceptions.NotFoundException;
 import org.example.socnetapi.mappers.MessageMapper;
+import org.example.socnetapi.repositories.ChatRepository;
 import org.example.socnetapi.repositories.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,12 +18,15 @@ import java.util.UUID;
 @Service
 public class MessageService {
     private final MessageRepository messageRepository;
+    private final ChatRepository chatRepository;
     private final MessageMapper messageMapper;
 
     @Autowired
     public MessageService(MessageRepository messageRepository,
+                          ChatRepository chatRepository,
                           MessageMapper messageMapper) {
         this.messageRepository = messageRepository;
+        this.chatRepository = chatRepository;
         this.messageMapper = messageMapper;
     }
 
@@ -35,28 +40,43 @@ public class MessageService {
         return messageMapper.messageToGetMessageDto(message);
     }
 
-    public void addMessage(AddMessageDto addMessageDto) {
+    public void addMessage(AddMessageDto addMessageDto, UUID authenticatedUserId) {
+        if (authenticatedUserId != addMessageDto.getUserId()) {
+            throw new ForbiddenException(Constants.FORBIDDEN);
+        }
+
         var message = messageMapper.addMessageDtoToMessage(addMessageDto);
         messageRepository.save(message);
     }
 
-    public void updateMessage(UpdateMessageDto updateMessageDto) {
+    public void updateMessage(UpdateMessageDto updateMessageDto, UUID authenticatedUserId) {
         var message = messageRepository.findById(updateMessageDto.getId()).orElseThrow(() -> new NotFoundException(Constants.NO_SUCH_ENTITY));
+
+        if (authenticatedUserId != message.getUser().getId()) {
+            throw new ForbiddenException(Constants.FORBIDDEN);
+        }
+
         message.setText(updateMessageDto.getText());
         messageRepository.save(message);
     }
 
-    public void removeMessageById(UUID id) {
-        var message = messageRepository.findById(id);
+    public void removeMessageById(UUID id, UUID authenticatedUserId) {
+        var message = messageRepository.findById(id).orElseThrow(() -> new NotFoundException(Constants.NO_SUCH_ENTITY));
 
-        if (message.isEmpty()) {
-            throw new NotFoundException(Constants.NO_SUCH_ENTITY);
+        if (authenticatedUserId != message.getUser().getId()) {
+            throw new ForbiddenException(Constants.FORBIDDEN);
         }
 
         messageRepository.deleteById(id);
     }
 
-    public List<GetMessageDto> getMessagesByChatId(UUID chatId) {
+    public List<GetMessageDto> getMessagesByChatId(UUID chatId, UUID authenticatedUserId) {
+        var chat = chatRepository.findById(chatId).orElseThrow(() -> new NotFoundException(Constants.NO_SUCH_ENTITY));
+
+        if (chat.getUsers().stream().noneMatch(user -> user.getId() == authenticatedUserId)) {
+            throw new ForbiddenException(Constants.FORBIDDEN);
+        }
+
         return messageRepository.findByChatId(chatId).stream().map(messageMapper::messageToGetMessageDto).toList();
     }
 }

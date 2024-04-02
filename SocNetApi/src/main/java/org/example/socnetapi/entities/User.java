@@ -43,8 +43,8 @@ public class User {
     @Column(name = "password", nullable = false, length = Integer.MAX_VALUE)
     private String password;
 
-    @OneToMany(mappedBy = "user")
-    private Set<ChatUser> chatUsers = new LinkedHashSet<>();
+    @ManyToMany(mappedBy = "users")
+    private Set<Chat> chats = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "user")
     private Set<Comment> comments = new LinkedHashSet<>();

@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,29 +39,33 @@ public class MessageController {
     }
 
     @PostMapping("/messages")
-    public ResponseEntity<Object> addMessage(AddMessageDto addMessageDto) {
-        messageService.addMessage(addMessageDto);
+    public ResponseEntity<Object> addMessage(@RequestBody AddMessageDto addMessageDto, Principal principal) {
+        var authenticatedUserId = UUID.fromString(principal.getName());
+        messageService.addMessage(addMessageDto, authenticatedUserId);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/messages")
-    public ResponseEntity<Object> updateMessage(UpdateMessageDto updateMessageDto) {
-        messageService.updateMessage(updateMessageDto);
+    public ResponseEntity<Object> updateMessage(@RequestBody UpdateMessageDto updateMessageDto, Principal principal) {
+        var authenticatedUserId = UUID.fromString(principal.getName());
+        messageService.updateMessage(updateMessageDto, authenticatedUserId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/messages/{id}")
-    public ResponseEntity<Object> removeMessageById(@PathVariable UUID id) {
-        messageService.removeMessageById(id);
+    public ResponseEntity<Object> removeMessageById(@PathVariable UUID id, Principal principal) {
+        var authenticatedUserId = UUID.fromString(principal.getName());
+        messageService.removeMessageById(id, authenticatedUserId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/chats/{id}/messages")
-    public ResponseEntity<Object> getMessagesByChatId(@PathVariable UUID id) {
-        var messages = messageService.getMessagesByChatId(id);
+    public ResponseEntity<Object> getMessagesByChatId(@PathVariable UUID id, Principal principal) {
+        var authenticatedUserId = UUID.fromString(principal.getName());
+        var messages = messageService.getMessagesByChatId(id, authenticatedUserId);
 
         return new ResponseEntity<>(messages, HttpStatus.OK);
     }

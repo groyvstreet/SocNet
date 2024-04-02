@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,24 +39,27 @@ public class CommentController {
 
     @PostMapping("/comments")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Object> addComment(AddCommentDto addCommentDto) {
-        commentService.addComment(addCommentDto);
+    public ResponseEntity<Object> addComment(@RequestBody AddCommentDto addCommentDto, Principal principal) {
+        var authenticatedUserId = UUID.fromString(principal.getName());
+        commentService.addComment(addCommentDto, authenticatedUserId);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/comments")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Object> updateComment(UpdateCommentDto updateCommentDto) {
-        commentService.updateComment(updateCommentDto);
+    public ResponseEntity<Object> updateComment(@RequestBody UpdateCommentDto updateCommentDto, Principal principal) {
+        var authenticatedUserId = UUID.fromString(principal.getName());
+        commentService.updateComment(updateCommentDto, authenticatedUserId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/comments/{id}")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Object> removeCommentById(@PathVariable UUID id) {
-        commentService.removeCommentById(id);
+    public ResponseEntity<Object> removeCommentById(@PathVariable UUID id, Principal principal) {
+        var authenticatedUserId = UUID.fromString(principal.getName());
+        commentService.removeCommentById(id, authenticatedUserId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

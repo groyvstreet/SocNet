@@ -20,14 +20,14 @@ public class AuthenticationService {
 
     public AuthenticationResponse signIn(String email, String password) {
         var user = userService.getUserByEmailAndPassword(email, password);
-        var token = jwtUtil.generateToken(user.getId(), user.getEmail());
+        var token = jwtUtil.generateToken(user.getId());
 
         return new AuthenticationResponse(user.getId(), token);
     }
 
     public AuthenticationResponse signUp(AddUserDto addUserDto) {
         var user = userService.addUser(addUserDto);
-        var token = jwtUtil.generateToken(user.getId(), user.getEmail());
+        var token = jwtUtil.generateToken(user.getId());
 
         return new AuthenticationResponse(user.getId(), token);
     }

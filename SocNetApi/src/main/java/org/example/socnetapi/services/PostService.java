@@ -4,6 +4,7 @@ import org.example.socnetapi.constants.Constants;
 import org.example.socnetapi.dtos.postdtos.AddPostDto;
 import org.example.socnetapi.dtos.postdtos.GetPostDto;
 import org.example.socnetapi.dtos.postdtos.UpdatePostDto;
+import org.example.socnetapi.exceptions.ForbiddenException;
 import org.example.socnetapi.exceptions.NotFoundException;
 import org.example.socnetapi.mappers.PostMapper;
 import org.example.socnetapi.repositories.PostRepository;
@@ -35,22 +36,31 @@ public class PostService {
         return postMapper.postToGetPostDto(post);
     }
 
-    public void addPost(AddPostDto addPostDto) {
+    public void addPost(AddPostDto addPostDto, UUID authenticatedUserId) {
+        if (authenticatedUserId != addPostDto.getUserId()) {
+            throw new ForbiddenException(Constants.FORBIDDEN);
+        }
+
         var post = postMapper.addPostDtoToPost(addPostDto);
         postRepository.save(post);
     }
 
-    public void updatePost(UpdatePostDto updatePostDto) {
+    public void updatePost(UpdatePostDto updatePostDto, UUID authenticatedUserId) {
         var post = postRepository.findById(updatePostDto.getId()).orElseThrow(() -> new NotFoundException(Constants.NO_SUCH_ENTITY));
+
+        if (authenticatedUserId != post.getUser().getId()) {
+            throw new ForbiddenException(Constants.FORBIDDEN);
+        }
+
         post.setText(updatePostDto.getText());
         postRepository.save(post);
     }
 
-    public void removePostById(UUID id) {
-        var post = postRepository.findById(id);
+    public void removePostById(UUID id, UUID authenticatedUserId) {
+        var post = postRepository.findById(id).orElseThrow(() -> new NotFoundException(Constants.NO_SUCH_ENTITY));
 
-        if (post.isEmpty()) {
-            throw new NotFoundException(Constants.NO_SUCH_ENTITY);
+        if (authenticatedUserId != post.getUser().getId()) {
+            throw new ForbiddenException(Constants.FORBIDDEN);
         }
 
         postRepository.deleteById(id);
