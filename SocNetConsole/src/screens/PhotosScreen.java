@@ -1,6 +1,5 @@
 package screens;
 
-import constants.Constants;
 import entities.Photo;
 import identity.IdentityUser;
 import repositories.PhotoRepository;
@@ -9,7 +8,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.UUID;
 
-import static java.lang.System.*;
+import static java.lang.System.console;
+import static java.lang.System.in;
 
 public class PhotosScreen {
     private PhotosScreen() {}
@@ -22,20 +22,10 @@ public class PhotosScreen {
         while (true) {
             var photos = photoRepository.getPhotosByUserId(IdentityUser.getUser().getId());
 
-            for (var i = 0; i < 50; i++) {
-                console().printf("\n");
-            }
+            console().printf("\n".repeat(50));
 
             for (var photo : photos) {
-                console().printf(Constants.GREEN);
-                console().printf("Photo:\n");
-                console().printf("Id: ");
-                console().printf(Constants.WHITE);
-                console().printf(STR."\{photo.getId()}\n");
-                console().printf(Constants.GREEN);
-                console().printf("Source: ");
-                console().printf(Constants.WHITE);
-                console().printf(STR."\{photo.getSource()}\n");
+                photo.print();
             }
 
             console().printf("Select option:\n");
@@ -55,7 +45,7 @@ public class PhotosScreen {
                     photoRepository.addPhoto(addedPhoto);
                     break;
                 case '2':
-                    console().printf("Enter id: ");
+                    console().printf("Enter photo id: ");
                     var editedPhotoId = console().readLine();
                     console().printf("Enter source: ");
                     var editedPhotoSource = console().readLine();
@@ -64,7 +54,7 @@ public class PhotosScreen {
                     photoRepository.updatePhoto(editedPhoto);
                     break;
                 case '3':
-                    console().printf("Enter id: ");
+                    console().printf("Enter photo id: ");
                     var removedPhotoId = console().readLine();
                     var removedPhoto = photoRepository.getPhotoById(UUID.fromString(removedPhotoId));
                     photoRepository.removePhoto(removedPhoto);

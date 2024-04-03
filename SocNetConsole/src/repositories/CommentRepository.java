@@ -103,5 +103,6 @@ public class CommentRepository {
         comment.setUserId(UUID.fromString(resultSet.getString("user_id")));
         var stringCommentId = resultSet.getString("comment_id");
         comment.setCommentId(stringCommentId == null ? null : UUID.fromString(stringCommentId));
+        comment.setRoot(resultSet.getBoolean("is_root"));
     }
 }

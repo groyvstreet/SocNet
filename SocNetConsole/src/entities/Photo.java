@@ -1,11 +1,13 @@
 package entities;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.UUID;
 
 @Data
-public class Photo {
+@EqualsAndHashCode(callSuper = true)
+public class Photo extends Entity {
     private UUID id = UUID.randomUUID();
     private String source;
     private UUID userId;

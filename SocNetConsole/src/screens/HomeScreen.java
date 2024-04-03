@@ -14,9 +14,7 @@ public class HomeScreen {
         int option;
 
         while (true) {
-            for (var i = 0; i < 50; i++) {
-                console().printf("\n");
-            }
+            console().printf("\n".repeat(50));
 
             console().printf("Select option:\n");
             console().printf("0 - Log out\n");

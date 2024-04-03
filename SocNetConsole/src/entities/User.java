@@ -1,13 +1,15 @@
 package entities;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 
 @Data
-public class User {
+@EqualsAndHashCode(callSuper = true)
+public class User extends Entity {
     private UUID id = UUID.randomUUID();
     private String email;
     private String password;

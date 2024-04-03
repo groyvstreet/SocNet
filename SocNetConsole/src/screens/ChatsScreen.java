@@ -1,6 +1,5 @@
 package screens;
 
-import constants.Constants;
 import entities.Chat;
 import identity.IdentityUser;
 import repositories.ChatRepository;
@@ -11,7 +10,8 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import static java.lang.System.*;
+import static java.lang.System.console;
+import static java.lang.System.in;
 
 public class ChatsScreen {
     private ChatsScreen() {}
@@ -31,28 +31,10 @@ public class ChatsScreen {
                 chats.add(chat);
             }
 
-            for (var i = 0; i < 50; i++) {
-                console().printf("\n");
-            }
+            console().printf("\n".repeat(50));
 
             for (var chat : chats) {
-                console().printf(Constants.GREEN);
-                console().printf("Chat:\n");
-                console().printf("Id: ");
-                console().printf(Constants.WHITE);
-                console().printf(STR."\{chat.getId()}\n");
-                console().printf(Constants.GREEN);
-                console().printf("Name: ");
-                console().printf(Constants.WHITE);
-                console().printf(STR."\{chat.getName()}\n");
-                console().printf(Constants.GREEN);
-                console().printf("Users:\n");
-                console().printf(Constants.WHITE);
-                chat.getUserIds().forEach(userId -> console().printf(STR."\t\{userId}\n"));
-                console().printf(Constants.GREEN);
-                console().printf("Messages:\n");
-                console().printf(Constants.WHITE);
-                chat.getMessageIds().forEach(messageId -> console().printf(STR."\t\{messageId}\n"));
+                chat.print();
             }
 
             console().printf("Select option:\n");
@@ -74,7 +56,7 @@ public class ChatsScreen {
                     chatRepository.addUserToChat(addedChat, IdentityUser.getUser());
                     break;
                 case '2':
-                    console().printf("Enter id: ");
+                    console().printf("Enter chat id for editing: ");
                     var editedChatId = console().readLine();
                     console().printf("Enter name: ");
                     var editedChatName = console().readLine();
@@ -83,13 +65,13 @@ public class ChatsScreen {
                     chatRepository.updateChat(editedChat);
                     break;
                 case '3':
-                    console().printf("Enter id: ");
+                    console().printf("Enter chat id for removing: ");
                     var removedChatId = console().readLine();
                     var removedChat = chatRepository.getChatById(UUID.fromString(removedChatId));
                     chatRepository.removeChat(removedChat);
                     break;
                 case '4':
-                    console().printf("Enter id: ");
+                    console().printf("Enter chat id for selecting: ");
                     var selectedChatId = console().readLine();
                     ChatScreen.getChatScreen(connection, UUID.fromString(selectedChatId));
                     break;

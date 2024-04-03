@@ -18,9 +18,7 @@ public class ProfileScreen {
         int option;
 
         while (true) {
-            for (var i = 0; i < 50; i++) {
-                console().printf("\n");
-            }
+            console().printf("\n".repeat(50));
 
             console().printf(STR."First name: \{IdentityUser.getUser().getFirstName()}\n");
             console().printf(STR."Last name: \{IdentityUser.getUser().getLastName()}\n");

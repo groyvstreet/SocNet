@@ -1,12 +1,14 @@
 package entities;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 import java.util.UUID;
 
 @Data
-public class Message {
+@EqualsAndHashCode(callSuper = true)
+public class Message extends Entity {
     private UUID id = UUID.randomUUID();
     private Date dateTime;
     private String text;

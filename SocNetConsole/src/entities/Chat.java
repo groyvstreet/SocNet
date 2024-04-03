@@ -1,12 +1,14 @@
 package entities;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.ArrayList;
 import java.util.UUID;
 
 @Data
-public class Chat {
+@EqualsAndHashCode(callSuper = true)
+public class Chat extends Entity {
     private UUID id = UUID.randomUUID();
     private String name;
     private ArrayList<UUID> messageIds = new ArrayList<>();

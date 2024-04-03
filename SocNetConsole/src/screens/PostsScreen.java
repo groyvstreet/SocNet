@@ -1,6 +1,5 @@
 package screens;
 
-import constants.Constants;
 import entities.Comment;
 import entities.Post;
 import identity.IdentityUser;
@@ -12,7 +11,8 @@ import java.sql.Connection;
 import java.util.Date;
 import java.util.UUID;
 
-import static java.lang.System.*;
+import static java.lang.System.console;
+import static java.lang.System.in;
 
 public class PostsScreen {
     private PostsScreen() {}
@@ -26,45 +26,15 @@ public class PostsScreen {
         while (true) {
             var posts = postRepository.getPostsByUserId(IdentityUser.getUser().getId());
 
-            for (var i = 0; i < 50; i++) {
-                console().printf("\n");
-            }
+            console().printf("\n".repeat(50));
 
             for (var post : posts) {
-                console().printf(Constants.GREEN);
-                console().printf("Post:\n");
-                console().printf("Id: ");
-                console().printf(Constants.WHITE);
-                console().printf(STR."\{post.getId()}\n");
-                console().printf(Constants.GREEN);
-                console().printf("Time: ");
-                console().printf(Constants.WHITE);
-                console().printf(STR."\{post.getDateTime()}\n");
-                console().printf(Constants.GREEN);
-                console().printf("Text: ");
-                console().printf(Constants.WHITE);
-                console().printf(STR."\{post.getText()}\n");
+                post.print();
 
                 var comments = commentRepository.getCommentsByPostId(post.getId());
 
                 for (var comment : comments) {
-                    console().printf(Constants.GREEN);
-                    console().printf("\tComment:\n");
-                    console().printf("\tId: ");
-                    console().printf(Constants.WHITE);
-                    console().printf(STR."\{comment.getId()}\n");
-                    console().printf(Constants.GREEN);
-                    console().printf("\tTime: ");
-                    console().printf(Constants.WHITE);
-                    console().printf(STR."\{comment.getDateTime()}\n");
-                    console().printf(Constants.GREEN);
-                    console().printf("\tText: ");
-                    console().printf(Constants.WHITE);
-                    console().printf(STR."\{comment.getText()}\n");
-                    console().printf(Constants.GREEN);
-                    console().printf("\tUser id: ");
-                    console().printf(Constants.WHITE);
-                    console().printf(STR."\{comment.getUserId()}\n");
+                    comment.print(1);
                 }
             }
 
@@ -88,7 +58,7 @@ public class PostsScreen {
                     postRepository.addPost(addedPost);
                     break;
                 case '2':
-                    console().printf("Enter id: ");
+                    console().printf("Enter post id for editing: ");
                     var editedPostId = console().readLine();
                     console().printf("Enter text: ");
                     var editedPostText = console().readLine();
@@ -97,7 +67,7 @@ public class PostsScreen {
                     postRepository.updatePost(editedPost);
                     break;
                 case '3':
-                    console().printf("Enter id: ");
+                    console().printf("Enter post id for removing: ");
                     var removedPostId = console().readLine();
                     var removedPost = postRepository.getPostById(UUID.fromString(removedPostId));
                     postRepository.removePost(removedPost);
@@ -109,22 +79,22 @@ public class PostsScreen {
                     var stringAddedCommentCommentId = console().readLine();
                     var addedCommentCommentId = stringAddedCommentCommentId.isEmpty() ? null : UUID.fromString(stringAddedCommentCommentId);
                     var isRoot = addedCommentCommentId == null;
-                    console().printf("Enter text: ");
+                    console().printf("Enter comment text: ");
                     var addedCommentText = console().readLine();
                     var addedComment = new Comment(new Date(), addedCommentText, addedCommentPostId, IdentityUser.getUser().getId(), addedCommentCommentId, isRoot);
                     commentRepository.addComment(addedComment);
                     break;
                 case '5':
-                    console().printf("Enter id: ");
+                    console().printf("Enter comment id for editing: ");
                     var editedCommentId = console().readLine();
-                    console().printf("Enter text: ");
+                    console().printf("Enter comment text: ");
                     var editedCommentText = console().readLine();
                     var editedComment = commentRepository.getCommentById(UUID.fromString(editedCommentId));
                     editedComment.setText(editedCommentText);
                     commentRepository.updateComment(editedComment);
                     break;
                 case '6':
-                    console().printf("Enter id: ");
+                    console().printf("Enter comment id for removing: ");
                     var removedCommentId = console().readLine();
                     var removedComment = commentRepository.getCommentById(UUID.fromString(removedCommentId));
                     commentRepository.removeComment(removedComment);

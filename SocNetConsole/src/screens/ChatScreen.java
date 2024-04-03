@@ -1,6 +1,5 @@
 package screens;
 
-import constants.Constants;
 import entities.Message;
 import entities.User;
 import identity.IdentityUser;
@@ -29,28 +28,10 @@ public class ChatScreen {
         while (true) {
             var messages = messageRepository.getMessagesByChatId(chatId);
 
-            for (var i = 0; i < 50; i++) {
-                console().printf("\n");
-            }
+            console().printf("\n".repeat(50));
 
             for (var message : messages) {
-                console().printf(Constants.GREEN);
-                console().printf("Message:\n");
-                console().printf("Id: ");
-                console().printf(Constants.WHITE);
-                console().printf(STR."\{message.getId()}\n");
-                console().printf(Constants.GREEN);
-                console().printf("Time: ");
-                console().printf(Constants.WHITE);
-                console().printf(STR."\{message.getDateTime()}\n");
-                console().printf(Constants.GREEN);
-                console().printf("Text: ");
-                console().printf(Constants.WHITE);
-                console().printf(STR."\{message.getText()}\n");
-                console().printf(Constants.GREEN);
-                console().printf("User id: ");
-                console().printf(Constants.WHITE);
-                console().printf(STR."\{message.getUserId()}\n");
+                message.print();
             }
 
             console().printf("Select option:\n");
@@ -72,7 +53,7 @@ public class ChatScreen {
                     messageRepository.addMessage(addedMessage);
                     break;
                 case '2':
-                    console().printf("Enter id: ");
+                    console().printf("Enter message id: ");
                     var editedMessageId = console().readLine();
                     console().printf("Enter text: ");
                     var editedMessageText = console().readLine();
@@ -81,7 +62,7 @@ public class ChatScreen {
                     messageRepository.updateMessage(editedMessage);
                     break;
                 case '3':
-                    console().printf("Enter id: ");
+                    console().printf("Enter message id: ");
                     var removedMessageId = console().readLine();
                     var removedMessage = messageRepository.getMessageById(UUID.fromString(removedMessageId));
                     messageRepository.removeMessage(removedMessage);
@@ -92,12 +73,14 @@ public class ChatScreen {
                     var invitedUser = new User();
                     invitedUser.setId(invitedUserId);
                     chatRepository.addUserToChat(chat, invitedUser);
+                    break;
                 case '5':
                     console().printf("Enter user id: ");
                     var kickedUserId = UUID.fromString(console().readLine());
                     var kickedUser = new User();
                     kickedUser.setId(kickedUserId);
                     chatRepository.removeUserFromChat(chat, kickedUser);
+                    break;
                 default:
                     break;
             }
