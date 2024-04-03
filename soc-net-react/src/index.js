@@ -2,52 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-import Root from './routes/root';
 import App from './App';
-import Users from './routes/users';
-import Chats from './routes/chats';
-import Profile from './routes/profile';
-import Signup from './routes/signup';
-import Signin from './routes/signin';
+import axios from 'axios';
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Root />,
-    errorElement: <App />,
-    children: [
-      {
-        path: "/users",
-        element: <Users />
-      },
-      {
-        path: "/chats",
-        element: <Chats />
-      },
-      {
-        path: "/profile",
-        element: <Profile />
-      },
-      {
-        path: "/signup",
-        element: <Signup />
-      },
-      {
-        path: "/signin",
-        element: <Signin />
-      }
-    ]
-  }
-]);
+axios.defaults.baseURL = 'http://localhost:8080';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <App />
   </React.StrictMode>
 );
 

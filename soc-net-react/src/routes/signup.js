@@ -3,9 +3,11 @@ export default function Signup() {
         <section>
             <input
                 placeholder="Email"
+                type="email"
             />
             <input
                 placeholder="Пароль"
+                type="password"
             />
             <input
                 placeholder="Имя"
