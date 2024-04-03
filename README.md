@@ -6,6 +6,8 @@ Console (JDBC) - https://github.com/groyvstreet/SocNet/tree/main/SocNetConsole/s
 
 API (SpringBoot + Hibernate) - https://github.com/groyvstreet/SocNet/tree/main/SocNetApi/src/main/java/org/example/socnetapi
 
+Front-end (React) - https://github.com/groyvstreet/SocNet/tree/main/soc-net-react
+
 # 1. Сделать схему БД:
 План: 2 ч;
 Факт: 2 ч.
