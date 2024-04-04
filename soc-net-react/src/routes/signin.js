@@ -4,12 +4,12 @@ import { AppContext } from "../contexts/contexts";
 import { useNavigate } from "react-router-dom";
 
 export default function Signin() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-
     const appContext = useContext(AppContext);
     
     const navigate = useNavigate();
+    
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
     return (
         <section>

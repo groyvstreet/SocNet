@@ -18,7 +18,7 @@ import java.util.UUID;
 public class Comment {
     @Id
     @Column(name = "id", nullable = false)
-    private UUID id;
+    private UUID id = UUID.randomUUID();
 
     @Column(name = "date_time", nullable = false)
     private Instant dateTime;

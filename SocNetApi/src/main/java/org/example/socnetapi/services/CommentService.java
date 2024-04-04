@@ -37,7 +37,7 @@ public class CommentService {
     }
 
     public void addComment(AddCommentDto addCommentDto, UUID authenticatedUserId) {
-        if (authenticatedUserId != addCommentDto.getUserId()) {
+        if (!authenticatedUserId.toString().equals(addCommentDto.getUserId().toString())) {
             throw new ForbiddenException(Constants.FORBIDDEN);
         }
 
@@ -48,7 +48,7 @@ public class CommentService {
     public void updateComment(UpdateCommentDto updateCommentDto, UUID authenticatedUserId) {
         var comment = commentRepository.findById(updateCommentDto.getId()).orElseThrow(() -> new NotFoundException(Constants.NO_SUCH_ENTITY));
 
-        if (authenticatedUserId != comment.getUser().getId()) {
+        if (!authenticatedUserId.toString().equals(comment.getUser().getId().toString())) {
             throw new ForbiddenException(Constants.FORBIDDEN);
         }
 
@@ -59,7 +59,7 @@ public class CommentService {
     public void removeCommentById(UUID id, UUID authenticatedUserId) {
         var comment = commentRepository.findById(id).orElseThrow(() -> new NotFoundException(Constants.NO_SUCH_ENTITY));
 
-        if (authenticatedUserId != comment.getUser().getId()) {
+        if (!authenticatedUserId.toString().equals(comment.getUser().getId().toString())) {
             throw new ForbiddenException(Constants.FORBIDDEN);
         }
 

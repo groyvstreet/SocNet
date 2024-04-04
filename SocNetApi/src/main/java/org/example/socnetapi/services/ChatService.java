@@ -4,6 +4,7 @@ import org.example.socnetapi.constants.Constants;
 import org.example.socnetapi.dtos.chatdtos.AddChatDto;
 import org.example.socnetapi.dtos.chatdtos.GetChatDto;
 import org.example.socnetapi.dtos.chatdtos.UpdateChatDto;
+import org.example.socnetapi.entities.User;
 import org.example.socnetapi.exceptions.AlreadyExistsException;
 import org.example.socnetapi.exceptions.ForbiddenException;
 import org.example.socnetapi.exceptions.NotFoundException;
@@ -13,9 +14,9 @@ import org.example.socnetapi.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class ChatService {
@@ -39,7 +40,7 @@ public class ChatService {
     public GetChatDto getChatById(UUID id, UUID authenticatedUserId) {
         var chat = chatRepository.findById(id).orElseThrow(() -> new NotFoundException(Constants.NO_SUCH_ENTITY));
 
-        if (chat.getUsers().stream().noneMatch(user -> user.getId() == authenticatedUserId)) {
+        if (chat.getUsers().stream().noneMatch(user -> user.getId().toString().equals(authenticatedUserId.toString()))) {
             throw new ForbiddenException(Constants.FORBIDDEN);
         }
 
@@ -47,7 +48,7 @@ public class ChatService {
     }
 
     public void addChat(AddChatDto addChatDto, UUID authenticatedUserId) {
-        if (authenticatedUserId != addChatDto.getUserId()) {
+        if (!authenticatedUserId.toString().equals(addChatDto.getUserId().toString())) {
             throw new ForbiddenException(Constants.FORBIDDEN);
         }
 
@@ -60,7 +61,7 @@ public class ChatService {
     public void updateChat(UpdateChatDto updateChatDto, UUID authenticatedUserId) {
         var chat = chatRepository.findById(updateChatDto.getId()).orElseThrow(() -> new NotFoundException(Constants.NO_SUCH_ENTITY));
 
-        if (chat.getUsers().stream().noneMatch(user -> user.getId() == authenticatedUserId)) {
+        if (chat.getUsers().stream().noneMatch(user -> user.getId().toString().equals(authenticatedUserId.toString()))) {
             throw new ForbiddenException(Constants.FORBIDDEN);
         }
 
@@ -71,7 +72,7 @@ public class ChatService {
     public void removeChatById(UUID id, UUID authenticatedUserId) {
         var chat = chatRepository.findById(id).orElseThrow(() -> new NotFoundException(Constants.NO_SUCH_ENTITY));
 
-        if (chat.getUsers().stream().noneMatch(user -> user.getId() == authenticatedUserId)) {
+        if (chat.getUsers().stream().noneMatch(user -> user.getId().toString().equals(authenticatedUserId.toString()))) {
             throw new ForbiddenException(Constants.FORBIDDEN);
         }
 
@@ -81,11 +82,11 @@ public class ChatService {
     public void addUserToChat(UUID chatId, UUID userId, UUID authenticatedUserId) {
         var chat = chatRepository.findById(chatId).orElseThrow(() -> new NotFoundException(Constants.NO_SUCH_ENTITY));
 
-        if (chat.getUsers().stream().noneMatch(user -> user.getId() == authenticatedUserId)) {
+        if (chat.getUsers().stream().noneMatch(user -> user.getId().toString().equals(authenticatedUserId.toString()))) {
             throw new ForbiddenException(Constants.FORBIDDEN);
         }
 
-        if (chat.getUsers().stream().anyMatch(user -> user.getId() == userId)) {
+        if (chat.getUsers().stream().anyMatch(user -> user.getId().toString().equals(userId.toString()))) {
             throw new AlreadyExistsException(Constants.CONFLICT);
         }
 
@@ -97,15 +98,24 @@ public class ChatService {
     public void removeUserFromChat(UUID chatId, UUID userId, UUID authenticatedUserId) {
         var chat = chatRepository.findById(chatId).orElseThrow(() -> new NotFoundException(Constants.NO_SUCH_ENTITY));
 
-        if (chat.getUsers().stream().noneMatch(user -> user.getId() == authenticatedUserId)) {
+        if (chat.getUsers().stream().noneMatch(user -> user.getId().toString().equals(authenticatedUserId.toString()))) {
             throw new ForbiddenException(Constants.FORBIDDEN);
         }
 
-        if (chat.getUsers().stream().noneMatch(user -> user.getId() == userId)) {
+        if (chat.getUsers().stream().noneMatch(user -> user.getId().toString().equals(userId.toString()))) {
             throw new NotFoundException(Constants.NO_SUCH_ENTITY);
         }
 
-        chat.setUsers(chat.getUsers().stream().dropWhile(droppingUser -> droppingUser.getId() == userId).collect(Collectors.toSet()));
+        chat.getUsers().removeIf(user -> user.getId().toString().equals(userId.toString()));
         chatRepository.save(chat);
+    }
+
+    public List<GetChatDto> getChatsByUserId(UUID userId) {
+        var user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException(Constants.NO_SUCH_ENTITY));
+        var userSet = new HashSet<User>();
+        userSet.add(user);
+        var chats = chatRepository.findAllByUsersContains(userSet);
+
+        return chats.stream().map(chatMapper::chatToGetChatDto).toList();
     }
 }

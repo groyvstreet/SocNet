@@ -41,7 +41,7 @@ public class MessageService {
     }
 
     public void addMessage(AddMessageDto addMessageDto, UUID authenticatedUserId) {
-        if (authenticatedUserId != addMessageDto.getUserId()) {
+        if (!authenticatedUserId.toString().equals(addMessageDto.getUserId().toString())) {
             throw new ForbiddenException(Constants.FORBIDDEN);
         }
 
@@ -52,7 +52,7 @@ public class MessageService {
     public void updateMessage(UpdateMessageDto updateMessageDto, UUID authenticatedUserId) {
         var message = messageRepository.findById(updateMessageDto.getId()).orElseThrow(() -> new NotFoundException(Constants.NO_SUCH_ENTITY));
 
-        if (authenticatedUserId != message.getUser().getId()) {
+        if (!authenticatedUserId.toString().equals(message.getUser().getId().toString())) {
             throw new ForbiddenException(Constants.FORBIDDEN);
         }
 
@@ -63,7 +63,7 @@ public class MessageService {
     public void removeMessageById(UUID id, UUID authenticatedUserId) {
         var message = messageRepository.findById(id).orElseThrow(() -> new NotFoundException(Constants.NO_SUCH_ENTITY));
 
-        if (authenticatedUserId != message.getUser().getId()) {
+        if (!authenticatedUserId.toString().equals(message.getUser().getId().toString())) {
             throw new ForbiddenException(Constants.FORBIDDEN);
         }
 
@@ -73,7 +73,7 @@ public class MessageService {
     public List<GetMessageDto> getMessagesByChatId(UUID chatId, UUID authenticatedUserId) {
         var chat = chatRepository.findById(chatId).orElseThrow(() -> new NotFoundException(Constants.NO_SUCH_ENTITY));
 
-        if (chat.getUsers().stream().noneMatch(user -> user.getId() == authenticatedUserId)) {
+        if (chat.getUsers().stream().noneMatch(user -> user.getId().toString().equals(authenticatedUserId.toString()))) {
             throw new ForbiddenException(Constants.FORBIDDEN);
         }
 

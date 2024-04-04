@@ -13,15 +13,24 @@ import { useCookies } from "react-cookie";
 import { useEffect, useState } from "react";
 import { AppContext } from "../src/contexts/contexts";
 import { getUserById } from "../src/api/userService";
+import axios from "axios";
+import Chat, { chatLoader } from "./routes/chat";
 
 export default function App() {
-  const [cookies, setCookie, removeCookie] = useCookies(['app']);
+  const [cookies, setCookie, removeCookie] = useCookies(['id', 'token']);
   const [isAuthenticated, setIsAuthenticated] = useState(cookies.token !== undefined);
   const [user, setUser] = useState({});
 
   useEffect(() => {
     if (cookies.userId !== undefined) {
       getUserById(cookies.userId).then(user => setUser(user));
+    }
+
+    if (cookies.token !== undefined) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${cookies.token}`;
+    }
+    else {
+      axios.defaults.headers.common['Authorization'] = '';
     }
   }, [isAuthenticated]);
 
@@ -30,7 +39,8 @@ export default function App() {
     removeCookie,
     isAuthenticated,
     setIsAuthenticated,
-    user
+    user,
+    setUser
   };
 
   const authenticatedRouter = createBrowserRouter([
@@ -46,6 +56,11 @@ export default function App() {
         {
           path: "/chats",
           element: <Chats />
+        },
+        {
+          path: "/chats/:chatId",
+          element: <Chat />,
+          loader: chatLoader
         },
         {
           path: "/profile",

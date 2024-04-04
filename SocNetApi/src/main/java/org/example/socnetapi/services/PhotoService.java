@@ -37,7 +37,7 @@ public class PhotoService {
     }
 
     public void addPhoto(AddPhotoDto addPhotoDto, UUID authenticatedUserId) {
-        if (authenticatedUserId != addPhotoDto.getUserId()) {
+        if (!authenticatedUserId.toString().equals(addPhotoDto.getUserId().toString())) {
             throw new ForbiddenException(Constants.FORBIDDEN);
         }
 
@@ -48,7 +48,7 @@ public class PhotoService {
     public void updatePhoto(UpdatePhotoDto updatePhotoDto, UUID authenticatedUserId) {
         var photo = photoRepository.findById(updatePhotoDto.getId()).orElseThrow(() -> new NotFoundException(Constants.NO_SUCH_ENTITY));
 
-        if (authenticatedUserId != photo.getUser().getId()) {
+        if (!authenticatedUserId.toString().equals(photo.getUser().getId().toString())) {
             throw new ForbiddenException(Constants.FORBIDDEN);
         }
 
@@ -59,7 +59,7 @@ public class PhotoService {
     public void removePhotoById(UUID id, UUID authenticatedUserId) {
         var photo = photoRepository.findById(id).orElseThrow(() -> new NotFoundException(Constants.NO_SUCH_ENTITY));
 
-        if (authenticatedUserId != photo.getUser().getId()) {
+        if (!authenticatedUserId.toString().equals(photo.getUser().getId().toString())) {
             throw new ForbiddenException(Constants.FORBIDDEN);
         }
 

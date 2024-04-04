@@ -15,7 +15,7 @@ import java.util.UUID;
 public class Photo {
     @Id
     @Column(name = "id", nullable = false)
-    private UUID id;
+    private UUID id = UUID.randomUUID();
 
     @Column(name = "source", nullable = false, length = Integer.MAX_VALUE)
     private String source;

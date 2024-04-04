@@ -37,7 +37,7 @@ public class PostService {
     }
 
     public void addPost(AddPostDto addPostDto, UUID authenticatedUserId) {
-        if (authenticatedUserId != addPostDto.getUserId()) {
+        if (!authenticatedUserId.toString().equals(addPostDto.getUserId().toString())) {
             throw new ForbiddenException(Constants.FORBIDDEN);
         }
 
@@ -48,7 +48,7 @@ public class PostService {
     public void updatePost(UpdatePostDto updatePostDto, UUID authenticatedUserId) {
         var post = postRepository.findById(updatePostDto.getId()).orElseThrow(() -> new NotFoundException(Constants.NO_SUCH_ENTITY));
 
-        if (authenticatedUserId != post.getUser().getId()) {
+        if (!authenticatedUserId.toString().equals(post.getUser().getId().toString())) {
             throw new ForbiddenException(Constants.FORBIDDEN);
         }
 
@@ -59,7 +59,7 @@ public class PostService {
     public void removePostById(UUID id, UUID authenticatedUserId) {
         var post = postRepository.findById(id).orElseThrow(() -> new NotFoundException(Constants.NO_SUCH_ENTITY));
 
-        if (authenticatedUserId != post.getUser().getId()) {
+        if (!authenticatedUserId.toString().equals(post.getUser().getId().toString())) {
             throw new ForbiddenException(Constants.FORBIDDEN);
         }
 

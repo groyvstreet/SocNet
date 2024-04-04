@@ -25,8 +25,9 @@ public class ChatController {
     }
 
     @GetMapping("/chats")
-    public ResponseEntity<List<GetChatDto>> getChats() {
-        var chats = chatService.getChats();
+    public ResponseEntity<List<GetChatDto>> getChats(Principal principal) {
+        var authenticatedUserId = UUID.fromString(principal.getName());
+        var chats = chatService.getChatsByUserId(authenticatedUserId);
 
         return new ResponseEntity<>(chats, HttpStatus.OK);
     }

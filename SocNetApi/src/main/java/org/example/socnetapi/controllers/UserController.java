@@ -53,4 +53,13 @@ public class UserController {
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("/chats/{id}/users")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<Object> getUsersByChatId(@PathVariable UUID id, @RequestParam boolean isInChat, Principal principal) {
+        var authenticatedUserId = UUID.fromString(principal.getName());
+        var users = userService.getUsersByChatId(id, authenticatedUserId, isInChat);
+
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
 }

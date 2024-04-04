@@ -15,7 +15,7 @@ import java.util.UUID;
 public class Chat {
     @Id
     @Column(name = "id", nullable = false)
-    private UUID id;
+    private UUID id = UUID.randomUUID();
 
     @Column(name = "name", nullable = false, length = Integer.MAX_VALUE)
     private String name;
