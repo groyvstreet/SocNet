@@ -1,47 +1,61 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../contexts/contexts";
 import { useNavigate } from "react-router-dom";
 import { removeUserById, updateUser } from "../api/userService";
+import './profile.css'
 
 export default function Profile() {
     const appContext = useContext(AppContext);
 
     const navigate = useNavigate();
 
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [birthDate, setBirthDate] = useState('');
+    const [firstName, setFirstName] = useState(appContext.user.firstName);
+    const [lastName, setLastName] = useState(appContext.user.lastName);
+    const [birthDate, setBirthDate] = useState(appContext.user.birthDate);
+
+    useEffect(() => {
+        setFirstName(appContext.user.firstName);
+        setLastName(appContext.user.lastName);
+        setBirthDate(appContext.user.birthDate);
+    }, [])
 
     return (
-        <section>
-            <h1>{appContext.user.firstName} {appContext.user.lastName}</h1>
-            <input
-                placeholder='Имя'
-                onChange={e => setFirstName(e.target.value)}
-            />
-            <input
-                placeholder='Фамилия'
-                onChange={e => setLastName(e.target.value)}
-            />
-            <input
-                type='date'
-                onChange={e => setBirthDate(e.target.value)}
-            />
-            <button
-                onClick={updateUserButtonOnClick}
-            >
-                Редактировать
-            </button>
-            <button
-                onClick={logoutButtonOnClick}
-            >
-                Выйти
-            </button>
-            <button
-                onClick={removeUserButtonOnClick}
-            >
-                Удалить аккаунт
-            </button>
+        <section className="profile-container">
+            <div className="profile-card">
+                <input
+                    placeholder='Имя'
+                    value={firstName}
+                    onChange={e => setFirstName(e.target.value)}
+                />
+                <input
+                    placeholder='Фамилия'
+                    value={lastName}
+                    onChange={e => setLastName(e.target.value)}
+                />
+                <input
+                    type='date'
+                    value={birthDate}
+                    onChange={e => setBirthDate(e.target.value)}
+                />
+                <button
+                    className="background-color-green"
+                    onClick={updateUserButtonOnClick}
+                >
+                    Редактировать
+                </button>
+                <button
+                    className="background-color-gray"
+                    onClick={logoutButtonOnClick}
+                >
+                    Выйти
+                </button>
+                <button
+                    className="background-color-red"
+                    onClick={removeUserButtonOnClick}
+                >
+                    Удалить аккаунт
+                </button>
+            </div>
         </section>
     );
 

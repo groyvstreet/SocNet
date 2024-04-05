@@ -2,6 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import { getChats, addChat } from "../api/chatService";
 import { AppContext } from "../contexts/contexts";
 import { useNavigate } from "react-router-dom";
+import './chats.css';
+import ChatCard from "../components/chatCard";
 
 export default function Chats() {
     const appContext = useContext(AppContext);
@@ -16,22 +18,29 @@ export default function Chats() {
     }, []);
 
     return (
-        <section>
-            <input
-                onChange={e => setName(e.target.value)}
-            />
-            <button
-                onClick={addChatButtonOnClick}
+        <section
+            className="chats-container"
+        >
+            <div
+                className="chats-create-container"
             >
-                Создать
-            </button>
-            {chats.map(chat => (
-                <div
-                    key={chat.id}
-                    onClick={() => navigateToChat(chat.id)}
+                <input
+                    placeholder="Название"
+                    onChange={e => setName(e.target.value)}
+                />
+                <button
+                    className="background-color-green"
+                    onClick={addChatButtonOnClick}
                 >
-                    {chat.name}
-                </div>
+                    Создать
+                </button>
+            </div>
+            {chats.map(chat => (
+                <ChatCard
+                    key={chat.id}
+                    chat={chat}
+                    onClick={() => navigateToChat(chat.id)}
+                />
             ))}
         </section>
     );

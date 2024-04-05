@@ -4,6 +4,8 @@ import org.example.socnetapi.constants.Constants;
 import org.example.socnetapi.dtos.messagedtos.AddMessageDto;
 import org.example.socnetapi.dtos.messagedtos.GetMessageDto;
 import org.example.socnetapi.dtos.messagedtos.UpdateMessageDto;
+import org.example.socnetapi.entities.Chat;
+import org.example.socnetapi.entities.User;
 import org.example.socnetapi.exceptions.ForbiddenException;
 import org.example.socnetapi.exceptions.NotFoundException;
 import org.example.socnetapi.mappers.MessageMapper;
@@ -46,6 +48,15 @@ public class MessageService {
         }
 
         var message = messageMapper.addMessageDtoToMessage(addMessageDto);
+
+        var chat = new Chat();
+        chat.setId(addMessageDto.getChatId());
+        message.setChat(chat);
+
+        var user = new User();
+        user.setId(addMessageDto.getUserId());
+        message.setUser(user);
+
         messageRepository.save(message);
     }
 

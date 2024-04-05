@@ -11,9 +11,11 @@ export default function Users() {
     return (
         <section>
             {users.map(user => (
-                <div key={user.id}>
-                    <p>{user.firstName} {user.lastName}</p>
-                </div>
+                <p
+                    key={user.id}
+                >
+                    {user.firstName} {user.lastName}
+                </p>
             ))}
         </section>
     );

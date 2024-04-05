@@ -20,7 +20,7 @@ export async function updateMessage(id, text) {
 }
 
 export async function removeMessageById(id) {
-    const response = await axios.delete(`/message/${id}`);
+    const response = await axios.delete(`/messages/${id}`);
 
     return response.data;
 }

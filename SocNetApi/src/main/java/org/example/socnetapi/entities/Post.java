@@ -21,7 +21,7 @@ public class Post {
     private UUID id = UUID.randomUUID();
 
     @Column(name = "date_time", nullable = false)
-    private Instant dateTime;
+    private Instant dateTime = Instant.now();
 
     @Column(name = "text", nullable = false, length = Integer.MAX_VALUE)
     private String text;

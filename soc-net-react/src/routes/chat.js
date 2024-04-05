@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { getUsersByChatId } from "../api/userService";
 import { addMessage, getMessagesByChatId, removeMessageById, updateMessage } from "../api/messageService";
 import { AppContext } from "../contexts/contexts";
+import './chat.css'
 
 export async function chatLoader({ params }) {
     const chat = await getChatById(params.chatId);
@@ -33,72 +34,96 @@ export default function Chat() {
     }, [reload]);
 
     return (
-        <>
-            {users.map(user => (
-                <div key={user.id}>
-                    <button
-                        onClick={() => addUserToChatButtonOnClick(chat.id, user.id)}
-                    >
-                        {user.firstName} {user.lastName}
-                    </button>
-                    <hr />
+        <section
+            className="chat-container"
+        >
+            <div
+                className="chat-subcontainer"
+            >
+                <input
+                    placeholder="Название"
+                    value={name}
+                    onChange={e => setName(e.target.value)}
+                />
+                <button
+                    className="background-color-green"
+                    onClick={updateChatButtonOnClick}
+                >
+                    Изменить
+                </button>
+                <button
+                    className="background-color-red"
+                    onClick={removeChatButtonOnClick}
+                >
+                    Удалить
+                </button>
+            </div>
+            <div
+                className="chat-content"
+            >
+                <div
+                    className="chat-section quater"
+                >
+                    {users.map(user => (
+                        <div key={user.id}>
+                            <button
+                                className="background-color-green"
+                                onClick={() => addUserToChatButtonOnClick(chat.id, user.id)}
+                            >
+                                {user.firstName} {user.lastName}
+                            </button>
+                        </div>
+                    ))}
                 </div>
-            ))}
-            <h1>{name}</h1>
-            <input
-                placeholder="Название"
-                value={name}
-                onChange={e => setName(e.target.value)}
-            />
-            <button
-                onClick={updateChatButtonOnClick}
-            >
-                Изменить
-            </button>
-            <button
-                onClick={removeChatButtonOnClick}
-            >
-                Удалить
-            </button>
-            <h2>Пользователи</h2>
-            {chatUsers.map(user => (
-                <div key={user.id}>
+                <div
+                    className="chat-section half"
+                >
+                    <input
+                        placeholder="Введите текст"
+                        value={text}
+                        onChange={e => setText(e.target.value)}
+                        
+                    />
                     <button
-                        onClick={() => removeUserFromChatButtonOnClick(chat.id, user.id)}
+                        className="background-color-green"
+                        onClick={addMessageButtonOnClick}
                     >
-                        {user.firstName} {user.lastName}
+                        Отправить
                     </button>
-                    <hr />
+                    {messages.map(message => (
+                        <div key={message.id}>
+                            {message.text}
+                            <button
+                                className="background-color-green"
+                                onClick={() => updateMessageButtonOnClick(message.id)}
+                            >
+                                Изменить
+                            </button>
+                            <button
+                                className="background-color-red"
+                                onClick={() => removeMessageButtonOnClick(message.id)}
+                            >
+                                Удалить
+                            </button>
+                        </div>
+                    ))}
                 </div>
-            ))}
-            <h2>Сообщения</h2>
-            <input
-                placeholder="Введите текст"
-                value={text}
-                onChange={e => setText(e.target.value)}
-                
-            />
-            <button
-                onClick={addMessageButtonOnClick}
-            >
-                Отправить
-            </button>
-            {messages.map(message => (
-                <>
-                    {message.text}
-                    <button
-                        onClick={() => updateMessageButtonOnClick(message.id)}
-                    >
-                        Изменить
-                    </button>
-                    <button
-                        onClick={() => removeMessageButtonOnClick(message.id)}
-                    >
-                        Удалить
-                    </button>
-                </>
-            ))}
-        </>
+                <div
+                    className="chat-section quater"
+                >
+                    {chatUsers.map(user => (
+                        <div key={user.id}>
+                            <button
+                                className="background-color-red"
+                                onClick={() => removeUserFromChatButtonOnClick(chat.id, user.id)}
+                            >
+                                {user.firstName} {user.lastName}
+                            </button>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
     );
 
     async function updateChatButtonOnClick() {

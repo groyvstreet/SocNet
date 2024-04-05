@@ -1,0 +1,11 @@
+.chat-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #333333;
+    min-width: 350px;
+    height: 40px;
+    border-radius: 40px;
+    padding: 20px;
+    color: white;
+}

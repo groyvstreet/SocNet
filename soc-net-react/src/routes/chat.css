@@ -1,0 +1,37 @@
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.chat-subcontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    background-color: #333333;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.chat-content {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.chat-section {
+    display: flex;
+    flex-direction: column;
+    background-color: #333333;
+    border-radius: 20px;
+    padding: 20px;
+    gap: 10px;
+}
+
+.half {
+    width: 45%;
+}
+
+.quater {
+    width: 20%;
+}

@@ -1,6 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export default function Navbar({ isAuthenticated }) {
+    const location = useLocation();
+
     return (
         <nav>
             <ul>
