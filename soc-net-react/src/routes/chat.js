@@ -5,6 +5,7 @@ import { getUsersByChatId } from "../api/userService";
 import { addMessage, getMessagesByChatId, removeMessageById, updateMessage } from "../api/messageService";
 import { AppContext } from "../contexts/contexts";
 import './chat.css'
+import Message from "../components/message";
 
 export async function chatLoader({ params }) {
     const chat = await getChatById(params.chatId);
@@ -65,19 +66,30 @@ export default function Chat() {
                     className="chat-section quater"
                 >
                     {users.map(user => (
-                        <div key={user.id}>
-                            <button
-                                className="background-color-green"
-                                onClick={() => addUserToChatButtonOnClick(chat.id, user.id)}
-                            >
-                                {user.firstName} {user.lastName}
-                            </button>
-                        </div>
+                        <button
+                            className="user-button background-color-green"
+                            key={user.id}
+                            onClick={() => addUserToChatButtonOnClick(chat.id, user.id)}
+                        >
+                            {user.firstName} {user.lastName}
+                        </button>
                     ))}
                 </div>
                 <div
                     className="chat-section half"
                 >
+                    <section
+                        className="messages"
+                    >
+                        {messages.map(message => (
+                            <Message
+                                key={message.id}
+                                message={message}
+                                updateMessageButtonOnClick={updateMessageButtonOnClick}
+                                removeMessageButtonOnClick={removeMessageButtonOnClick}
+                            />
+                        ))}
+                    </section>
                     <input
                         placeholder="Введите текст"
                         value={text}
@@ -90,36 +102,18 @@ export default function Chat() {
                     >
                         Отправить
                     </button>
-                    {messages.map(message => (
-                        <div key={message.id}>
-                            {message.text}
-                            <button
-                                className="background-color-green"
-                                onClick={() => updateMessageButtonOnClick(message.id)}
-                            >
-                                Изменить
-                            </button>
-                            <button
-                                className="background-color-red"
-                                onClick={() => removeMessageButtonOnClick(message.id)}
-                            >
-                                Удалить
-                            </button>
-                        </div>
-                    ))}
                 </div>
                 <div
                     className="chat-section quater"
                 >
                     {chatUsers.map(user => (
-                        <div key={user.id}>
-                            <button
-                                className="background-color-red"
-                                onClick={() => removeUserFromChatButtonOnClick(chat.id, user.id)}
-                            >
-                                {user.firstName} {user.lastName}
-                            </button>
-                        </div>
+                        <button
+                            className="user-button background-color-red"
+                            key={user.id}
+                            onClick={() => removeUserFromChatButtonOnClick(chat.id, user.id)}
+                        >
+                            {user.firstName} {user.lastName}
+                        </button>
                     ))}
                 </div>
             </div>

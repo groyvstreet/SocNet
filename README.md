@@ -17,3 +17,6 @@ Front-end (React) - https://github.com/groyvstreet/SocNet/tree/main/soc-net-reac
 # 3. Сделать back-end:
 План: 12 ч;
 Факт: 19 ч.
+# 4. Сделать front-end (React):
+План: 12 ч;
+Факт: 16 ч.

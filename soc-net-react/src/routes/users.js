@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getUsers } from "../api/userService";
+import './users.css'
 
 export default function Users() {
     const [users, setUsers] = useState([]);
@@ -9,9 +10,12 @@ export default function Users() {
     }, [])
 
     return (
-        <section>
+        <section
+            className="users-container"
+        >
             {users.map(user => (
                 <p
+                    className="user-p"
                     key={user.id}
                 >
                     {user.firstName} {user.lastName}

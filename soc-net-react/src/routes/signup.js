@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { signUp } from "../api/authenticationService";
 import { AppContext } from "../contexts/contexts";
 import { useNavigate } from "react-router-dom";
+import './signup.css'
 
 export default function Signup() {
     const appContext = useContext(AppContext);
@@ -15,7 +16,9 @@ export default function Signup() {
     const [birthDate, setBirthDate] = useState('');
 
     return (
-        <section>
+        <section
+            className="container"
+        >
             <input
                 placeholder="Email"
                 type="email"
@@ -39,6 +42,7 @@ export default function Signup() {
                 onChange={e => setBirthDate(e.target.value)}
             />
             <button
+                className="background-color-green"
                 onClick={signupButtonOnClick}
             >
                 Зарегистрироваться

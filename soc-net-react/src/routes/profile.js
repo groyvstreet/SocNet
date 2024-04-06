@@ -20,8 +20,12 @@ export default function Profile() {
     }, [])
 
     return (
-        <section className="profile-container">
-            <div className="profile-card">
+        <section
+            className="profile-container"
+        >
+            <div
+                className="profile-card"
+            >
                 <input
                     placeholder='Имя'
                     value={firstName}
@@ -68,7 +72,7 @@ export default function Profile() {
         appContext.setUser(user);
     }
 
-    async function logoutButtonOnClick() {
+    function logoutButtonOnClick() {
         appContext.removeCookie('userId');
         appContext.removeCookie('token');
         appContext.setIsAuthenticated(false);

@@ -8,7 +8,7 @@
 
 body {
   width: 100%;
-  height: 80vh;
+  height: 100vh;
   background-color: #666666;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -21,6 +21,9 @@ body {
 main {
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 code {

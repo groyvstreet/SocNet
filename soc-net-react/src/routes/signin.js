@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { signIn } from "../api/authenticationService";
 import { AppContext } from "../contexts/contexts";
 import { useNavigate } from "react-router-dom";
+import './signin.css'
 
 export default function Signin() {
     const appContext = useContext(AppContext);
@@ -12,7 +13,9 @@ export default function Signin() {
     const [password, setPassword] = useState('');
 
     return (
-        <section>
+        <section
+            className="container"
+        >
             <input
                 placeholder="Email"
                 type="email"
@@ -24,6 +27,7 @@ export default function Signin() {
                 onChange={e => setPassword(e.target.value)}
             />
             <button
+                className="background-color-green"
                 onClick={signinButtonOnClick}
             >
                 Войти
