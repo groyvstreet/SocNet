@@ -1,9 +1,9 @@
 package org.example.socnetapi.services;
 
 import org.example.socnetapi.constants.Constants;
-import org.example.socnetapi.dtos.roledtos.AddRoleDto;
-import org.example.socnetapi.dtos.roledtos.GetRoleDto;
-import org.example.socnetapi.dtos.roledtos.UpdateRoleDto;
+import org.example.socnetapi.dtos.role.AddRoleDto;
+import org.example.socnetapi.dtos.role.GetRoleDto;
+import org.example.socnetapi.dtos.role.UpdateRoleDto;
 import org.example.socnetapi.exceptions.NotFoundException;
 import org.example.socnetapi.mappers.RoleMapper;
 import org.example.socnetapi.repositories.RoleRepository;

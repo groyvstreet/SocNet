@@ -1,11 +1,11 @@
-package org.example.socnetapi.dtos.commentdtos;
+package org.example.socnetapi.dtos.post;
 
 import lombok.Data;
 
 import java.util.UUID;
 
 @Data
-public class UpdateCommentDto {
+public class UpdatePostDto {
     private UUID id;
     private String text;
 }

@@ -18,6 +18,7 @@ export class ChatsComponent {
   name = '';
   user = new User;
   chats: Chat[] = [];
+  
   constructor(private chatService: ChatService,
     authorizationService: AuthorizationService,
     private router: Router) {

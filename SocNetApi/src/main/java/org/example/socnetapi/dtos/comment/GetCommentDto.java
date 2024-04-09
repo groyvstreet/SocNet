@@ -1,11 +1,14 @@
-package org.example.socnetapi.dtos.commentdtos;
+package org.example.socnetapi.dtos.comment;
 
 import lombok.Data;
 
+import java.time.Instant;
 import java.util.UUID;
 
 @Data
-public class AddCommentDto {
+public class GetCommentDto {
+    private UUID id;
+    private Instant dateTime;
     private String text;
     private UUID postId;
     private UUID userId;

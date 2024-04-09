@@ -1,4 +1,4 @@
-package org.example.socnetapi.dtos.messagedtos;
+package org.example.socnetapi.dtos.message;
 
 import lombok.Data;
 

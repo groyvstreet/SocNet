@@ -1,9 +1,9 @@
 package org.example.socnetapi.services;
 
 import org.example.socnetapi.constants.Constants;
-import org.example.socnetapi.dtos.chatdtos.AddChatDto;
-import org.example.socnetapi.dtos.chatdtos.GetChatDto;
-import org.example.socnetapi.dtos.chatdtos.UpdateChatDto;
+import org.example.socnetapi.dtos.chat.AddChatDto;
+import org.example.socnetapi.dtos.chat.GetChatDto;
+import org.example.socnetapi.dtos.chat.UpdateChatDto;
 import org.example.socnetapi.entities.User;
 import org.example.socnetapi.exceptions.AlreadyExistsException;
 import org.example.socnetapi.exceptions.ForbiddenException;

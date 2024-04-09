@@ -1,7 +1,7 @@
 package org.example.socnetapi.mappers;
 
-import org.example.socnetapi.dtos.chatdtos.AddChatDto;
-import org.example.socnetapi.dtos.chatdtos.GetChatDto;
+import org.example.socnetapi.dtos.chat.AddChatDto;
+import org.example.socnetapi.dtos.chat.GetChatDto;
 import org.example.socnetapi.entities.Chat;
 import org.mapstruct.Mapper;
 

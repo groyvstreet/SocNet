@@ -1,7 +1,7 @@
-package org.example.socnetapi.dtos.messagedtos;
+package org.example.socnetapi.dtos.message;
 
 import lombok.Data;
-import org.example.socnetapi.dtos.userdtos.GetUserDto;
+import org.example.socnetapi.dtos.user.GetUserDto;
 
 import java.time.Instant;
 import java.util.UUID;

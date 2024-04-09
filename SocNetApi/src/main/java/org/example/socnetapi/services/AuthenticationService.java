@@ -1,7 +1,7 @@
 package org.example.socnetapi.services;
 
 import org.example.socnetapi.authorization.JwtUtil;
-import org.example.socnetapi.dtos.userdtos.AddUserDto;
+import org.example.socnetapi.dtos.user.AddUserDto;
 import org.example.socnetapi.responses.AuthenticationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

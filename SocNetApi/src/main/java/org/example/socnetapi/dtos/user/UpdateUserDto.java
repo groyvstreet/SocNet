@@ -1,14 +1,13 @@
-package org.example.socnetapi.dtos.userdtos;
+package org.example.socnetapi.dtos.user;
 
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
 @Data
-public class GetUserDto {
+public class UpdateUserDto {
     private UUID id;
-    private String email;
     private String firstName;
     private String lastName;
     private LocalDate birthDate;

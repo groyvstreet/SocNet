@@ -1,8 +1,7 @@
 package org.example.socnetapi.controllers;
 
-import org.example.socnetapi.dtos.photodtos.AddPhotoDto;
-import org.example.socnetapi.dtos.photodtos.GetPhotoDto;
-import org.example.socnetapi.dtos.photodtos.UpdatePhotoDto;
+import org.example.socnetapi.dtos.photo.AddPhotoDto;
+import org.example.socnetapi.dtos.photo.UpdatePhotoDto;
 import org.example.socnetapi.services.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,10 +10,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
+@RequestMapping("/photos")
 public class PhotoController {
     private final PhotoService photoService;
 
@@ -23,21 +22,14 @@ public class PhotoController {
         this.photoService = photoService;
     }
 
-    @GetMapping("/photos")
-    public ResponseEntity<List<GetPhotoDto>> getPhotos() {
-        var photos = photoService.getPhotos();
-
-        return new ResponseEntity<>(photos, HttpStatus.OK);
-    }
-
-    @GetMapping("/photos/{id}")
-    public ResponseEntity<GetPhotoDto> getPhotoById(@PathVariable UUID id) {
+    @GetMapping("{id}")
+    public ResponseEntity<Object> getPhotoById(@PathVariable UUID id) {
         var photo = photoService.getPhotoById(id);
 
         return new ResponseEntity<>(photo, HttpStatus.OK);
     }
 
-    @PostMapping("/photos")
+    @PostMapping
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Object> addPhoto(@RequestBody AddPhotoDto addPhotoDto, Principal principal) {
         var authenticatedUserId = UUID.fromString(principal.getName());
@@ -46,7 +38,7 @@ public class PhotoController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PutMapping("/photos")
+    @PutMapping
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Object> updatePhoto(@RequestBody UpdatePhotoDto updatePhotoDto, Principal principal) {
         var authenticatedUserId = UUID.fromString(principal.getName());
@@ -55,7 +47,7 @@ public class PhotoController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @DeleteMapping("/photos/{id}")
+    @DeleteMapping("{id}")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Object> removePhotoById(@PathVariable UUID id, Principal principal) {
         var authenticatedUserId = UUID.fromString(principal.getName());
@@ -64,9 +56,9 @@ public class PhotoController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/users/{id}/photos")
-    public ResponseEntity<Object> getPhotosByUserId(@PathVariable UUID id) {
-        var photos = photoService.getPhotosByUserId(id);
+    @GetMapping
+    public ResponseEntity<Object> getPhotosByUserId(@RequestParam UUID userId) {
+        var photos = photoService.getPhotosByUserId(userId);
 
         return new ResponseEntity<>(photos, HttpStatus.OK);
     }

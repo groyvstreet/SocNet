@@ -4,20 +4,22 @@
     <p
         class="message-text"
     >
-        <!-- <strong>{message.user.firstName} {message.user.lastName}:</strong> {message.text} -->
+        <strong>{{message.user.firstName}} {{message.user.lastName}}:</strong> {{message.text}}
     </p>
     <span
         class="message-time"
     >
-        <!-- {message.dateTime.toString().replace('T', ' ').split('.')[0]} -->
+        {{message.dateTime.toString().replace('T', ' ').split('.')[0]}}
     </span>
     <button
         class="background-color-green"
+        (click)="updateMessageOnClick()"
     >
         Изменить
     </button>
     <button
         class="background-color-red"
+        (click)="removeMessageOnClick()"
     >
         Удалить
     </button>

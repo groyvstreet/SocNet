@@ -6,15 +6,17 @@
     >
         <input
             placeholder="Название"
-            value={name}
+            [(ngModel)]="chat.name"
         />
         <button
             class="background-color-green"
+            (click)="updateChat()"
         >
             Изменить
         </button>
         <button
             class="background-color-red"
+            (click)="removeChat()"
         >
             Удалить
         </button>
@@ -34,6 +36,14 @@
                     {user.firstName} {user.lastName}
                 </button>
             ))} -->
+            @for (user of users; track user.id) {
+                <button
+                    class="user-button background-color-green"
+                    (click)="addUserToChat(chat.id, user.id)"
+                >
+                    {{user.firstName}} {{user.lastName}}
+                </button>
+            }
         </div>
         <div
             class="chat-section half"
@@ -41,22 +51,22 @@
             <section
                 class="messages"
             >
-                <!-- {messages.map(message => (
-                    <Message
-                        key={message.id}
-                        message={message}
-                        updateMessageButtonOnClick={updateMessageButtonOnClick}
-                        removeMessageButtonOnClick={removeMessageButtonOnClick}
-                    />
-                ))} -->
+                @for (message of messages; track message.id) {
+                    <app-message
+                        [message]="message"
+                        (updateMessage)="updateMessage(message.id)"
+                        (removeMessage)="removeMessage(message.id)"
+                    >
+                    </app-message>
+                }
             </section>
             <input
                 placeholder="Введите текст"
-                value={text}
-                
+                [(ngModel)]="text"
             />
             <button
                 class="background-color-green"
+                (click)="addMessage()"
             >
                 Отправить
             </button>
@@ -64,15 +74,14 @@
         <div
             class="chat-section quater"
         >
-            <!-- {chatUsers.map(user => (
+            @for (chatUser of chatUsers; track chatUser.id) {
                 <button
                     class="user-button background-color-red"
-                    key={user.id}
-                    onClick={() => removeUserFromChatButtonOnClick(chat.id, user.id)}
+                    (click)="removeUserFromChat(chat.id, chatUser.id)"
                 >
-                    {user.firstName} {user.lastName}
+                    {{chatUser.firstName}} {{chatUser.lastName}}
                 </button>
-            ))} -->
+            }
         </div>
     </div>
 </section>

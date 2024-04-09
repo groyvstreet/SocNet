@@ -1,11 +1,12 @@
-package org.example.socnetapi.dtos.photodtos;
+package org.example.socnetapi.dtos.photo;
 
 import lombok.Data;
 
 import java.util.UUID;
 
 @Data
-public class UpdatePhotoDto {
+public class GetPhotoDto {
     private UUID id;
     private String source;
+    private String userId;
 }

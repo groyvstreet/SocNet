@@ -1,8 +1,7 @@
 package org.example.socnetapi.controllers;
 
-import org.example.socnetapi.dtos.commentdtos.AddCommentDto;
-import org.example.socnetapi.dtos.commentdtos.GetCommentDto;
-import org.example.socnetapi.dtos.commentdtos.UpdateCommentDto;
+import org.example.socnetapi.dtos.comment.AddCommentDto;
+import org.example.socnetapi.dtos.comment.UpdateCommentDto;
 import org.example.socnetapi.services.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,10 +10,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
+@RequestMapping("/comments")
 public class CommentController {
     private final CommentService commentService;
 
@@ -23,21 +22,14 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @GetMapping("/comments")
-    public ResponseEntity<List<GetCommentDto>> getComments() {
-        var comments = commentService.getComments();
-
-        return new ResponseEntity<>(comments, HttpStatus.OK);
-    }
-
-    @GetMapping("/comments/{id}")
-    public ResponseEntity<GetCommentDto> getCommentById(@PathVariable UUID id) {
+    @GetMapping("{id}")
+    public ResponseEntity<Object> getCommentById(@PathVariable UUID id) {
         var comment = commentService.getCommentById(id);
 
         return new ResponseEntity<>(comment, HttpStatus.OK);
     }
 
-    @PostMapping("/comments")
+    @PostMapping
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Object> addComment(@RequestBody AddCommentDto addCommentDto, Principal principal) {
         var authenticatedUserId = UUID.fromString(principal.getName());
@@ -46,7 +38,7 @@ public class CommentController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PutMapping("/comments")
+    @PutMapping
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Object> updateComment(@RequestBody UpdateCommentDto updateCommentDto, Principal principal) {
         var authenticatedUserId = UUID.fromString(principal.getName());
@@ -55,7 +47,7 @@ public class CommentController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @DeleteMapping("/comments/{id}")
+    @DeleteMapping("{id}")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Object> removeCommentById(@PathVariable UUID id, Principal principal) {
         var authenticatedUserId = UUID.fromString(principal.getName());
@@ -64,9 +56,9 @@ public class CommentController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/posts/{id}/comments")
-    public ResponseEntity<Object> getCommentsByPostId(@PathVariable UUID id) {
-        var comments = commentService.getCommentsByPostId(id);
+    @GetMapping
+    public ResponseEntity<Object> getCommentsByPostId(@RequestParam UUID postId) {
+        var comments = commentService.getCommentsByPostId(postId);
 
         return new ResponseEntity<>(comments, HttpStatus.OK);
     }

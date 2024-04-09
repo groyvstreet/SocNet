@@ -1,12 +1,11 @@
-package org.example.socnetapi.dtos.messagedtos;
+package org.example.socnetapi.dtos.post;
 
 import lombok.Data;
 
 import java.util.UUID;
 
 @Data
-public class AddMessageDto {
+public class AddPostDto {
     private String text;
-    private UUID chatId;
     private UUID userId;
 }

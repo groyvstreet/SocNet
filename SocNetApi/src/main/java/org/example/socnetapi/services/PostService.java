@@ -1,9 +1,9 @@
 package org.example.socnetapi.services;
 
 import org.example.socnetapi.constants.Constants;
-import org.example.socnetapi.dtos.postdtos.AddPostDto;
-import org.example.socnetapi.dtos.postdtos.GetPostDto;
-import org.example.socnetapi.dtos.postdtos.UpdatePostDto;
+import org.example.socnetapi.dtos.post.AddPostDto;
+import org.example.socnetapi.dtos.post.GetPostDto;
+import org.example.socnetapi.dtos.post.UpdatePostDto;
 import org.example.socnetapi.exceptions.ForbiddenException;
 import org.example.socnetapi.exceptions.NotFoundException;
 import org.example.socnetapi.mappers.PostMapper;

@@ -20,8 +20,8 @@ export class UserService {
     return response.data;
   }
 
-  async getUsersByChatId(chatId: string, isInChat: string) {
-    const response = await axios.get(`/chats/${chatId}/users?isInChat=${isInChat}`);
+  async getUsersByChatId(chatId: string, isInChat: boolean) {
+    const response = await axios.get(`/users/chats?chatId=${chatId}&isInChat=${isInChat}`);
 
     return response.data;
   }

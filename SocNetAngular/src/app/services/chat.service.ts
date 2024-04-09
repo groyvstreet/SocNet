@@ -30,13 +30,13 @@ export class ChatService {
   }
 
   async addUserToChat(chatId: string, userId: string) {
-    const response = await axios.post(`/chats/${chatId}/users/${userId}`)
+    const response = await axios.post(`/chats/users?chatId=${chatId}&userId=${userId}`)
 
     return response.data;
   }
 
   async removeUserFromChat(chatId: string, userId: string) {
-    const response = await axios.delete(`/chats/${chatId}/users/${userId}`)
+    const response = await axios.delete(`/chats/users?chatId=${chatId}&userId=${userId}`)
 
     return response.data;
   }

@@ -14,7 +14,8 @@ import { useEffect, useState } from "react";
 import { AppContext } from "../src/contexts/contexts";
 import { getUserById } from "../src/api/userService";
 import axios from "axios";
-import Chat, { chatLoader } from "./routes/chat";
+import Chat from "./routes/chat";
+import chatLoader from "./routeLoaders/chatLoader";
 
 export default function App() {
   const [cookies, setCookie, removeCookie] = useCookies(['id', 'token']);

@@ -22,13 +22,13 @@ export async function getChatById(id) {
 }
 
 export async function addUserToChat(chatId, userId) {
-    const response = await axios.post(`/chats/${chatId}/users/${userId}`)
+    const response = await axios.post(`/chats/users?chatId=${chatId}&userId=${userId}`)
 
     return response.data;
 }
 
 export async function removeUserFromChat(chatId, userId) {
-    const response = await axios.delete(`/chats/${chatId}/users/${userId}`)
+    const response = await axios.delete(`/chats/users?chatId=${chatId}&userId=${userId}`)
 
     return response.data;
 }

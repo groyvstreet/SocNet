@@ -1,8 +1,7 @@
 package org.example.socnetapi.controllers;
 
-import org.example.socnetapi.dtos.messagedtos.AddMessageDto;
-import org.example.socnetapi.dtos.messagedtos.GetMessageDto;
-import org.example.socnetapi.dtos.messagedtos.UpdateMessageDto;
+import org.example.socnetapi.dtos.message.AddMessageDto;
+import org.example.socnetapi.dtos.message.UpdateMessageDto;
 import org.example.socnetapi.services.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,10 +10,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
+@RequestMapping("/messages")
 @PreAuthorize("isAuthenticated()")
 public class MessageController {
     private final MessageService messageService;
@@ -24,21 +23,14 @@ public class MessageController {
         this.messageService = messageService;
     }
 
-    @GetMapping("/messages")
-    public ResponseEntity<List<GetMessageDto>> getMessages() {
-        var messages = messageService.getMessages();
-
-        return new ResponseEntity<>(messages, HttpStatus.OK);
-    }
-
-    @GetMapping("/messages/{id}")
-    public ResponseEntity<GetMessageDto> getMessageById(@PathVariable UUID id) {
+    @GetMapping("{id}")
+    public ResponseEntity<Object> getMessageById(@PathVariable UUID id) {
         var message = messageService.getMessageById(id);
 
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-    @PostMapping("/messages")
+    @PostMapping
     public ResponseEntity<Object> addMessage(@RequestBody AddMessageDto addMessageDto, Principal principal) {
         var authenticatedUserId = UUID.fromString(principal.getName());
         messageService.addMessage(addMessageDto, authenticatedUserId);
@@ -46,7 +38,7 @@ public class MessageController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PutMapping("/messages")
+    @PutMapping
     public ResponseEntity<Object> updateMessage(@RequestBody UpdateMessageDto updateMessageDto, Principal principal) {
         var authenticatedUserId = UUID.fromString(principal.getName());
         messageService.updateMessage(updateMessageDto, authenticatedUserId);
@@ -54,7 +46,7 @@ public class MessageController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @DeleteMapping("/messages/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<Object> removeMessageById(@PathVariable UUID id, Principal principal) {
         var authenticatedUserId = UUID.fromString(principal.getName());
         messageService.removeMessageById(id, authenticatedUserId);
@@ -62,10 +54,10 @@ public class MessageController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/chats/{id}/messages")
-    public ResponseEntity<Object> getMessagesByChatId(@PathVariable UUID id, Principal principal) {
+    @GetMapping
+    public ResponseEntity<Object> getMessagesByChatId(@RequestParam UUID chatId, Principal principal) {
         var authenticatedUserId = UUID.fromString(principal.getName());
-        var messages = messageService.getMessagesByChatId(id, authenticatedUserId);
+        var messages = messageService.getMessagesByChatId(chatId, authenticatedUserId);
 
         return new ResponseEntity<>(messages, HttpStatus.OK);
     }

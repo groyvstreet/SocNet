@@ -13,7 +13,7 @@ export async function getUsers() {
 }
 
 export async function getUsersByChatId(chatId, isInChat) {
-    const response = await axios.get(`/chats/${chatId}/users?isInChat=${isInChat}`);
+    const response = await axios.get(`/users/chats?chatId=${chatId}&isInChat=${isInChat}`);
 
     return response.data;
 }

@@ -26,7 +26,7 @@ export async function removeMessageById(id) {
 }
 
 export async function getMessagesByChatId(chatId) {
-    const response = await axios.get(`/chats/${chatId}/messages`);
+    const response = await axios.get(`/messages?chatId=${chatId}`);
 
     return response.data;
 }

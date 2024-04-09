@@ -1,4 +1,4 @@
-package org.example.socnetapi.dtos.userdtos;
+package org.example.socnetapi.dtos.user;
 
 import lombok.Data;
 

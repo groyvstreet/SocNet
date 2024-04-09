@@ -1,9 +1,9 @@
 package org.example.socnetapi.services;
 
 import org.example.socnetapi.constants.Constants;
-import org.example.socnetapi.dtos.photodtos.AddPhotoDto;
-import org.example.socnetapi.dtos.photodtos.GetPhotoDto;
-import org.example.socnetapi.dtos.photodtos.UpdatePhotoDto;
+import org.example.socnetapi.dtos.photo.AddPhotoDto;
+import org.example.socnetapi.dtos.photo.GetPhotoDto;
+import org.example.socnetapi.dtos.photo.UpdatePhotoDto;
 import org.example.socnetapi.exceptions.ForbiddenException;
 import org.example.socnetapi.exceptions.NotFoundException;
 import org.example.socnetapi.mappers.PhotoMapper;

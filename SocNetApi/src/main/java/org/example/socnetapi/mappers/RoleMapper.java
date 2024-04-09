@@ -1,7 +1,7 @@
 package org.example.socnetapi.mappers;
 
-import org.example.socnetapi.dtos.roledtos.AddRoleDto;
-import org.example.socnetapi.dtos.roledtos.GetRoleDto;
+import org.example.socnetapi.dtos.role.AddRoleDto;
+import org.example.socnetapi.dtos.role.GetRoleDto;
 import org.example.socnetapi.entities.Role;
 import org.mapstruct.Mapper;
 

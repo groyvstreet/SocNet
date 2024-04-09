@@ -1,9 +1,9 @@
 package org.example.socnetapi.services;
 
 import org.example.socnetapi.constants.Constants;
-import org.example.socnetapi.dtos.userdtos.AddUserDto;
-import org.example.socnetapi.dtos.userdtos.GetUserDto;
-import org.example.socnetapi.dtos.userdtos.UpdateUserDto;
+import org.example.socnetapi.dtos.user.AddUserDto;
+import org.example.socnetapi.dtos.user.GetUserDto;
+import org.example.socnetapi.dtos.user.UpdateUserDto;
 import org.example.socnetapi.entities.Chat;
 import org.example.socnetapi.entities.User;
 import org.example.socnetapi.exceptions.AlreadyExistsException;

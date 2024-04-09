@@ -1,7 +1,6 @@
 package org.example.socnetapi.controllers;
 
-import org.example.socnetapi.dtos.userdtos.GetUserDto;
-import org.example.socnetapi.dtos.userdtos.UpdateUserDto;
+import org.example.socnetapi.dtos.user.UpdateUserDto;
 import org.example.socnetapi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,10 +9,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
+@RequestMapping("/users")
 public class UserController {
     private final UserService userService;
 
@@ -22,21 +21,21 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/users")
-    public ResponseEntity<List<GetUserDto>> getUsers() {
+    @GetMapping
+    public ResponseEntity<Object> getUsers() {
         var users = userService.getUsers();
 
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @GetMapping("/users/{id}")
-    public ResponseEntity<GetUserDto> getUserById(@PathVariable UUID id) {
+    @GetMapping("{id}")
+    public ResponseEntity<Object> getUserById(@PathVariable UUID id) {
         var user = userService.getUserById(id);
 
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @PutMapping("/users")
+    @PutMapping
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Object> updateUser(@RequestBody UpdateUserDto updateUserDto, Principal principal) {
         var authenticatedUserId = UUID.fromString(principal.getName());
@@ -45,7 +44,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @DeleteMapping("/users/{id}")
+    @DeleteMapping("{id}")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Object> removeUserById(@PathVariable UUID id, Principal principal) {
         var authenticatedUserId = UUID.fromString(principal.getName());
@@ -54,11 +53,11 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/chats/{id}/users")
+    @GetMapping("chats")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Object> getUsersByChatId(@PathVariable UUID id, @RequestParam boolean isInChat, Principal principal) {
+    public ResponseEntity<Object> getUsersByChatId(@RequestParam UUID chatId, @RequestParam boolean isInChat, Principal principal) {
         var authenticatedUserId = UUID.fromString(principal.getName());
-        var users = userService.getUsersByChatId(id, authenticatedUserId, isInChat);
+        var users = userService.getUsersByChatId(chatId, authenticatedUserId, isInChat);
 
         return new ResponseEntity<>(users, HttpStatus.OK);
     }

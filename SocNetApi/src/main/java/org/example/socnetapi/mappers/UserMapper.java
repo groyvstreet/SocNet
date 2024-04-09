@@ -1,7 +1,7 @@
 package org.example.socnetapi.mappers;
 
-import org.example.socnetapi.dtos.userdtos.AddUserDto;
-import org.example.socnetapi.dtos.userdtos.GetUserDto;
+import org.example.socnetapi.dtos.user.AddUserDto;
+import org.example.socnetapi.dtos.user.GetUserDto;
 import org.example.socnetapi.entities.User;
 import org.mapstruct.Mapper;
 

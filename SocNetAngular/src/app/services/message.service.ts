@@ -34,7 +34,7 @@ export class MessageService {
   }
 
   async getMessagesByChatId(chatId: string) {
-    const response = await axios.get(`/chats/${chatId}/messages`);
+    const response = await axios.get(`/messages?chatId=${chatId}`);
 
     return response.data;
   }

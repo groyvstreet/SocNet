@@ -1,9 +1,9 @@
 package org.example.socnetapi.services;
 
 import org.example.socnetapi.constants.Constants;
-import org.example.socnetapi.dtos.commentdtos.AddCommentDto;
-import org.example.socnetapi.dtos.commentdtos.GetCommentDto;
-import org.example.socnetapi.dtos.commentdtos.UpdateCommentDto;
+import org.example.socnetapi.dtos.comment.AddCommentDto;
+import org.example.socnetapi.dtos.comment.GetCommentDto;
+import org.example.socnetapi.dtos.comment.UpdateCommentDto;
 import org.example.socnetapi.exceptions.ForbiddenException;
 import org.example.socnetapi.exceptions.NotFoundException;
 import org.example.socnetapi.mappers.CommentMapper;

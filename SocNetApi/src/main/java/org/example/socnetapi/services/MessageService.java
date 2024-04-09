@@ -1,9 +1,9 @@
 package org.example.socnetapi.services;
 
 import org.example.socnetapi.constants.Constants;
-import org.example.socnetapi.dtos.messagedtos.AddMessageDto;
-import org.example.socnetapi.dtos.messagedtos.GetMessageDto;
-import org.example.socnetapi.dtos.messagedtos.UpdateMessageDto;
+import org.example.socnetapi.dtos.message.AddMessageDto;
+import org.example.socnetapi.dtos.message.GetMessageDto;
+import org.example.socnetapi.dtos.message.UpdateMessageDto;
 import org.example.socnetapi.entities.Chat;
 import org.example.socnetapi.entities.User;
 import org.example.socnetapi.exceptions.ForbiddenException;

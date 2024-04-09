@@ -16,6 +16,7 @@ export class ProfileComponent {
   lastName = '';
   birthDate = '';
   user = new User;
+  
   constructor(private authorizationService: AuthorizationService,
     private userService: UserService) {
     authorizationService.user.subscribe(user => {

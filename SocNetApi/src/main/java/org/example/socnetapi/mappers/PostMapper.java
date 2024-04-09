@@ -1,7 +1,7 @@
 package org.example.socnetapi.mappers;
 
-import org.example.socnetapi.dtos.postdtos.AddPostDto;
-import org.example.socnetapi.dtos.postdtos.GetPostDto;
+import org.example.socnetapi.dtos.post.AddPostDto;
+import org.example.socnetapi.dtos.post.GetPostDto;
 import org.example.socnetapi.entities.Post;
 import org.mapstruct.Mapper;
 

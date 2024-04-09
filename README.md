@@ -8,6 +8,8 @@ API (SpringBoot + Hibernate) - https://github.com/groyvstreet/SocNet/tree/main/S
 
 Front-end (React) - https://github.com/groyvstreet/SocNet/tree/main/soc-net-react
 
+Front-end (Angular) - https://github.com/groyvstreet/SocNet/tree/main/SocNetAngular/src
+
 # 1. Сделать схему БД:
 План: 2 ч;
 Факт: 2 ч.
@@ -16,7 +18,10 @@ Front-end (React) - https://github.com/groyvstreet/SocNet/tree/main/soc-net-reac
 Факт: 17 ч.
 # 3. Сделать back-end:
 План: 12 ч;
-Факт: 19 ч.
+Факт: 20 ч.
 # 4. Сделать front-end (React):
 План: 12 ч;
 Факт: 16 ч.
+# 5. Сделать front-end (Angular):
+План: 12 ч;
+Факт: 12 ч.

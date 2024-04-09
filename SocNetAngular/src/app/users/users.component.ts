@@ -14,7 +14,7 @@ export class UsersComponent {
 
   constructor(private userService: UserService) {}
 
-  async ngOnInit(){
+  async ngOnInit() {
     this.users = await this.userService.getUsers();
   }
 }

@@ -1,4 +1,4 @@
-package org.example.socnetapi.dtos.roledtos;
+package org.example.socnetapi.dtos.role;
 
 import lombok.Data;
 

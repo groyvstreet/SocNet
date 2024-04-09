@@ -1,17 +1,11 @@
 import { useLoaderData, useNavigate } from "react-router-dom";
-import { addUserToChat, getChatById, removeChatById, removeUserFromChat, updateChat } from "../api/chatService";
+import { addUserToChat, removeChatById, removeUserFromChat, updateChat } from "../api/chatService";
 import { useContext, useEffect, useState } from "react";
 import { getUsersByChatId } from "../api/userService";
 import { addMessage, getMessagesByChatId, removeMessageById, updateMessage } from "../api/messageService";
 import { AppContext } from "../contexts/contexts";
 import './chat.css'
 import Message from "../components/message";
-
-export async function chatLoader({ params }) {
-    const chat = await getChatById(params.chatId);
-
-    return { chat }
-}
 
 export default function Chat() {
     const { chat } = useLoaderData();

@@ -1,4 +1,4 @@
-package org.example.socnetapi.dtos.postdtos;
+package org.example.socnetapi.dtos.post;
 
 import lombok.Data;
 
