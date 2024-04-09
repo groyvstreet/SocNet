@@ -27,15 +27,6 @@
         <div
             class="chat-section quater"
         >
-            <!-- {users.map(user => (
-                <button
-                    class="user-button background-color-green"
-                    key={user.id}
-                    onClick={() => addUserToChatButtonOnClick(chat.id, user.id)}
-                >
-                    {user.firstName} {user.lastName}
-                </button>
-            ))} -->
             @for (user of users; track user.id) {
                 <button
                     class="user-button background-color-green"
