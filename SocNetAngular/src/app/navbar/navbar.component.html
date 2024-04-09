@@ -1,0 +1,59 @@
+<header
+    class="navigation-header"
+>
+    <nav
+        class="navigation-menu"
+    >
+        <ul>
+            <li>
+                <a
+                    class="menu-item"
+                    routerLink="/users"
+                    routerLinkActive="active"
+                >
+                    Пользователи
+                </a>
+            </li>
+            @if (isAuthenticated) {
+                <li>
+                    <a
+                        class="menu-item"
+                        routerLink="/chats"
+                        routerLinkActive="active"
+                    >
+                        Чаты
+                    </a>
+                </li>
+                <li>
+                    <a
+                        class="menu-item"
+                        routerLink="/profile"
+                        routerLinkActive="active"
+                    >
+                        Профиль
+                    </a>
+                </li>
+            }
+            @else {
+                <li>
+                    <a
+                        class="menu-item"
+                        routerLink="/signup"
+                        routerLinkActive="active"
+                    >
+                        Регистрация
+                    </a>
+                </li>
+                <li>
+                    <a
+                        class="menu-item"
+                        routerLink="/signin"
+                        routerLinkActive="active"
+                    >
+                        Авторизация
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>
+</header>

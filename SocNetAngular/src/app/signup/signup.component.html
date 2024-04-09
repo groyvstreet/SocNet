@@ -1,0 +1,32 @@
+<section
+    class="container"
+>
+    <input
+        placeholder="Email"
+        type="email"
+        [(ngModel)]="email"
+    />
+    <input
+        placeholder="Пароль"
+        type="password"
+        [(ngModel)]="password"
+    />
+    <input
+        placeholder="Имя"
+        [(ngModel)]="firstName"
+    />
+    <input
+        placeholder="Фамилия"
+        [(ngModel)]="lastName"
+    />
+    <input
+        type="date"
+        [(ngModel)]="birthDate"
+    />
+    <button
+        class="background-color-green"
+        (click)="signUp()"
+    >
+        Зарегистрироваться
+    </button>
+</section>

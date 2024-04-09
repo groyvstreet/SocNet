@@ -1,0 +1,25 @@
+<section
+    class="chats-container"
+>
+    <div
+        class="chats-create-container"
+    >
+        <input
+            placeholder="Название"
+            [(ngModel)]="name"
+        />
+        <button
+            class="background-color-green"
+            (click)="addChat()"
+        >
+            Создать
+        </button>
+    </div>
+    @for (chat of chats; track chat.id) {
+        <app-chat-card
+            [chat]="chat"
+            (click)="navigateToChat(chat.id)"
+        >
+        </app-chat-card>
+    }
+</section>

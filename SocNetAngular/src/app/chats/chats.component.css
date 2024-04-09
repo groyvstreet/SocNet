@@ -1,0 +1,12 @@
+.chats-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-direction: column;
+}
+
+.chats-create-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

@@ -1,0 +1,11 @@
+<section
+    class="users-container"
+>
+    @for (user of users; track user.id) {
+        <p
+            class="user-p"
+        >
+            {{user.firstName}} {{user.lastName}}
+        </p>
+    }
+</section>

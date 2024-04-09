@@ -8,7 +8,7 @@ export default function Message({ message, updateMessageButtonOnClick, removeMes
             <p
                 className="message-text"
             >
-                <strong>:</strong> {message.text}
+                <strong>{message.user.firstName} {message.user.lastName}:</strong> {message.text}
             </p>
             <span
                 className="message-time"

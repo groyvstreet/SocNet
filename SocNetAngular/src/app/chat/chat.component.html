@@ -1,0 +1,78 @@
+<section
+    class="chat-container"
+>
+    <div
+        class="chat-subcontainer"
+    >
+        <input
+            placeholder="Название"
+            value={name}
+        />
+        <button
+            class="background-color-green"
+        >
+            Изменить
+        </button>
+        <button
+            class="background-color-red"
+        >
+            Удалить
+        </button>
+    </div>
+    <div
+        class="chat-content"
+    >
+        <div
+            class="chat-section quater"
+        >
+            <!-- {users.map(user => (
+                <button
+                    class="user-button background-color-green"
+                    key={user.id}
+                    onClick={() => addUserToChatButtonOnClick(chat.id, user.id)}
+                >
+                    {user.firstName} {user.lastName}
+                </button>
+            ))} -->
+        </div>
+        <div
+            class="chat-section half"
+        >
+            <section
+                class="messages"
+            >
+                <!-- {messages.map(message => (
+                    <Message
+                        key={message.id}
+                        message={message}
+                        updateMessageButtonOnClick={updateMessageButtonOnClick}
+                        removeMessageButtonOnClick={removeMessageButtonOnClick}
+                    />
+                ))} -->
+            </section>
+            <input
+                placeholder="Введите текст"
+                value={text}
+                
+            />
+            <button
+                class="background-color-green"
+            >
+                Отправить
+            </button>
+        </div>
+        <div
+            class="chat-section quater"
+        >
+            <!-- {chatUsers.map(user => (
+                <button
+                    class="user-button background-color-red"
+                    key={user.id}
+                    onClick={() => removeUserFromChatButtonOnClick(chat.id, user.id)}
+                >
+                    {user.firstName} {user.lastName}
+                </button>
+            ))} -->
+        </div>
+    </div>
+</section>

@@ -1,0 +1,38 @@
+<section
+    class="profile-container"
+>
+    <div
+        class="profile-card"
+    >
+        <input
+            placeholder='Имя'
+            [(ngModel)]="firstName"
+        />
+        <input
+            placeholder='Фамилия'
+            [(ngModel)]="lastName"
+        />
+        <input
+            type='date'
+            [(ngModel)]="birthDate"
+        />
+        <button
+            class="background-color-green"
+            (click)="updateUser()"
+        >
+            Редактировать
+        </button>
+        <button
+            class="background-color-gray"
+            (click)="logOut()"
+        >
+            Выйти
+        </button>
+        <button
+            class="background-color-red"
+            (click)="removeUser()"
+        >
+            Удалить аккаунт
+        </button>
+    </div>
+</section>

@@ -1,0 +1,83 @@
+app-root {
+    width: 100%;
+    height: 100%;
+    background-color: #666666;
+
+    --green: #1DF240;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    background-color: #666666;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+main {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+input {
+    border: 3px solid black;
+    border-radius: 20px;
+    height: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+    outline: none;
+    font-size: 18px;
+    background-color: black;
+    color: white;
+}
+
+input:focus {
+    border-color: var(--green);
+}
+
+input::placeholder {
+    color: gray;
+}
+
+button {
+    border: 0px;
+    border-radius: 20px;
+    height: 40px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.background-color-green {
+    background-color: var(--green);
+}
+
+.color-green {
+    color: var(--green);
+}
+
+.background-color-red {
+    background-color: red;
+}
+
+.color-red {
+    color: red;
+}
+
+.background-color-gray {
+    background-color: #999999;
+}
+
+.color-gray {
+    color: #999999;
+}

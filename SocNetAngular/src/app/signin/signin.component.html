@@ -1,0 +1,20 @@
+<section
+    class="container"
+>
+    <input
+        placeholder="Email"
+        type="email"
+        [(ngModel)]="email"
+    />
+    <input
+        placeholder="Пароль"
+        type="password"
+        [(ngModel)]="password"
+    />
+    <button
+        class="background-color-green"
+        (click)="signIn()"
+    >
+        Войти
+    </button>
+</section>
