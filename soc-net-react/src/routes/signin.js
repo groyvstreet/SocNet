@@ -37,6 +37,7 @@ export default function Signin() {
 
     async function signinButtonOnClick() {
         const data = await signIn(email, password);
+        console.log(appContext)
         appContext.setCookie('userId', data.id);
         appContext.setCookie('token', data.token);
         appContext.setIsAuthenticated(true);

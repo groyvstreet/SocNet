@@ -1,4 +1,5 @@
 import './message.css'
+import PropTypes from 'prop-types';
 
 export default function Message({ message, updateMessageButtonOnClick, removeMessageButtonOnClick }) {
     return (
@@ -29,4 +30,17 @@ export default function Message({ message, updateMessageButtonOnClick, removeMes
             </button>
         </section>
     );
+}
+Message.propTypes = {
+    message: PropTypes.shape({
+        user: PropTypes.shape({
+            firstName: PropTypes.string,
+            lastName: PropTypes.string
+        }),
+        text: PropTypes.string,
+        dateTime: PropTypes.any,
+        id: PropTypes.string
+    }),
+    updateMessageButtonOnClick: PropTypes.func,
+    removeMessageButtonOnClick: PropTypes.func
 }

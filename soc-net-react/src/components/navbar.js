@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import './navbar.css'
+import PropTypes from 'prop-types';
 
 export default function Navbar({ isAuthenticated }) {
     const location = useLocation();
@@ -63,4 +64,7 @@ export default function Navbar({ isAuthenticated }) {
             </nav>
         </header>
     );
+}
+Navbar.propTypes = {
+    isAuthenticated: PropTypes.bool
 }

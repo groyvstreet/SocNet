@@ -10,7 +10,7 @@ import Profile from './routes/profile';
 import Signup from './routes/signup';
 import Signin from './routes/signin';
 import { useCookies } from "react-cookie";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AppContext } from "../src/contexts/contexts";
 import { getUserById } from "../src/api/userService";
 import axios from "axios";
@@ -35,14 +35,16 @@ export default function App() {
     }
   }, [isAuthenticated]);
 
-  const state = {
-    setCookie,
-    removeCookie,
-    isAuthenticated,
-    setIsAuthenticated,
-    user,
-    setUser
-  };
+  const state = useMemo(() => {
+    return {
+      setCookie,
+      removeCookie,
+      isAuthenticated,
+      setIsAuthenticated,
+      user,
+      setUser
+    };
+  }, [isAuthenticated, user]);
 
   const authenticatedRouter = createBrowserRouter([
     {

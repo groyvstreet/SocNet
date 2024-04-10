@@ -21,7 +21,7 @@ Front-end (Angular) - https://github.com/groyvstreet/SocNet/tree/main/SocNetAngu
 Факт: 20 ч.
 # 4. Сделать front-end (React):
 План: 12 ч;
-Факт: 16 ч.
+Факт: 17 ч.
 # 5. Сделать front-end (Angular):
 План: 12 ч;
 Факт: 12 ч.
